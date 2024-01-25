@@ -1,0 +1,11 @@
+{
+  "Version": 1,
+  "Hash": "UWcfgGe1EkqGp/j1BWOidLRjsWqHrHlZg1H8dN67vLM=",
+  "Source": "spg-api",
+  "BasePath": "_content/spg-api",
+  "Mode": "Default",
+  "ManifestType": "Build",
+  "ReferencedProjectsConfiguration": [],
+  "DiscoveryPatterns": [],
+  "Assets": []
+}
