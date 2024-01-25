@@ -13,6 +13,8 @@
 
 ## <a name="what-is-this-api">🚀  What is this API ?</a>
 
+**Spg-api** is an api developed to perform as the primary backend structure for the SPG TCC project.
+
 ## <a name="installation">✅ Installation</a>
 
 ## <a name="build">🔨 Build</a>
