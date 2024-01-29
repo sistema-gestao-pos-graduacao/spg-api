@@ -16,6 +16,14 @@
 
 **Spg-api** is an api developed to perform as the primary backend structure for the SPG TCC project.
 
+```mermaid
+  graph TD;
+      A-->B;
+      A-->C;
+      B-->D;
+      C-->D;
+```
+
 ## <a name="swagger-documentation">✨ Swagger Documentation</a>
 
 All endpoints, schemas and object constructors necessary to use this api properly can be found in the 
