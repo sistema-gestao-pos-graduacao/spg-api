@@ -16,12 +16,16 @@
 
 **Spg-api** is an api developed to perform as the primary backend structure for the SPG TCC project.
 
+### Rest Architecture 
 ```mermaid
-  graph TD;
-      A-->B;
-      A-->C;
-      B-->D;
-      C-->D;
+  graph LR
+    A[(DataBase)] 
+    A --> B(Web Server)
+    B --> C{Rest API}
+    C --> D((Web))
+    B --> A
+    C --> B
+    D --> C
 ```
 
 ## <a name="swagger-documentation">✨ Swagger Documentation</a>
