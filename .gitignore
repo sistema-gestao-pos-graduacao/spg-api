@@ -67,6 +67,36 @@ artifacts/
 **/bin/
 **/obj/
 
+# .NET (including .NET Core and .NET 8) artifacts
+*.obj
+*.dll
+*.exe
+*.pdb
+*.user
+*.aps
+*.pch
+*.vspscc
+*_i.c
+*_p.c
+*.ncb
+*.suo
+*.tlb
+*.tlh
+*.bak
+*.[Cc]ache
+*.ilk
+*.log
+*.lib
+*.sbr
+*.sdf
+*.dbmdl
+*.dbproj.schemaview
+*.pfx
+*.publishsettings
+node_modules/
+npm-debug.log
+bower_components/
+
 # Visual Studio Code
 .vscode/
 
