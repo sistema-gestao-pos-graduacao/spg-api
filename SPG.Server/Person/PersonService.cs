@@ -10,9 +10,10 @@ namespace SPG.Server.Services
         private readonly IMapper _mapper = mapper;
         private readonly IPersonRepository _repository = repository;
 
-        public IEnumerable<PersonDto> GetAllPersons()
+        public IEnumerable<PersonModel> GetAllPersons()
         {
-            return _mapper.Map<IEnumerable<PersonDto>>(_repository.GetAll());
+            //Retirado o mapping para a finalidade de teste. 
+            return _repository.GetAll();
         }
 
         public PersonDto GetPersonById(int id)

@@ -1,5 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using System.Runtime.InteropServices;
 
 namespace SPG.Intf.Model
 {
@@ -8,11 +9,15 @@ namespace SPG.Intf.Model
         [Key]
         public  int Id { get; set; }
 
-        [Key]
+        [Required]
+        [StringLength(45)]
         public string Cpf { get; set; } = string.Empty;
-
+        
         [ForeignKey("UserId")]
         public int UserId { get; set; }
+        
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+        public Guid Ucode { get; set; }
 
         [Required]
         [StringLength(200)]

@@ -1,4 +1,5 @@
-﻿using SPG.Intf.Model;
+﻿using SPG.Intf.Data;
+using SPG.Intf.Model;
 
 namespace SPG.Intf.Interfaces
 {
