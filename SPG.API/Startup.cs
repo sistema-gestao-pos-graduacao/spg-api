@@ -1,10 +1,10 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using SPG.Application.Person;
+using SPG.Data.Context;
 using SPG.Data.Person;
-using SPG.Intf.Data;
-using SPG.Intf.Interfaces;
-using SPG.Server.Services;
+using SPG.Domain.Interfaces.Person;
 
-namespace SPG.WebApi
+namespace SPG.API
 {
     public class Startup(IConfiguration configuration)
     {

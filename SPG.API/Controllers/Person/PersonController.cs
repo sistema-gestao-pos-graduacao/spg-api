@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using SPG.Intf.Dto;
-using SPG.Intf.Interfaces;
+using SPG.Domain.Dto.Person;
+using SPG.Domain.Interfaces.Person;
 
 namespace SPG.WebApi.Controllers.Person {
 

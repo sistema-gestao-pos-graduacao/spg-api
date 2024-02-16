@@ -1,8 +1,7 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using System.Runtime.InteropServices;
 
-namespace SPG.Intf.Model
+namespace SPG.Domain.Model.Person
 {
     public class PersonModel
     {

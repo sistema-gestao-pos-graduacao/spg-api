@@ -1,7 +1,7 @@
-﻿using SPG.Intf.Dto;
-using SPG.Intf.Model;
+﻿using SPG.Domain.Dto.Person;
+using SPG.Domain.Model.Person;
 
-namespace SPG.Intf.Interfaces
+namespace SPG.Domain.Interfaces.Person
 {
     public interface IPersonService
     {

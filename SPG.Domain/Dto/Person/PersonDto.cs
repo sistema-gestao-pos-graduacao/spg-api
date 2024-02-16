@@ -1,4 +1,4 @@
-﻿namespace SPG.Intf.Dto
+﻿namespace SPG.Domain.Dto.Person
 {
     public class PersonDto
     {

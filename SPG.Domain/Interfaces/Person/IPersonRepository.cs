@@ -1,7 +1,6 @@
-﻿using SPG.Intf.Data;
-using SPG.Intf.Model;
+﻿using SPG.Domain.Model.Person;
 
-namespace SPG.Intf.Interfaces
+namespace SPG.Domain.Interfaces.Person
 {
     public interface IPersonRepository
     {

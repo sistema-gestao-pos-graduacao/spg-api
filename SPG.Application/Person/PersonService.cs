@@ -1,9 +1,9 @@
 ﻿using AutoMapper;
-using SPG.Intf.Dto;
-using SPG.Intf.Interfaces;
-using SPG.Intf.Model;
+using SPG.Domain.Dto.Person;
+using SPG.Domain.Interfaces.Person;
+using SPG.Domain.Model.Person;
 
-namespace SPG.Server.Services
+namespace SPG.Application.Person
 {
     public class PersonService(IPersonRepository repository, IMapper mapper) : IPersonService
     {

@@ -1,6 +1,6 @@
-﻿using SPG.Intf.Data;
-using SPG.Intf.Interfaces;
-using SPG.Intf.Model;
+﻿using SPG.Data.Context;
+using SPG.Domain.Interfaces.Person;
+using SPG.Domain.Model.Person;
 
 namespace SPG.Data.Person
 {

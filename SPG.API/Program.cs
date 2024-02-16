@@ -1,3 +1,4 @@
+using SPG.API;
 using SPG.WebApi;
 
 var builder = WebApplication.CreateBuilder(args);

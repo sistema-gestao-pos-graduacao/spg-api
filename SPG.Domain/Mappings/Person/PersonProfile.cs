@@ -1,8 +1,8 @@
 ﻿using AutoMapper;
-using SPG.Intf.Dto;
-using SPG.Intf.Model;
+using SPG.Domain.Dto.Person;
+using SPG.Domain.Model.Person;
 
-namespace SPG.Intf.Mappings
+namespace SPG.Domain.Mappings.Person
 {
     public class PersonProfile : Profile
     {

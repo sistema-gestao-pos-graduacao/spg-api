@@ -5,7 +5,7 @@
     <Nullable>enable</Nullable>
     <ImplicitUsings>enable</ImplicitUsings>
     <InvariantGlobalization>false</InvariantGlobalization>
-    <RootNamespace>SPG_WebApi</RootNamespace>
+    <RootNamespace>SPG.API</RootNamespace>
   </PropertyGroup>
 
   <ItemGroup>
@@ -20,8 +20,8 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\SPG.Intf\SPG.Intf.csproj" />
-    <ProjectReference Include="..\SPG.Server\SPG.Server.csproj" />
+    <ProjectReference Include="..\SPG.Domain\SPG.Domain.csproj" />
+    <ProjectReference Include="..\SPG.Application\SPG.Application.csproj" />
   </ItemGroup>
 
 </Project>
