@@ -7,8 +7,8 @@ namespace SPG.Domain.Interfaces.Person
     {
         IEnumerable<PersonModel> GetAllPersons();
         PersonDto GetPersonById(int id);
-        void AddPerson(PersonDto person);
-        void UpdatePerson(PersonDto person);
+        PersonModel AddPerson(PersonDto person);
+        void UpdatePerson(int id, PersonDto person);
         void DeletePerson(int id);
     }
 }

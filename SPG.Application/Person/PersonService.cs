@@ -21,19 +21,20 @@ namespace SPG.Application.Person
             return _mapper.Map<PersonDto>(_repository.GetById(id));
         }
 
-        public void AddPerson(PersonDto person)
+        public PersonModel AddPerson(PersonDto dto)
         {
-            _repository.Add(_mapper.Map<PersonModel>(person));
+            var person = new PersonModel(dto.Cpf, dto.UserId, dto.Ucode, dto.Name, DateOnly.FromDateTime(dto.BirthDate));
+
+            _repository.Add(person);
+
+            return person;
         }
 
-        public void UpdatePerson(PersonDto person)
+        public void UpdatePerson(int id, PersonDto person)
         {
-            var existingPerson = _repository.GetById(person.Id);
-            if (existingPerson == null)
-            {
+            var existingPerson = _repository.GetById(id);
+            if (existingPerson == null)            
                 throw new ArgumentException("Person not found");
-            }
-
 
             _repository.Update(_mapper.Map<PersonModel>(person));
         }

@@ -23,7 +23,15 @@ namespace SPG.Domain.Model.Person
         public string Name { get; set; } = string.Empty;
 
         [Required]
-        public DateOnly BirthDate { get; set; } 
+        public DateOnly BirthDate { get; set; }
 
+        public PersonModel(string cpf, int userId, Guid ucode, string name, DateOnly birthDate)
+        {
+            Cpf = cpf;
+            UserId = userId;
+            Ucode = ucode;
+            Name = name;
+            BirthDate = birthDate;
+        }
     }
 }

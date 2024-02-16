@@ -14,7 +14,7 @@ namespace SPG.API
         {
             var connectionString = Configuration.GetConnectionString("DefaultConnection");
             services.AddDbContext<AppDbContext>(options => {
-                options.UseSqlServer(connectionString, b => b.MigrationsAssembly("SPG-WebApi"));
+                options.UseSqlServer(connectionString);
             });
 
             services.AddControllers();

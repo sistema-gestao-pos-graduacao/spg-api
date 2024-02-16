@@ -2,7 +2,8 @@
 using SPG.Domain.Dto.Person;
 using SPG.Domain.Interfaces.Person;
 
-namespace SPG.WebApi.Controllers.Person {
+namespace SPG.API.Controllers.Person
+{
 
     [ApiController]
     [Route("api/[controller]")]
@@ -31,22 +32,19 @@ namespace SPG.WebApi.Controllers.Person {
         public IActionResult Post([FromBody] PersonDto person)
         {
             if (!ModelState.IsValid)
-            {
                 return BadRequest(ModelState);
-            }
-            _service.AddPerson(person);
-            return CreatedAtAction(nameof(Get), new { id = person.Id }, person);
+
+            var result = _service.AddPerson(person);
+
+            return CreatedAtAction(nameof(Get), new { id = result.Id }, person);
         }
 
         // PUT: api/persons/5
         [HttpPut("{id}")]
         public IActionResult Put(int id, [FromBody] PersonDto person)
         {
-            if (id != person.Id)
-            {
-                return BadRequest();
-            }
-            _service.UpdatePerson(person);
+            _service.UpdatePerson(id, person);
+
             return NoContent();
         }
 
@@ -62,5 +60,5 @@ namespace SPG.WebApi.Controllers.Person {
             _service.DeletePerson(id);
             return NoContent();
         }
-    } 
+    }
 }
