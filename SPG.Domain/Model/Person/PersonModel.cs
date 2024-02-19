@@ -1,22 +1,19 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace SPG.Domain.Model.Person
+namespace SPG.Domain.Model
 {
-    public class PersonModel
+    public class PersonModel()
     {
         [Key]
-        public  int Id { get; set; }
+        public int Id { get; set; }
 
         [Required]
         [StringLength(45)]
         public string Cpf { get; set; } = string.Empty;
-        
+
         [ForeignKey("UserId")]
         public int UserId { get; set; }
-        
-        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-        public Guid Ucode { get; set; }
 
         [Required]
         [StringLength(200)]
@@ -24,14 +21,5 @@ namespace SPG.Domain.Model.Person
 
         [Required]
         public DateOnly BirthDate { get; set; }
-
-        public PersonModel(string cpf, int userId, Guid ucode, string name, DateOnly birthDate)
-        {
-            Cpf = cpf;
-            UserId = userId;
-            Ucode = ucode;
-            Name = name;
-            BirthDate = birthDate;
-        }
     }
 }

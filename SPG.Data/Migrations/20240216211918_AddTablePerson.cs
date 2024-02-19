@@ -19,7 +19,6 @@ namespace SPG.Data.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Cpf = table.Column<string>(type: "nvarchar(45)", maxLength: 45, nullable: false),
                     UserId = table.Column<int>(type: "int", nullable: false),
-                    Ucode = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     Name = table.Column<string>(type: "nvarchar(200)", maxLength: 200, nullable: false),
                     BirthDate = table.Column<DateOnly>(type: "date", nullable: false)
                 },

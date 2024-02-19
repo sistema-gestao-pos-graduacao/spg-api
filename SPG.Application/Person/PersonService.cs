@@ -1,7 +1,7 @@
 ﻿using AutoMapper;
-using SPG.Domain.Dto.Person;
-using SPG.Domain.Interfaces.Person;
-using SPG.Domain.Model.Person;
+using SPG.Domain.Dto;
+using SPG.Domain.Interfaces;
+using SPG.Domain.Model;
 
 namespace SPG.Application.Person
 {
@@ -10,10 +10,17 @@ namespace SPG.Application.Person
         private readonly IMapper _mapper = mapper;
         private readonly IPersonRepository _repository = repository;
 
-        public IEnumerable<PersonModel> GetAllPersons()
+        public IEnumerable<PersonDto> GetAllPersons()
         {
-            //Retirado o mapping para a finalidade de teste. 
-            return _repository.GetAll();
+            var persons = _repository.GetAll().ToList();
+            if(!persons.Any())
+                return new List<PersonDto>();
+
+            var personsDto = new List<PersonDto>();
+
+            persons.ForEach(person => { personsDto.Add(_mapper.Map<PersonDto>(person)); });
+
+            return personsDto;
         }
 
         public PersonDto GetPersonById(int id)
@@ -21,22 +28,20 @@ namespace SPG.Application.Person
             return _mapper.Map<PersonDto>(_repository.GetById(id));
         }
 
-        public PersonModel AddPerson(PersonDto dto)
+        public PersonDto AddPerson(PersonDto dto)
         {
-            var person = new PersonModel(dto.Cpf, dto.UserId, dto.Ucode, dto.Name, DateOnly.FromDateTime(dto.BirthDate));
+            var person = _mapper.Map<PersonModel>(dto);
 
             _repository.Add(person);
 
-            return person;
+            return _mapper.Map<PersonDto>(person);
         }
 
-        public void UpdatePerson(int id, PersonDto person)
+        public PersonDto UpdatePerson(PersonDto person)
         {
-            var existingPerson = _repository.GetById(id);
-            if (existingPerson == null)            
-                throw new ArgumentException("Person not found");
-
             _repository.Update(_mapper.Map<PersonModel>(person));
+
+            return person;
         }
 
         public void DeletePerson(int id)

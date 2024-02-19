@@ -2,7 +2,8 @@
 using SPG.Application.Person;
 using SPG.Data.Context;
 using SPG.Data.Person;
-using SPG.Domain.Interfaces.Person;
+using SPG.Domain.Interfaces;
+using SPG.Domain.Mappings;
 
 namespace SPG.API
 {
@@ -20,9 +21,19 @@ namespace SPG.API
             services.AddControllers();
             services.AddEndpointsApiExplorer();
             services.AddSwaggerGen();
+
+            #region Mapper
+            services.AddAutoMapper(typeof(PersonProfile));
+            services.AddAutoMapper(typeof(UserProfile));
+            #endregion
+
+            #region Repositories
             services.AddScoped<IPersonRepository, PersonRepository>();
+            #endregion
+
+            #region Services
             services.AddScoped<IPersonService, PersonService>();
-            services.AddAutoMapper(typeof(Startup));
+            #endregion
         }
 
         public void Configure(WebApplication app, IWebHostEnvironment env)

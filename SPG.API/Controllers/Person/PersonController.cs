@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using SPG.Domain.Dto.Person;
-using SPG.Domain.Interfaces.Person;
+using SPG.Domain.Dto;
+using SPG.Domain.Interfaces;
 
 namespace SPG.API.Controllers.Person
 {
@@ -40,10 +40,10 @@ namespace SPG.API.Controllers.Person
         }
 
         // PUT: api/persons/5
-        [HttpPut("{id}")]
-        public IActionResult Put(int id, [FromBody] PersonDto person)
+        [HttpPut]
+        public IActionResult Put([FromBody] PersonDto person)
         {
-            _service.UpdatePerson(id, person);
+            _service.UpdatePerson(person);
 
             return NoContent();
         }

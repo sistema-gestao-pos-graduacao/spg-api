@@ -1,14 +1,13 @@
-﻿using SPG.Domain.Dto.Person;
-using SPG.Domain.Model.Person;
+﻿using SPG.Domain.Dto;
 
-namespace SPG.Domain.Interfaces.Person
+namespace SPG.Domain.Interfaces
 {
     public interface IPersonService
     {
-        IEnumerable<PersonModel> GetAllPersons();
+        IEnumerable<PersonDto> GetAllPersons();
         PersonDto GetPersonById(int id);
-        PersonModel AddPerson(PersonDto person);
-        void UpdatePerson(int id, PersonDto person);
+        PersonDto AddPerson(PersonDto person);
+        PersonDto UpdatePerson(PersonDto person);
         void DeletePerson(int id);
     }
 }
