@@ -28,4 +28,8 @@
     <ProjectReference Include="..\SPG.Application\SPG.Application.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Controllers\Login\" />
+  </ItemGroup>
+
 </Project>

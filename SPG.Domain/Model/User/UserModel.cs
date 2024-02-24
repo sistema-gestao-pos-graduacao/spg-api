@@ -1,7 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
-using System.Collections;
+﻿using System.Collections;
 using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
 using System.Security.Cryptography;
 using System.Text;
 namespace SPG.Domain.Model 
