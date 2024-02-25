@@ -1,57 +1,70 @@
 ﻿using AutoMapper;
 using SPG.Domain.Dto;
 using SPG.Domain.Interfaces;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
 using SPG.Domain.Model;
 
 namespace SPG.Application.User
 {
-  public class UserService(IUserRepository repository, IMapper mapper) : IUserService
+  public class UserService(UserManager<UserModel> userManager, IMapper mapper) : IUserService
   {
+    private readonly UserManager<UserModel> _userManager = userManager;
     private readonly IMapper _mapper = mapper;
-    private readonly IUserRepository _repository = repository;
 
-    public IEnumerable<UserDto> GetAllUsers()
+    /// <summary>
+    /// Retorna todos os usuários do sistema
+    /// </summary>
+    /// <returns>Retorna uma lista de usuários </returns>
+    public async Task<IEnumerable<UserDto>> GetAllUsersAsync()
     {
-      var users = _repository.GetAll().ToList();
-      if (!users.Any())
-        return new List<UserDto>();
-
-      var usersDto = new List<UserDto>();
-
-      users.ForEach(user => { usersDto.Add(_mapper.Map<UserDto>(user)); });
-
-      return usersDto;
-    } 
-
-    public UserDto GetUserById(int id)
-    {
-      return _mapper.Map<UserDto>(_repository.GetById(id));
+      var users = await _userManager.Users.ToListAsync();
+      return _mapper.Map<IEnumerable<UserDto>>(users);
     }
 
-    public UserModel GetUserByLogin(int id)
+    /// <summary>
+    /// Retorna um usuário pelo id
+    /// </summary>
+    /// <param name="id">Id do usuário</param>
+    /// <returns>Retorna o usuário correspondente</returns>
+    public async Task<UserDto> GetUserByIdAsync(string id)
     {
-      return _repository.GetById(id);
+      var user = await _userManager.FindByIdAsync(id);
+      return _mapper.Map<UserDto>(user);
     }
 
-    public UserDto AddUser(UserDto dto)
+    /// <summary>
+    /// Cria um novo usuário
+    /// </summary>
+    /// <param name="userDto">Usuário</param>
+    /// <returns>Retorna o usuário correspondente</returns>
+    public async Task<UserDto> CreateUserAsync(UserDto userDto)
     {
-      var user = _mapper.Map<UserModel>(dto);
-
-      _repository.Add(user);
+      var user = _mapper.Map<UserModel>(userDto);
+      await _userManager.CreateAsync(user, userDto.Password);
 
       return _mapper.Map<UserDto>(user);
     }
 
-    public UserDto UpdateUser(UserDto user)
+    /// <summary>
+    /// Edita um usuário
+    /// </summary>
+    /// <param name="userDto">Usuário</param>
+    public async Task UpdateUserAsync(UserDto userDto)
     {
-      _repository.Update(_mapper.Map<UserModel>(user));
-
-      return user;
+      var user = await _userManager.FindByIdAsync(userDto.Id);
+      await _userManager.UpdateAsync(_mapper.Map<UserModel>(user));
     }
 
-    public void DeleteUser(int id)
+    /// <summary>
+    /// Exclui um usuário pelo id
+    /// </summary>
+    /// <param name="id">Id do usuário</param>
+    public async Task DeleteUserAsync(string id)
     {
-      _repository.Delete(id);
+      var user = await _userManager.FindByIdAsync(id);
+      if (user != null)
+        await _userManager.DeleteAsync(user);
     }
   }
 }

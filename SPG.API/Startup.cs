@@ -1,30 +1,32 @@
-﻿using Microsoft.AspNetCore.Authorization;
+﻿using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
-using SPG.Application.Authorization;
 using SPG.Application.Person;
 using SPG.Application.User;
 using SPG.Data.Context;
 using SPG.Data.Person;
-using SPG.Data.User;
 using SPG.Domain.Interfaces;
 using SPG.Domain.Mappings;
+using SPG.Domain.Model;
 
 namespace SPG.API
 {
   public class Startup(IConfiguration configuration)
   {
-    public IConfiguration Configuration { get; } = configuration;
+    public readonly IConfiguration Configuration = configuration;
 
     public void ConfigureServices(IServiceCollection services)
     {
       var connectionString = Configuration.GetConnectionString("DefaultConnection");
       services.AddDbContext<AppDbContext>(options => {
-          options.UseSqlServer(connectionString);
+        options.UseSqlServer(connectionString);
       });
 
       services.AddControllers();
       services.AddEndpointsApiExplorer();
       services.AddSwaggerGen();
+      services.AddIdentity<UserModel, IdentityRole>()
+        .AddEntityFrameworkStores<AppDbContext>()
+        .AddDefaultTokenProviders();
 
       #region Mapper
       services.AddAutoMapper(typeof(PersonProfile));
@@ -33,14 +35,11 @@ namespace SPG.API
 
       #region Repositories
       services.AddScoped<IPersonRepository, PersonRepository>();
-      services.AddScoped<IUserRepository, UserRepository>();
-      services.AddScoped<IAuthorizationRepository, AuthorizationRepository>();
       #endregion
 
       #region Services
       services.AddScoped<IPersonService, PersonService>();
       services.AddScoped<IUserService, UserService>();
-      services.AddScoped<IAuthorizationService, AuthorizationService>();
       #endregion
     }
 
@@ -48,16 +47,32 @@ namespace SPG.API
     {
       if (app.Environment.IsDevelopment())
       {
-          app.UseSwagger();
-          app.UseSwaggerUI();
+        app.UseSwagger();
+        app.UseSwaggerUI();
       }
-      app.UseGenerateJwtSecret();
+      SeedRoles(app).Wait();
 
       app.UseHttpsRedirection();
 
       app.UseAuthorization();
 
       app.MapControllers();
+    }
+
+    private static async Task SeedRoles(IApplicationBuilder app)
+    {
+      using var serviceScope = app.ApplicationServices.GetRequiredService<IServiceScopeFactory>().CreateScope();
+      var roleManager = serviceScope.ServiceProvider.GetRequiredService<RoleManager<IdentityRole>>();
+
+      if (!await roleManager.RoleExistsAsync("Admin"))
+      {
+        await roleManager.CreateAsync(new IdentityRole("Admin"));
+      }
+
+      if (!await roleManager.RoleExistsAsync("Student"))
+      {
+        await roleManager.CreateAsync(new IdentityRole("Student"));
+      }
     }
   }
 }

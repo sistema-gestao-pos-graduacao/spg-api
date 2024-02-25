@@ -1,15 +1,16 @@
 ﻿using SPG.Domain.Dto;
-using SPG.Domain.Model;
 
 namespace SPG.Domain.Interfaces
 {
   public interface IUserService
   {
-    IEnumerable<UserDto> GetAllUsers();
-    UserDto GetUserById(int id);
-    UserModel GetUserByLogin(string login);
-    UserDto AddUser(UserDto person);
-    UserDto UpdateUser(UserDto person);
-    void DeleteUser(int id);
+    Task<IEnumerable<UserDto>> GetAllUsersAsync();
+    Task<UserDto> GetUserByIdAsync(string id);
+    Task<UserDto> CreateUserAsync(UserDto userDto);
+    Task UpdateUserAsync(UserDto userDto);
+    Task DeleteUserAsync(string id);
   }
 }
+
+
+

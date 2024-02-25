@@ -1,24 +1,26 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
+using SPG.API.Properties;
 using SPG.Domain.Dto;
 using SPG.Domain.Interfaces;
 
 namespace SPG.API.Controllers.Login
 {
+  [Route("api/login")]
   [ApiController]
-  [Route("api/oAuth")]
-  public class LoginController(IoAuthService service) : ControllerBase
+  [AllowAnonymous]
+  public class LoginController(ILoginService loginService) : ControllerBase
   {
-    private readonly IoAuthService _service = service;
-    // POST: api/oAuth
+    private readonly ILoginService _loginService = loginService;
+
     [HttpPost]
-    public IActionResult Post([FromBody] PersonDto person)
+    public async Task<IActionResult> Login([FromBody] LoginDto login)
     {
-      if (!ModelState.IsValid)
-        return BadRequest(ModelState);
-
-      var result = _service.AddPerson(person);
-
-      return CreatedAtAction(nameof(Get), new { id = result.Id }, person);
+      var result = await _loginService.AuthenticateUser(login);
+      if (result.Succeeded)
+        return Ok(Resources.SuccessfulLogin);
+      else
+        return Unauthorized(Resources.InvalidLogin);
     }
   }
 }

@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace SPG.Application.Properties {
+namespace SPG.API.Properties {
     using System;
     
     
@@ -39,7 +39,7 @@ namespace SPG.Application.Properties {
         internal static global::System.Resources.ResourceManager ResourceManager {
             get {
                 if (object.ReferenceEquals(resourceMan, null)) {
-                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("SPG.Application.Properties.Resources", typeof(Resources).Assembly);
+                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("SPG.API.Properties.Resources", typeof(Resources).Assembly);
                     resourceMan = temp;
                 }
                 return resourceMan;
@@ -61,11 +61,20 @@ namespace SPG.Application.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Credenciais inválidas.
+        ///   Looks up a localized string similar to As informações de login são inválidas.
         /// </summary>
         internal static string InvalidLogin {
             get {
                 return ResourceManager.GetString("InvalidLogin", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Login efetuado com sucesso.
+        /// </summary>
+        internal static string SuccessfulLogin {
+            get {
+                return ResourceManager.GetString("SuccessfulLogin", resourceCulture);
             }
         }
     }

@@ -1,9 +1,10 @@
-﻿using SPG.Domain.Dto;
+﻿using Microsoft.AspNetCore.Identity;
+using SPG.Domain.Dto;
 
 namespace SPG.Domain.Interfaces
 {
   public interface ILoginService
   {
-    void AuthenticateUser(LoginDto loginDto);
+    Task<SignInResult> AuthenticateUser(LoginDto loginDto);
   }
 }
