@@ -27,6 +27,10 @@ namespace SPG.API
       services.AddIdentity<UserModel, IdentityRole>()
         .AddEntityFrameworkStores<AppDbContext>()
         .AddDefaultTokenProviders();
+      services.ConfigureApplicationCookie(options =>
+      {
+        options.ExpireTimeSpan = TimeSpan.FromMinutes(30);
+      });
 
       #region Mapper
       services.AddAutoMapper(typeof(PersonProfile));
