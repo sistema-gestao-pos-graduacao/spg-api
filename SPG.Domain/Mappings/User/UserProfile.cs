@@ -4,12 +4,12 @@ using SPG.Domain.Model;
 
 namespace SPG.Domain.Mappings
 {
-    public class UserProfile : Profile
+  public class UserProfile : Profile
+  {
+    public UserProfile()
     {
-        public UserProfile()
-        {
-            CreateMap<UserModel, UserDto>()
-                .ReverseMap();
-        }
+      CreateMap<UserModel, UserDto>()
+          .ReverseMap();
     }
+  }
 }
