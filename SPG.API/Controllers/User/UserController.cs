@@ -6,7 +6,7 @@ using SPG.Domain.Interfaces;
 
 namespace SPG.API.Controllers.Users
 {
-  //[Authorize(Roles = "Admin")]
+  [Authorize(Roles = "Admin")]
   [Route("api/[controller]")]
   [ApiController]
   public class UsersController : ControllerBase

@@ -7,7 +7,7 @@ namespace SPG.API.Controllers.Person
 {
   [ApiController]
   [Route("api/[controller]")]
-  //[Authorize]
+  [Authorize]
   public class PersonsController(IPersonService service) : ControllerBase
   {
     private readonly IPersonService _service = service;
