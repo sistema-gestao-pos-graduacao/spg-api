@@ -16,7 +16,7 @@ namespace SPG.Domain.Model
     [ForeignKey("User")]
     public string UserId { get; set; } = string.Empty;
 
-    public IdentityUser? User { get; set; }
+    public UserModel? User { get; set; }
 
     [Required]
     [StringLength(200)]

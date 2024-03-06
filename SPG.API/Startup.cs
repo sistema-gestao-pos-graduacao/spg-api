@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Options;
+using SPG.Application.Login;
 using SPG.Application.Person;
 using SPG.Application.User;
 using SPG.Data.Context;
@@ -18,17 +19,16 @@ namespace SPG.API
 
     public void ConfigureServices(IServiceCollection services)
     {
-      var connectionString = Configuration.GetConnectionString("DefaultConnection");
-      services.AddDbContext<AppDbContext>(options => {
-        options.UseSqlServer(connectionString, b => b.MigrationsAssembly("SPG.Data"));
-      });
+      services.AddDbContext<AppDbContext>(options =>
+          options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection"), b => b.MigrationsAssembly("SPG.Data")));
+
+      services.AddIdentity<UserModel, IdentityRole>()
+          .AddEntityFrameworkStores<AppDbContext>()
+          .AddDefaultTokenProviders();
 
       services.AddControllers();
       services.AddEndpointsApiExplorer();
       services.AddSwaggerGen();
-      services.AddIdentity<UserModel, IdentityRole>()
-        .AddEntityFrameworkStores<AppDbContext>()
-        .AddDefaultTokenProviders();
       services.ConfigureApplicationCookie(options =>
       {
         options.ExpireTimeSpan = TimeSpan.FromMinutes(30);
@@ -46,6 +46,7 @@ namespace SPG.API
       #region Services
       services.AddScoped<IPersonService, PersonService>();
       services.AddScoped<IUserService, UserService>();
+      services.AddScoped<ILoginService, LoginService>();
       #endregion
     }
 

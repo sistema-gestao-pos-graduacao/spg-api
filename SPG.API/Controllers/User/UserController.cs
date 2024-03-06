@@ -6,7 +6,7 @@ using SPG.Domain.Interfaces;
 
 namespace SPG.API.Controllers.Users
 {
-  [Authorize(Roles = "Admin")]
+  //[Authorize(Roles = "Admin")]
   [Route("api/[controller]")]
   [ApiController]
   public class UsersController : ControllerBase
@@ -39,8 +39,15 @@ namespace SPG.API.Controllers.Users
     [HttpPost]
     public async Task<ActionResult<UserDto>> Create(UserDto userDto)
     {
-      var createdUser = await _userService.CreateUserAsync(userDto);
-      return CreatedAtAction(nameof(Get), new { id = createdUser.Id }, createdUser);
+      try
+      {
+        var createdUser = await _userService.CreateUserAsync(userDto);
+        return CreatedAtAction("Create", createdUser);
+      }
+      catch (Exception ex)
+      {
+        throw ex;
+      }
     }
 
     [HttpPut]

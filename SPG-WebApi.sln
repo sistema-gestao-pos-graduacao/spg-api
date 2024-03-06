@@ -3,13 +3,13 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.8.34525.116
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SPG.API", "SPG.API\SPG.API.csproj", "{B84D664E-82FA-420A-A529-2C90FB862CA8}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SPG.API", "SPG.API\SPG.API.csproj", "{B84D664E-82FA-420A-A529-2C90FB862CA8}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SPG.Application", "SPG.Application\SPG.Application.csproj", "{7DB8DD7C-71A4-41C9-87EA-86F1CACE2C82}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SPG.Application", "SPG.Application\SPG.Application.csproj", "{7DB8DD7C-71A4-41C9-87EA-86F1CACE2C82}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SPG.Domain", "SPG.Domain\SPG.Domain.csproj", "{D7CF03C7-C9DC-45A8-8C75-60A7F2EC968C}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SPG.Domain", "SPG.Domain\SPG.Domain.csproj", "{D7CF03C7-C9DC-45A8-8C75-60A7F2EC968C}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SPG.Data", "SPG.Data\SPG.Data.csproj", "{FC92BAB0-8E4E-4A94-AB33-627E4C9765FC}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SPG.Data", "SPG.Data\SPG.Data.csproj", "{FC92BAB0-8E4E-4A94-AB33-627E4C9765FC}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

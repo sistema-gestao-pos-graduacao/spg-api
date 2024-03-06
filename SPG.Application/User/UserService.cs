@@ -4,12 +4,14 @@ using SPG.Domain.Interfaces;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using SPG.Domain.Model;
+using SPG.Application.Properties;
 
 namespace SPG.Application.User
 {
-  public class UserService(UserManager<UserModel> userManager, IMapper mapper) : IUserService
+  public class UserService(UserManager<UserModel> userManager, RoleManager<IdentityRole> roleManager, IMapper mapper) : IUserService
   {
     private readonly UserManager<UserModel> _userManager = userManager;
+    private readonly RoleManager<IdentityRole> _roleManager = roleManager;
     private readonly IMapper _mapper = mapper;
 
     /// <summary>
@@ -41,8 +43,18 @@ namespace SPG.Application.User
     public async Task<UserDto> CreateUserAsync(UserDto userDto)
     {
       var user = _mapper.Map<UserModel>(userDto);
-      await _userManager.CreateAsync(user, userDto.Password);
+      if (user.UserName == null)
+        throw new Exception(Resources.ValidUserException);
 
+      user.Id = Guid.NewGuid().ToString();
+      user.SecurityStamp = Guid.NewGuid().ToString();
+
+      var result = await _userManager.CreateAsync(user, userDto.Password);
+      
+      if(!result.Succeeded)
+        throw new Exception(result.Errors.First().ToString());
+
+      await AtribuirRoleAoUsuario(user.UserName, userDto.Role);
       return _mapper.Map<UserDto>(user);
     }
 
@@ -65,6 +77,17 @@ namespace SPG.Application.User
       var user = await _userManager.FindByIdAsync(id);
       if (user != null)
         await _userManager.DeleteAsync(user);
+    }
+
+    public async Task AtribuirRoleAoUsuario(string nomeDoUsuario, string nomeDaRole)
+    {
+      var usuario = await _userManager.FindByNameAsync(nomeDoUsuario);
+      var role = await _roleManager.FindByNameAsync(nomeDaRole);
+
+      if (usuario != null && role != null)
+      {
+        await _userManager.AddToRoleAsync(usuario, nomeDaRole);
+      }
     }
   }
 }

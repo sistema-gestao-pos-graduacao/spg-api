@@ -1,13 +1,14 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using SPG.Domain.Dto;
 using SPG.Domain.Interfaces;
+using SPG.Domain.Model;
 using System.Text;
 
 namespace SPG.Application.Login
 {
-  public class LoginService(SignInManager<IdentityUser> signInManager) : ILoginService
+  public class LoginService(SignInManager<UserModel> signInManager) : ILoginService
   {
-    private readonly SignInManager<IdentityUser> _signInManager = signInManager;
+    private readonly SignInManager<UserModel> _signInManager = signInManager;
 
     public async Task<SignInResult> AuthenticateUser(LoginDto loginDto)
     {
