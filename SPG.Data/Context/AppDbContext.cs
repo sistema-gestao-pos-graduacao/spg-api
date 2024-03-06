@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
 using SPG.Domain.Model;
 
 namespace SPG.Data.Context
@@ -8,5 +9,7 @@ namespace SPG.Data.Context
         public DbSet<PersonModel> Persons { get; set; }
 
         public DbSet<UserModel> Users { get; set; }
+
+        public DbSet<IdentityRole> IdentityRoles { get; set; }
     }
 }

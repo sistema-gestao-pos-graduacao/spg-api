@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Options;
 using SPG.Application.Person;
 using SPG.Application.User;
 using SPG.Data.Context;
@@ -7,6 +8,7 @@ using SPG.Data.Person;
 using SPG.Domain.Interfaces;
 using SPG.Domain.Mappings;
 using SPG.Domain.Model;
+using static Microsoft.EntityFrameworkCore.DbLoggerCategory.Database;
 
 namespace SPG.API
 {
@@ -18,7 +20,7 @@ namespace SPG.API
     {
       var connectionString = Configuration.GetConnectionString("DefaultConnection");
       services.AddDbContext<AppDbContext>(options => {
-        options.UseSqlServer(connectionString);
+        options.UseSqlServer(connectionString, b => b.MigrationsAssembly("SPG.Data"));
       });
 
       services.AddControllers();
