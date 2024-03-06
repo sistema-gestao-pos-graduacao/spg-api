@@ -75,6 +75,16 @@ namespace SPG.API
         await roleManager.CreateAsync(new IdentityRole("Admin"));
       }
 
+      if (!await roleManager.RoleExistsAsync("Professor"))
+      {
+        await roleManager.CreateAsync(new IdentityRole("Professor"));
+      }
+
+      if (!await roleManager.RoleExistsAsync("Coordinator"))
+      {
+        await roleManager.CreateAsync(new IdentityRole("Coordinator"));
+      }
+
       if (!await roleManager.RoleExistsAsync("Student"))
       {
         await roleManager.CreateAsync(new IdentityRole("Student"));
