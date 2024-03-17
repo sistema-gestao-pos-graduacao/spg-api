@@ -4,7 +4,7 @@ using SPG.Domain.Interfaces;
 using SPG.Domain.Model;
 using System.Text;
 
-namespace SPG.Application.Login
+namespace SPG.Application.Services
 {
   public class LoginService(SignInManager<UserModel> signInManager) : ILoginService
   {
@@ -14,7 +14,7 @@ namespace SPG.Application.Login
     {
       byte[] bytes = Convert.FromBase64String(loginDto.Password);
       string password = Encoding.UTF8.GetString(bytes);
-      
+
       return await _signInManager.PasswordSignInAsync(
         loginDto.Username,
         password,

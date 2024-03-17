@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore;
 using SPG.Domain.Model;
 using SPG.Application.Properties;
 
-namespace SPG.Application.User
+namespace SPG.Application.Services
 {
   public class UserService(UserManager<UserModel> userManager, RoleManager<IdentityRole> roleManager, IMapper mapper) : IUserService
   {
@@ -50,8 +50,8 @@ namespace SPG.Application.User
       user.SecurityStamp = Guid.NewGuid().ToString();
 
       var result = await _userManager.CreateAsync(user, userDto.Password);
-      
-      if(!result.Succeeded)
+
+      if (!result.Succeeded)
         throw new Exception(result.Errors.First().ToString());
 
       await AtribuirRoleAoUsuario(user.UserName, userDto.Role);

@@ -1,4 +1,4 @@
-﻿using Microsoft.AspNetCore.Identity;
+﻿using SPG.Domain.Enums;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
@@ -24,5 +24,8 @@ namespace SPG.Domain.Model
 
     [Required]
     public DateOnly BirthDate { get; set; }
+
+    [Required]
+    public PersonTypeEnum PersonType { get; set; }
   }
 }

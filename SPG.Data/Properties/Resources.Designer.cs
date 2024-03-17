@@ -70,6 +70,24 @@ namespace SPG.Data.Properties {
         }
         
         /// <summary>
+        ///   Consulta uma cadeia de caracteres localizada semelhante a Não existe disciplina cadastrada com o id:{0}.
+        /// </summary>
+        internal static string NotFoundSubject {
+            get {
+                return ResourceManager.GetString("NotFoundSubject", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Consulta uma cadeia de caracteres localizada semelhante a Não existe disponibilidade cadastrada com o id:{0}.
+        /// </summary>
+        internal static string NotFoundTeacherAvailability {
+            get {
+                return ResourceManager.GetString("NotFoundTeacherAvailability", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Consulta uma cadeia de caracteres localizada semelhante a Não existe pessoa cadastrada com o login{0}.
         /// </summary>
         internal static string NotFoundUser {

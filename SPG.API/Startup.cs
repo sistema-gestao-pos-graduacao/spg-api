@@ -1,15 +1,11 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Options;
-using SPG.Application.Login;
-using SPG.Application.Person;
-using SPG.Application.User;
+using SPG.Application.Services;
 using SPG.Data.Context;
-using SPG.Data.Person;
+using SPG.Data.Repositories;
 using SPG.Domain.Interfaces;
 using SPG.Domain.Mappings;
 using SPG.Domain.Model;
-using static Microsoft.EntityFrameworkCore.DbLoggerCategory.Database;
 
 namespace SPG.API
 {
@@ -37,16 +33,22 @@ namespace SPG.API
       #region Mapper
       services.AddAutoMapper(typeof(PersonProfile));
       services.AddAutoMapper(typeof(UserProfile));
+      services.AddAutoMapper(typeof(SubjectProfile));
+      services.AddAutoMapper(typeof(TeacherAvailabilityProfile));
       #endregion
 
       #region Repositories
       services.AddScoped<IPersonRepository, PersonRepository>();
+      services.AddScoped<ISubjectRepository, SubjectRepository>();
+      services.AddScoped<ITeacherAvailabilityRepository, TeacherAvailabilityRepository>();
       #endregion
 
       #region Services
       services.AddScoped<IPersonService, PersonService>();
       services.AddScoped<IUserService, UserService>();
       services.AddScoped<ILoginService, LoginService>();
+      services.AddScoped<ISubjectService, SubjectService>();
+      services.AddScoped<ITeacherAvailabilityService, TeacherAvailabilityService>();
       #endregion
     }
 
@@ -76,9 +78,9 @@ namespace SPG.API
         await roleManager.CreateAsync(new IdentityRole("Admin"));
       }
 
-      if (!await roleManager.RoleExistsAsync("Professor"))
+      if (!await roleManager.RoleExistsAsync("Teacher"))
       {
-        await roleManager.CreateAsync(new IdentityRole("Professor"));
+        await roleManager.CreateAsync(new IdentityRole("Teacher"));
       }
 
       if (!await roleManager.RoleExistsAsync("Coordinator"))

@@ -120,6 +120,12 @@
   <data name="NotFoundPerson" xml:space="preserve">
     <value>Não existe pessoa cadastrada com o id:{0}</value>
   </data>
+  <data name="NotFoundSubject" xml:space="preserve">
+    <value>Não existe disciplina cadastrada com o id:{0}</value>
+  </data>
+  <data name="NotFoundTeacherAvailability" xml:space="preserve">
+    <value>Não existe disponibilidade cadastrada com o id:{0}</value>
+  </data>
   <data name="NotFoundUser" xml:space="preserve">
     <value>Não existe pessoa cadastrada com o login{0}</value>
   </data>
