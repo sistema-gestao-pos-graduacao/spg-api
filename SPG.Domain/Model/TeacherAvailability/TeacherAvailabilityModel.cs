@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace SPG.Domain.Model
 {
@@ -6,6 +7,11 @@ namespace SPG.Domain.Model
   {
     [Key]
     public int Id { get; set; }
+
+    [ForeignKey("Teacher")]
+    public int TeacherId { get; set; }
+
+    public PersonModel? Teacher { get; set; }
 
     [Required]
     public DateTime StartDateTime { get; set; }
