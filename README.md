@@ -45,8 +45,7 @@ Write about Building
 
 ## <a name="tests"> 💯 Tests</a>
 
-Write about Tests 
-Test deploy
+Write about Tests
 
 ## <a name="contributors">❤️ Contributors</a>
 - <a href="https://github.com/andrepcarraro">Andre Carraro</a>
