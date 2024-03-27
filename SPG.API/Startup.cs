@@ -22,6 +22,15 @@ namespace SPG.API
           .AddEntityFrameworkStores<AppDbContext>()
           .AddDefaultTokenProviders();
 
+      services.AddCors(options =>
+      {
+        options.AddPolicy("MyPolicy", builder =>
+        {
+          builder.WithOrigins("http://localhost:3000")
+            .AllowAnyMethod()
+            .AllowAnyHeader();
+        });
+      });
       services.AddControllers();
       services.AddEndpointsApiExplorer();
       services.AddSwaggerGen();
@@ -64,6 +73,8 @@ namespace SPG.API
       app.UseHttpsRedirection();
 
       app.UseAuthorization();
+      
+      app.UseCors("MyPolicy");
 
       app.MapControllers();
     }
