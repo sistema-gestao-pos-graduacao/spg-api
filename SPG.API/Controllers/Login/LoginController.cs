@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
 using SPG.API.Properties;
 using SPG.Domain.Dto;
@@ -6,6 +7,7 @@ using SPG.Domain.Interfaces;
 
 namespace SPG.API.Controllers.Login
 {
+  [EnableCors("MyPolicy")]
   [Route("api/login")]
   [ApiController]
   [AllowAnonymous]
