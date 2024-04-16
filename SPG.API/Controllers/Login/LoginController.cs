@@ -7,7 +7,6 @@ using SPG.Domain.Interfaces;
 
 namespace SPG.API.Controllers.Login
 {
-  [EnableCors("MyPolicy")]
   [Route("api/login")]
   [ApiController]
   [AllowAnonymous]

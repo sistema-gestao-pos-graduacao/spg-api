@@ -7,7 +7,6 @@ using SPG.Domain.Interfaces;
 
 namespace SPG.API.Controllers.Users
 {
-  [EnableCors("MyPolicy")]
   [Authorize(Roles = "Admin")]
   [Route("api/[controller]")]
   [ApiController]
