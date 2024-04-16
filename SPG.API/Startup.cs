@@ -27,8 +27,9 @@ namespace SPG.API
         options.AddPolicy("MyPolicy", builder =>
         {
           builder.WithOrigins("http://localhost:3000")
-            .AllowAnyMethod()
-            .AllowAnyHeader();
+               .AllowAnyHeader()
+               .AllowAnyMethod()
+               .AllowCredentials();
         });
       });
       services.AddControllers();
@@ -37,6 +38,10 @@ namespace SPG.API
       services.ConfigureApplicationCookie(options =>
       {
         options.ExpireTimeSpan = TimeSpan.FromMinutes(30);
+        options.Cookie.HttpOnly = true;
+        options.Cookie.Domain = "localhost"; 
+        options.Cookie.Path = "/"; 
+        options.Cookie.SecurePolicy = CookieSecurePolicy.SameAsRequest;
       });
 
       #region Mapper
