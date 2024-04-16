@@ -15,6 +15,10 @@ namespace SPG.API
 
     public void ConfigureServices(IServiceCollection services)
     {
+      var baseDomain = Configuration["BaseDomain"];
+      if (string.IsNullOrEmpty(baseDomain))
+        throw new Exception("Base Domain cannot be empty");
+
       services.AddDbContext<AppDbContext>(options =>
           options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection"), b => b.MigrationsAssembly("SPG.Data")));
 
@@ -24,11 +28,12 @@ namespace SPG.API
 
       services.AddCors(options =>
       {
-        options.AddPolicy("MyPolicy", builder =>
+        options.AddPolicy("AllowFrontend", builder =>
         {
-          builder.WithOrigins("http://localhost:3000")
-            .AllowAnyMethod()
-            .AllowAnyHeader();
+          builder.WithOrigins(baseDomain)
+               .AllowAnyHeader()
+               .AllowAnyMethod()
+               .AllowCredentials();
         });
       });
       services.AddControllers();
@@ -37,6 +42,11 @@ namespace SPG.API
       services.ConfigureApplicationCookie(options =>
       {
         options.ExpireTimeSpan = TimeSpan.FromMinutes(30);
+        options.Cookie.HttpOnly = true;
+        options.Cookie.Domain = new Uri(baseDomain).Host; 
+        options.Cookie.Path = "/"; 
+        options.Cookie.SecurePolicy = CookieSecurePolicy.SameAsRequest;
+        options.Cookie.SameSite = SameSiteMode.None;
       });
 
       #region Mapper
@@ -74,7 +84,9 @@ namespace SPG.API
 
       app.UseAuthorization();
       
-      app.UseCors("MyPolicy");
+      app.UseCors("AllowFrontend");
+
+      app.UseRouting();
 
       app.MapControllers();
     }

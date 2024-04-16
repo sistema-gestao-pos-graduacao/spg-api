@@ -6,7 +6,6 @@ using SPG.Domain.Interfaces;
 
 namespace SPG.API.Controllers.TeacherAvailability
 {
-  [EnableCors("MyPolicy")]
   [ApiController]
   [Route("api/[controller]")]
   [Authorize]
