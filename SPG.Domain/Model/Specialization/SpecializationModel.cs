@@ -1,6 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using SPG.Domain.Model.Coordenador;
 
 namespace SPG.Domain.Model
 {
@@ -12,7 +11,7 @@ namespace SPG.Domain.Model
     [ForeignKey("Coordenador")]
     public int CoordenadorId { get; set; } 
 
-    public CoordenadorModel? Coordenador { get; set; }
+    public CoordinatorModel? Coordenador { get; set; }
     
     [Required]
     [StringLength(200)]
