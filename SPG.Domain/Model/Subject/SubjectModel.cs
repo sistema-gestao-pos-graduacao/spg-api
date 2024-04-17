@@ -12,10 +12,10 @@ namespace SPG.Domain.Model
     [StringLength(500)]
     public string Name { get; set; } = string.Empty;
     
-    [ForeignKey("Matrix")]
-    public int MatrixId { get; set; }
+    [ForeignKey("Curriculum")]
+    public int CurriculumId { get; set; }
 
-    public MatrixModel? Matrix { get; set; }
+    public CurriculumModel? Curriculum { get; set; }
     
     [Required]
     public int Hours { get; set; }

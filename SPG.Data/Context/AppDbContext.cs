@@ -12,6 +12,24 @@ namespace SPG.Data.Context
     public DbSet<SubjectModel> Subjects { get; set; }
 
     public DbSet<TeacherAvailabilityModel> TeacherAvailabilities { get; set; }
+
+    public DbSet<AvailableTimeModel> AvailableTimes { get; set; }
+
+    public DbSet<ClassModel> Classes { get; set; }
+
+    public DbSet<CoordinatorModel> Coordinators { get; set; }
+
+    public DbSet<ExceptionDateModel> ExceptionDates { get; set; }
+
+    public DbSet<LicenceModel> Licences { get; set; }
+
+    public DbSet<ScheduledClassModel> ScheduledClasses { get; set; }
+
+    public DbSet<SpecializationModel> Specializations { get; set; }
+
+    public DbSet<TeacherModel> Teachers { get; set; }
+
+    public DbSet<CurriculumModel> Curriculums { get; set; }
   }
 }
 

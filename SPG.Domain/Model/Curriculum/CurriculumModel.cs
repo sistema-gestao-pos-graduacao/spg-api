@@ -3,7 +3,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace SPG.Domain.Model
 {
-  public class MatrixModel()
+  public class CurriculumModel()
   {
     [Key]
     public int Id { get; set; }

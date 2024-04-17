@@ -1,17 +1,17 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace SPG.Domain.Model.Class
+namespace SPG.Domain.Model
 {
   public class ClassModel()
   {
     [Key]
     public int Id { get; set; }
 
-    [ForeignKey("Matrix")]
-    public int MatrixId { get; set; }
+    [ForeignKey("Curriculum")]
+    public int CurriculumId { get; set; }
 
-    public MatrixModel? Matrix { get; set; }
+    public CurriculumModel? Curriculum { get; set; }
     
     [Required]
     [StringLength(200)]
