@@ -11,7 +11,7 @@ namespace SPG.Domain.Model
     [ForeignKey("AvaliableTime")]
     public int AvaliableTimeId { get; set; }
 
-    public AvaliableTimeModel? AvaliableTime { get; set; }
+    public AvailableTimeModel? AvaliableTime { get; set; }
     
     [Required]
     [StringLength(200)]

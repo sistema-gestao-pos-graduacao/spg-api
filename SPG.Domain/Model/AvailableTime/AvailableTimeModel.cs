@@ -4,7 +4,7 @@ using SPG.Domain.Enums;
 
 namespace SPG.Domain.Model
 {
-  public class AvaliableTimeModel()
+  public class AvailableTimeModel()
   {
     [Key]
     public int Id { get; set; }
