@@ -1,5 +1,4 @@
 ﻿using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
 using SPG.Domain.Dto;
 using SPG.Domain.Interfaces;
@@ -7,7 +6,7 @@ using SPG.Domain.Interfaces;
 namespace SPG.API.Controllers.TeacherAvailability
 {
   [ApiController]
-  [Route("api/[controller]")]
+  [Route("api/v1/[controller]")]
   [Authorize]
   public class TeacherAvailabilitysController(ITeacherAvailabilityService service) : ControllerBase
   {

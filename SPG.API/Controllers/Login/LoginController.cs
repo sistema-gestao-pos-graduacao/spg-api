@@ -8,7 +8,7 @@ using SPG.Domain.Interfaces;
 
 namespace SPG.API.Controllers.Login
 {
-  [Route("api")]
+  [Route("api/v1")]
   [ApiController]
   [AllowAnonymous]
   public class LoginController(ILoginService loginService) : ControllerBase
