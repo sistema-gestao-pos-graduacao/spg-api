@@ -2,25 +2,21 @@
 using System.ComponentModel.DataAnnotations.Schema;
 using SPG.Domain.Model.Matrix;
 
-namespace SPG.Domain.Model
+namespace SPG.Domain.Model.Class
 {
-  public class SubjectModel
+  public class ClassModel()
   {
     [Key]
     public int Id { get; set; }
 
-    [Required]
-    [StringLength(500)]
-    public string Name { get; set; } = string.Empty;
-    
     [ForeignKey("Matrix")]
     public int MatrixId { get; set; }
 
     public MatrixModel? Matrix { get; set; }
     
     [Required]
-    public int Hours { get; set; }
+    [StringLength(200)]
+    public string Name { get; set; } = string.Empty;
     
-    // Campo necessary_licences Many to many com licence
   }
 }
