@@ -7,4 +7,9 @@
     public string Role { get; set; } = string.Empty;
     public string Password { get; set; } = string.Empty;
   }
+
+  public class ForgotPasswordDto
+  {
+    public required string Email { get; set; }
+  }
 }

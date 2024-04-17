@@ -1,13 +1,12 @@
 ﻿using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
 using SPG.Domain.Dto;
 using SPG.Domain.Interfaces;
 
-
 namespace SPG.API.Controllers.Users
 {
-  [Authorize(Roles = "Admin")]
+
+  [Authorize]
   [Route("api/[controller]")]
   [ApiController]
   public class UsersController : ControllerBase
@@ -20,6 +19,7 @@ namespace SPG.API.Controllers.Users
     }
 
     [HttpGet]
+    [Authorize(Roles = "Admin")]
     public async Task<ActionResult<IEnumerable<UserDto>>> GetAll()
     {
       var users = await _userService.GetAllUsersAsync();
@@ -27,6 +27,7 @@ namespace SPG.API.Controllers.Users
     }
 
     [HttpGet("{id}")]
+    [Authorize(Roles = "Admin")]
     public async Task<ActionResult<UserDto>> Get(string id)
     {
       var user = await _userService.GetUserByIdAsync(id);
@@ -38,6 +39,7 @@ namespace SPG.API.Controllers.Users
     }
 
     [HttpPost]
+    [Authorize(Roles = "Admin")]
     public async Task<ActionResult<UserDto>> Create(UserDto userDto)
     {
       try
@@ -47,11 +49,12 @@ namespace SPG.API.Controllers.Users
       }
       catch (Exception ex)
       {
-        throw ex;
+        throw new Exception(ex.Message);
       }
     }
 
     [HttpPut]
+    [Authorize(Roles = "Admin")]
     public async Task<IActionResult> Update(UserDto userDto)
     {
       await _userService.UpdateUserAsync(userDto);
@@ -59,10 +62,25 @@ namespace SPG.API.Controllers.Users
     }
 
     [HttpDelete("{id}")]
+    [Authorize(Roles = "Admin")]
     public async Task<IActionResult> Delete(string id)
     {
       await _userService.DeleteUserAsync(id);
       return NoContent();
     }
+
+    [HttpPost("ForgotPassword")]
+    [AllowAnonymous]
+    public async Task<IActionResult> ForgotPassword([FromBody] ForgotPasswordDto model)
+    {
+      if (!ModelState.IsValid)
+        return BadRequest(ModelState);
+
+
+      await _userService.ForgotPassword(model);
+      
+      return Ok();
+    }
+
   }
 }
