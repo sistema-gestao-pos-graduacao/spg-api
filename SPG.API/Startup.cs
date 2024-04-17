@@ -71,24 +71,27 @@ namespace SPG.API
       #endregion
     }
 
-    public void Configure(WebApplication app, IWebHostEnvironment env)
+    public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
     {
-      if (app.Environment.IsDevelopment())
+      if (env.IsDevelopment())
       {
         app.UseSwagger();
         app.UseSwaggerUI();
       }
-      SeedRoles(app).Wait();
 
       app.UseHttpsRedirection();
-
-      app.UseAuthorization();
-      
       app.UseCors("AllowFrontend");
-
       app.UseRouting();
+      
+      app.UseAuthentication();
+      app.UseAuthorization();
 
-      app.MapControllers();
+      app.UseEndpoints(endpoints =>
+      {
+        endpoints.MapControllers();
+      });
+     
+      SeedRoles(app).Wait();
     }
 
     private static async Task SeedRoles(IApplicationBuilder app)
