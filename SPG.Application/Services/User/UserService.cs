@@ -116,7 +116,7 @@ namespace SPG.Application.Services
       return;
     }
 
-    private static async Task SendEmailAsync(string email, string subject, string message)
+    private async Task SendEmailAsync(string email, string subject, string message)
     {
       var smtpCredentialsSection = _configuration.GetSection("SmtpCredentials");
 
