@@ -123,4 +123,10 @@
   <data name="SuccessfulLogin" xml:space="preserve">
     <value>Login efetuado com sucesso</value>
   </data>
+  <data name="SuccessfulLogout" xml:space="preserve">
+    <value>Logout efetuado com sucesso</value>
+  </data>
+  <data name="UserNotFound" xml:space="preserve">
+    <value>Usuario não encontrado</value>
+  </data>
 </root>

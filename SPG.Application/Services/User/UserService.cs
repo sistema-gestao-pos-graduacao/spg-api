@@ -5,14 +5,18 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using SPG.Domain.Model;
 using SPG.Application.Properties;
+using System.Net.Mail;
+using System.Net;
+using Microsoft.Extensions.Configuration;
 
 namespace SPG.Application.Services
 {
-  public class UserService(UserManager<UserModel> userManager, RoleManager<IdentityRole> roleManager, IMapper mapper) : IUserService
+  public class UserService(UserManager<UserModel> userManager, RoleManager<IdentityRole> roleManager, IMapper mapper, IConfiguration configuration) : IUserService
   {
     private readonly UserManager<UserModel> _userManager = userManager;
     private readonly RoleManager<IdentityRole> _roleManager = roleManager;
     private readonly IMapper _mapper = mapper;
+    private readonly IConfiguration _configuration = configuration;
 
     /// <summary>
     /// Retorna todos os usuários do sistema
@@ -54,7 +58,7 @@ namespace SPG.Application.Services
       if (!result.Succeeded)
         throw new Exception(result.Errors.First().ToString());
 
-      await AtribuirRoleAoUsuario(user.UserName, userDto.Role);
+      await PutUserRole(user.UserName, userDto.Role);
       return _mapper.Map<UserDto>(user);
     }
 
@@ -79,7 +83,10 @@ namespace SPG.Application.Services
         await _userManager.DeleteAsync(user);
     }
 
-    public async Task AtribuirRoleAoUsuario(string nomeDoUsuario, string nomeDaRole)
+    /// <summary>
+    /// Inlcui a role do usuario
+    /// </summary>
+    public async Task PutUserRole(string nomeDoUsuario, string nomeDaRole)
     {
       var usuario = await _userManager.FindByNameAsync(nomeDoUsuario);
       var role = await _roleManager.FindByNameAsync(nomeDaRole);
@@ -88,6 +95,49 @@ namespace SPG.Application.Services
       {
         await _userManager.AddToRoleAsync(usuario, nomeDaRole);
       }
+    }
+
+    public async Task ForgotPassword(ForgotPasswordDto model)
+    {
+      // Find the user by email address
+      var user = await _userManager.FindByEmailAsync(model.Email);
+      if (user == null || string.IsNullOrEmpty(user.Email) || !(await _userManager.IsEmailConfirmedAsync(user)))
+        return;
+
+      var token = await _userManager.GeneratePasswordResetTokenAsync(user);
+
+      await SendEmailAsync(
+        user.Email,
+        "Password Reset",
+        @$"Please reset your password by clicking this link: 
+           <a href='www.url.com/{token}'>Resetar Senha</a>"
+        );
+
+      return;
+    }
+
+    private async Task SendEmailAsync(string email, string subject, string message)
+    {
+      var smtpCredentialsSection = _configuration.GetSection("SmtpCredentials");
+
+      var smtpClient = new SmtpClient(smtpCredentialsSection["ServerAddress"])
+      {
+        Port = 587,
+        Credentials = new NetworkCredential(smtpCredentialsSection["Username"], smtpCredentialsSection["Password"]),
+        EnableSsl = true,
+      };
+
+      var mailMessage = new MailMessage
+      {
+        From = new MailAddress(smtpCredentialsSection["FromEmail"] ?? ""),
+        Subject = subject,
+        Body = message,
+        IsBodyHtml = true,
+      };
+
+      mailMessage.To.Add(email);
+
+      await smtpClient.SendMailAsync(mailMessage);
     }
   }
 }

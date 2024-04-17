@@ -9,6 +9,7 @@ namespace SPG.Domain.Interfaces
     Task<UserDto> CreateUserAsync(UserDto userDto);
     Task UpdateUserAsync(UserDto userDto);
     Task DeleteUserAsync(string id);
+    Task ForgotPassword(ForgotPasswordDto model);
   }
 }
 
