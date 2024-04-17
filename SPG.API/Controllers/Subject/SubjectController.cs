@@ -7,7 +7,7 @@ using SPG.Domain.Interfaces;
 namespace SPG.API.Controllers.Subject
 {
   [ApiController]
-  [Route("api/v1/[controller]")]
+  [Route("api/[controller]")]
   [Authorize]
   public class SubjectsController(ISubjectService service) : ControllerBase
   {

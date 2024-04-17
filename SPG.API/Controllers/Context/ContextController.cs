@@ -8,7 +8,7 @@ using System.Security.Claims;
 
 namespace SPG.API.Controllers.Login
 {
-  [Route("api/v1/context")]
+  [Route("api/context")]
   [ApiController]
   [Authorize]
   public class ContextController(UserManager<UserModel> userManager) : ControllerBase

@@ -6,7 +6,7 @@ using SPG.Domain.Interfaces;
 namespace SPG.API.Controllers.TeacherAvailability
 {
   [ApiController]
-  [Route("api/v1/[controller]")]
+  [Route("api/[controller]")]
   [Authorize]
   public class TeacherAvailabilitysController(ITeacherAvailabilityService service) : ControllerBase
   {
