@@ -11,12 +11,12 @@ using Microsoft.Extensions.Configuration;
 
 namespace SPG.Application.Services
 {
-  public class UserService(UserManager<UserModel> userManager, RoleManager<IdentityRole> roleManager, IMapper mapper, IConfiguration configuration) : IUserService
+  public class UserService(UserManager<UserModel> userManager, RoleManager<IdentityRole> roleManager, IMapper mapper, IEmailService emailService) : IUserService
   {
     private readonly UserManager<UserModel> _userManager = userManager;
     private readonly RoleManager<IdentityRole> _roleManager = roleManager;
     private readonly IMapper _mapper = mapper;
-    private readonly IConfiguration _configuration = configuration;
+    private readonly IEmailService _emailService = emailService;
 
     /// <summary>
     /// Retorna todos os usuários do sistema
@@ -101,12 +101,12 @@ namespace SPG.Application.Services
     {
       // Find the user by email address
       var user = await _userManager.FindByEmailAsync(model.Email);
-      if (user == null || string.IsNullOrEmpty(user.Email) || !(await _userManager.IsEmailConfirmedAsync(user)))
+      if (user == null || string.IsNullOrEmpty(user.Email))
         return;
 
       var token = await _userManager.GeneratePasswordResetTokenAsync(user);
 
-      await SendEmailAsync(
+      await _emailService.SendEmailAsync(
         user.Email,
         "Password Reset",
         @$"Please reset your password by clicking this link: 
@@ -115,29 +115,5 @@ namespace SPG.Application.Services
 
       return;
     }
-
-    private async Task SendEmailAsync(string email, string subject, string message)
-    {
-      var smtpCredentialsSection = _configuration.GetSection("SmtpCredentials");
-
-      var smtpClient = new SmtpClient(smtpCredentialsSection["ServerAddress"])
-      {
-        Port = 587,
-        Credentials = new NetworkCredential(smtpCredentialsSection["Username"], smtpCredentialsSection["Password"]),
-        EnableSsl = true,
-      };
-
-      var mailMessage = new MailMessage
-      {
-        From = new MailAddress(smtpCredentialsSection["FromEmail"] ?? ""),
-        Subject = subject,
-        Body = message,
-        IsBodyHtml = true,
-      };
-
-      mailMessage.To.Add(email);
-
-      await smtpClient.SendMailAsync(mailMessage);
-    }
-  }
+ }
 }

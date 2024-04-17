@@ -41,7 +41,7 @@ namespace SPG.API
       services.AddSwaggerGen();
       services.ConfigureApplicationCookie(options =>
       {
-        options.ExpireTimeSpan = TimeSpan.FromMinutes(30);
+        options.ExpireTimeSpan = TimeSpan.FromDays(1);
         options.Cookie.HttpOnly = true;
         options.Cookie.Domain = new Uri(baseDomain).Host; 
         options.Cookie.Path = "/"; 
@@ -68,6 +68,7 @@ namespace SPG.API
       services.AddScoped<ILoginService, LoginService>();
       services.AddScoped<ISubjectService, SubjectService>();
       services.AddScoped<ITeacherAvailabilityService, TeacherAvailabilityService>();
+      services.AddScoped<IEmailService, EmailService>();
       #endregion
     }
 
@@ -112,11 +113,6 @@ namespace SPG.API
       if (!await roleManager.RoleExistsAsync("Coordinator"))
       {
         await roleManager.CreateAsync(new IdentityRole("Coordinator"));
-      }
-
-      if (!await roleManager.RoleExistsAsync("Student"))
-      {
-        await roleManager.CreateAsync(new IdentityRole("Student"));
       }
     }
   }

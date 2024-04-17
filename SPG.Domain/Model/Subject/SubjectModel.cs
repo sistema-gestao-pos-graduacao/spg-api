@@ -19,7 +19,5 @@ namespace SPG.Domain.Model
     
     [Required]
     public int Hours { get; set; }
-    
-    // Campo necessary_licences Many to many com licence
   }
 }

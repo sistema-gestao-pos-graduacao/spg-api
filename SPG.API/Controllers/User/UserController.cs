@@ -6,7 +6,7 @@ using SPG.Domain.Interfaces;
 namespace SPG.API.Controllers.Users
 {
 
-  [Authorize]
+  [Authorize(Roles = "Admin")]
   [Route("api/[controller]")]
   [ApiController]
   public class UsersController(IUserService userService) : ControllerBase
@@ -14,7 +14,6 @@ namespace SPG.API.Controllers.Users
     private readonly IUserService _userService = userService;
 
     [HttpGet]
-    [Authorize(Roles = "Admin")]
     public async Task<ActionResult<IEnumerable<UserDto>>> GetAll()
     {
       var users = await _userService.GetAllUsersAsync();
@@ -22,7 +21,6 @@ namespace SPG.API.Controllers.Users
     }
 
     [HttpGet("{id}")]
-    [Authorize(Roles = "Admin")]
     public async Task<ActionResult<UserDto>> Get(string id)
     {
       var user = await _userService.GetUserByIdAsync(id);
@@ -34,7 +32,6 @@ namespace SPG.API.Controllers.Users
     }
 
     [HttpPost]
-    [Authorize(Roles = "Admin")]
     public async Task<ActionResult<UserDto>> Create(UserDto userDto)
     {
       try
@@ -48,8 +45,8 @@ namespace SPG.API.Controllers.Users
       }
     }
 
-    [HttpPut]
-    [Authorize(Roles = "Admin")]
+    [HttpPatch]
+    
     public async Task<IActionResult> Update(UserDto userDto)
     {
       await _userService.UpdateUserAsync(userDto);
@@ -57,7 +54,6 @@ namespace SPG.API.Controllers.Users
     }
 
     [HttpDelete("{id}")]
-    [Authorize(Roles = "Admin")]
     public async Task<IActionResult> Delete(string id)
     {
       await _userService.DeleteUserAsync(id);
