@@ -8,10 +8,10 @@ namespace SPG.Domain.Model
     [Key]
     public int Id { get; set; }
 
-    [ForeignKey("Coordenador")]
-    public int CoordenadorId { get; set; } 
+    [ForeignKey("Coordinator")]
+    public int CoordinatorId { get; set; } 
 
-    public CoordinatorModel? Coordenador { get; set; }
+    public CoordinatorModel? Coordinator { get; set; }
     
     [Required]
     [StringLength(200)]
