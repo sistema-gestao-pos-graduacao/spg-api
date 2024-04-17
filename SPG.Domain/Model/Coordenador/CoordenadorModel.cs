@@ -1,7 +1,7 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace SPG.Domain.Model.Coordenador
+namespace SPG.Domain.Model
 {
   public class CoordenadorModel()
   {

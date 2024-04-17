@@ -1,8 +1,7 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using SPG.Domain.Model.Specialization;
 
-namespace SPG.Domain.Model.Matrix
+namespace SPG.Domain.Model
 {
   public class MatrixModel()
   {

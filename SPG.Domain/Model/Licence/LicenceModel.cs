@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace SPG.Domain.Model.Licence
+namespace SPG.Domain.Model
 {
   public class LicenceModel
   {

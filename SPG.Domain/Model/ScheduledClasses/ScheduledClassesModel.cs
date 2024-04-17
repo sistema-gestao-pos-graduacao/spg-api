@@ -1,9 +1,8 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using SPG.Domain.Model.AvaliableTime;
-using SPG.Domain.Model;
 
-namespace SPG.Domain.Model.ScheduledClasses
+namespace SPG.Domain.Model
 {
   public class ScheduledClassesModel()
   {

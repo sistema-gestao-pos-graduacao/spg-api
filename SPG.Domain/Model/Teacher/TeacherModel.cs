@@ -1,8 +1,7 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using SPG.Domain.Model.Matrix;
 
-namespace SPG.Domain.Model.Teacher
+namespace SPG.Domain.Model
 {
   public class TeacherModel
   {

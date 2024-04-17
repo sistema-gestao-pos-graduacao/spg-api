@@ -1,10 +1,8 @@
 ﻿using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
-using SPG.Domain.Model.Coordenador;
 
-namespace SPG.Domain.Model.Studant
+namespace SPG.Domain.Model
 {
-  public class StudantModel()
+  public class StudentModel()
   {
     [Key]
     public int Id { get; set; }

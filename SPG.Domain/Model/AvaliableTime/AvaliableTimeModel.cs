@@ -1,9 +1,8 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using SPG.Domain.Enums;
-using SPG.Domain.Model.Teacher;
 
-namespace SPG.Domain.Model.AvaliableTime
+namespace SPG.Domain.Model
 {
   public class AvaliableTimeModel()
   {

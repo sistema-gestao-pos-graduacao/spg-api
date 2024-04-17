@@ -1,8 +1,7 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using SPG.Domain.Model.AvaliableTime;
 
-namespace SPG.Domain.Model.ExceptionDates
+namespace SPG.Domain.Model
 {
   public class ExceptionDatesModel()
   {
