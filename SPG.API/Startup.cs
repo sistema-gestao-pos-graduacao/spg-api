@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using SPG.Application.Services;
-using SPG.Data.Context;
+using SPG.Data;
 using SPG.Data.Repositories;
 using SPG.Domain.Interfaces;
 using SPG.Domain.Mappings;
@@ -15,12 +15,12 @@ namespace SPG.API
 
     public void ConfigureServices(IServiceCollection services)
     {
+      services.AddDbContext<AppDbContext>(options =>
+        options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection"), b => b.MigrationsAssembly("SPG.Data")));
+     
       var baseDomain = Configuration["BaseDomain"];
       if (string.IsNullOrEmpty(baseDomain))
         throw new Exception("Base Domain cannot be empty");
-
-      services.AddDbContext<AppDbContext>(options =>
-          options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection"), b => b.MigrationsAssembly("SPG.Data")));
 
       services.AddIdentity<UserModel, IdentityRole>()
           .AddEntityFrameworkStores<AppDbContext>()

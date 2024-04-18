@@ -3,8 +3,9 @@ using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using SPG.Domain.Model;
 
-namespace SPG.Data.Context
+namespace SPG.Data
 {
+
   public class AppDbContext(DbContextOptions<AppDbContext> options) : IdentityDbContext<UserModel, IdentityRole, string>(options)
   {
     public DbSet<PersonModel> Persons { get; set; }
