@@ -9,8 +9,7 @@ namespace SPG.Domain.Model
     [Key]
     public int Id { get; set; }
 
-    [Required]
-    [StringLength(45)]
+    [StringLength(11)]
     public string Cpf { get; set; } = string.Empty;
 
     [ForeignKey("User")]
@@ -22,7 +21,10 @@ namespace SPG.Domain.Model
     [StringLength(200)]
     public string Name { get; set; } = string.Empty;
 
+    [StringLength(256)]
     [Required]
+    public string Email { get; set; } = string.Empty;
+
     public DateOnly BirthDate { get; set; }
 
     [Required]

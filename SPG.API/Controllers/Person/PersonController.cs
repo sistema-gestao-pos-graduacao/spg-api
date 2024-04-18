@@ -1,5 +1,4 @@
 ﻿using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
 using SPG.Domain.Dto;
 using SPG.Domain.Interfaces;
@@ -28,12 +27,14 @@ namespace SPG.API.Controllers.Person
     }
 
     [HttpPost]
-    public IActionResult Post([FromBody] PersonDto person)
+    public async Task<IActionResult> Post([FromBody] PersonDto person)
     {
       if (!ModelState.IsValid)
-          return BadRequest(ModelState);
+        return BadRequest(ModelState);
 
-      var result = _service.AddPerson(person);
+      var result = await _service.AddPerson(person);
+      person.Id = result.Id;
+      person.UserId = result.UserId;
 
       return CreatedAtAction(nameof(Get), new { id = result.Id }, person);
     }

@@ -1,5 +1,4 @@
 ﻿using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
 
 namespace SPG.Domain.Model
 {
@@ -7,11 +6,6 @@ namespace SPG.Domain.Model
   {
     [Key]
     public int Id { get; set; }
-
-    [ForeignKey("Coordinator")]
-    public int CoordinatorId { get; set; } 
-
-    public CoordinatorModel? Coordinator { get; set; }
     
     [Required]
     [StringLength(200)]

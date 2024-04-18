@@ -1,5 +1,4 @@
-﻿using SPG.Data.Context;
-using SPG.Domain.Interfaces;
+﻿using SPG.Domain.Interfaces;
 using SPG.Domain.Model;
 using SPG.Data.Properties;
 

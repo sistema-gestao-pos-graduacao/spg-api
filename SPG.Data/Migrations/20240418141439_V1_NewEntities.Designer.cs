@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using SPG.Data;
 
@@ -11,9 +12,11 @@ using SPG.Data;
 namespace SPG.Data.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    partial class AppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20240418141439_V1_NewEntities")]
+    partial class V1_NewEntities
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -183,7 +186,7 @@ namespace SPG.Data.Migrations
 
                     b.HasIndex("PersonId");
 
-                    b.ToTable("AvailableTimes", (string)null);
+                    b.ToTable("AvailableTimes");
                 });
 
             modelBuilder.Entity("SPG.Domain.Model.ClassModel", b =>
@@ -206,7 +209,7 @@ namespace SPG.Data.Migrations
 
                     b.HasIndex("CurriculumId");
 
-                    b.ToTable("Classes", (string)null);
+                    b.ToTable("Classes");
                 });
 
             modelBuilder.Entity("SPG.Domain.Model.CurriculumModel", b =>
@@ -229,7 +232,7 @@ namespace SPG.Data.Migrations
 
                     b.HasIndex("SpecializationId");
 
-                    b.ToTable("Curriculums", (string)null);
+                    b.ToTable("Curriculums");
                 });
 
             modelBuilder.Entity("SPG.Domain.Model.ExceptionDateModel", b =>
@@ -256,7 +259,7 @@ namespace SPG.Data.Migrations
 
                     b.HasIndex("AvailableTimeId");
 
-                    b.ToTable("ExceptionDates", (string)null);
+                    b.ToTable("ExceptionDates");
                 });
 
             modelBuilder.Entity("SPG.Domain.Model.PersonModel", b =>
@@ -294,10 +297,9 @@ namespace SPG.Data.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("UserId")
-                        .IsUnique();
+                    b.HasIndex("UserId");
 
-                    b.ToTable("Persons", (string)null);
+                    b.ToTable("Persons");
                 });
 
             modelBuilder.Entity("SPG.Domain.Model.ScheduledClassModel", b =>
@@ -326,7 +328,7 @@ namespace SPG.Data.Migrations
 
                     b.HasIndex("SubjectId");
 
-                    b.ToTable("ScheduledClasses", (string)null);
+                    b.ToTable("ScheduledClasses");
                 });
 
             modelBuilder.Entity("SPG.Domain.Model.SpecializationModel", b =>
@@ -344,7 +346,7 @@ namespace SPG.Data.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Specializations", (string)null);
+                    b.ToTable("Specializations");
                 });
 
             modelBuilder.Entity("SPG.Domain.Model.SubjectModel", b =>
@@ -370,7 +372,7 @@ namespace SPG.Data.Migrations
 
                     b.HasIndex("CurriculumId");
 
-                    b.ToTable("Subjects", (string)null);
+                    b.ToTable("Subjects");
                 });
 
             modelBuilder.Entity("SPG.Domain.Model.TeacherAvailabilityModel", b =>
@@ -394,7 +396,7 @@ namespace SPG.Data.Migrations
 
                     b.HasIndex("TeacherId");
 
-                    b.ToTable("TeacherAvailabilities", (string)null);
+                    b.ToTable("TeacherAvailabilities");
                 });
 
             modelBuilder.Entity("SPG.Domain.Model.UserModel", b =>
@@ -560,8 +562,8 @@ namespace SPG.Data.Migrations
             modelBuilder.Entity("SPG.Domain.Model.PersonModel", b =>
                 {
                     b.HasOne("SPG.Domain.Model.UserModel", "User")
-                        .WithOne()
-                        .HasForeignKey("SPG.Domain.Model.PersonModel", "UserId")
+                        .WithMany()
+                        .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 

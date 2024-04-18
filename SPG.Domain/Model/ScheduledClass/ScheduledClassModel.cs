@@ -3,7 +3,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace SPG.Domain.Model
 {
-  public class ScheduledClassesModel()
+  public class ScheduledClassModel()
   {
     [Key]
     public int Id { get; set; }
@@ -14,7 +14,7 @@ namespace SPG.Domain.Model
     public SubjectModel? Subject { get; set; }
     
     [Required]
-    public int MatrixId { get; set; }
+    public int CurriculumId { get; set; }
     
     [ForeignKey("AvaliableTime")]
     public int AvaliableTimeId { get; set; }

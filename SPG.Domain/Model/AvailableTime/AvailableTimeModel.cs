@@ -9,10 +9,10 @@ namespace SPG.Domain.Model
     [Key]
     public int Id { get; set; }
 
-    [ForeignKey("Teacher")]
-    public int TeacherId { get; set; }
+    [ForeignKey("Person")]
+    public int PersonId { get; set; }
 
-    public TeacherModel? Teacher { get; set; }
+    public PersonModel? Person { get; set; }
     
     [Required]
     [StringLength(200)]
