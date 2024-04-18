@@ -2,10 +2,10 @@
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using SPG.Domain.Model;
+using System;
 
 namespace SPG.Data
 {
-
   public class AppDbContext(DbContextOptions<AppDbContext> options) : IdentityDbContext<UserModel, IdentityRole, string>(options)
   {
     public DbSet<PersonModel> Persons { get; set; }
@@ -25,6 +25,17 @@ namespace SPG.Data
     public DbSet<SpecializationModel> Specializations { get; set; }
 
     public DbSet<CurriculumModel> Curriculums { get; set; }
+
+    protected override void OnModelCreating(ModelBuilder modelBuilder)
+    {
+      base.OnModelCreating(modelBuilder);
+
+      modelBuilder.Entity<PersonModel>()
+          .HasOne(p => p.User)
+          .WithOne()
+          .HasForeignKey<PersonModel>(p => p.UserId)
+          .OnDelete(DeleteBehavior.Cascade);
+    }
   }
 }
 

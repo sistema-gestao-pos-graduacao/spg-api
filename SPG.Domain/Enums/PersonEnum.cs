@@ -2,8 +2,8 @@
 {
   public enum PersonTypeEnum
   {
-    teacher = 0,
-    student = 1,
-    coordinator = 2,
+    Teacher = 0,
+    Coordinator = 1,
+    Admin = 2
   }
 }

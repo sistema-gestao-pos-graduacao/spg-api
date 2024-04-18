@@ -3,9 +3,11 @@ using Microsoft.EntityFrameworkCore;
 using SPG.Application.Services;
 using SPG.Data;
 using SPG.Data.Repositories;
+using SPG.Domain.Enums;
 using SPG.Domain.Interfaces;
 using SPG.Domain.Mappings;
 using SPG.Domain.Model;
+using System;
 
 namespace SPG.API
 {
@@ -100,19 +102,19 @@ namespace SPG.API
       using var serviceScope = app.ApplicationServices.GetRequiredService<IServiceScopeFactory>().CreateScope();
       var roleManager = serviceScope.ServiceProvider.GetRequiredService<RoleManager<IdentityRole>>();
 
-      if (!await roleManager.RoleExistsAsync("Admin"))
+      if (!await roleManager.RoleExistsAsync(Enum.GetName(typeof(PersonTypeEnum), PersonTypeEnum.Admin) ?? "Admin"))
       {
-        await roleManager.CreateAsync(new IdentityRole("Admin"));
+        await roleManager.CreateAsync(new IdentityRole(Enum.GetName(typeof(PersonTypeEnum), PersonTypeEnum.Admin) ?? "Admin"));
       }
 
-      if (!await roleManager.RoleExistsAsync("Teacher"))
+      if (!await roleManager.RoleExistsAsync(Enum.GetName(typeof(PersonTypeEnum), PersonTypeEnum.Teacher) ?? "Teacher"))
       {
-        await roleManager.CreateAsync(new IdentityRole("Teacher"));
+        await roleManager.CreateAsync(new IdentityRole(Enum.GetName(typeof(PersonTypeEnum), PersonTypeEnum.Teacher) ?? "Teacher"));
       }
 
-      if (!await roleManager.RoleExistsAsync("Coordinator"))
+      if (!await roleManager.RoleExistsAsync(Enum.GetName(typeof(PersonTypeEnum), PersonTypeEnum.Coordinator) ?? "Coordinator"))
       {
-        await roleManager.CreateAsync(new IdentityRole("Coordinator"));
+        await roleManager.CreateAsync(new IdentityRole(Enum.GetName(typeof(PersonTypeEnum), PersonTypeEnum.Coordinator) ?? "Coordinator"));
       }
     }
   }

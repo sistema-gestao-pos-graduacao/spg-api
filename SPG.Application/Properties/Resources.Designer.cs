@@ -61,6 +61,37 @@ namespace SPG.Application.Properties {
         }
         
         /// <summary>
+        ///   Consulta uma cadeia de caracteres localizada semelhante a Não é possível criar uma pessoa sem informar o perfil dela .
+        /// </summary>
+        internal static string InvalidUserRoleName {
+            get {
+                return ResourceManager.GetString("InvalidUserRoleName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Consulta uma cadeia de caracteres localizada semelhante a Usuário de acesso ao SGP.
+        /// </summary>
+        internal static string SuccessfullyCreatedUser {
+            get {
+                return ResourceManager.GetString("SuccessfullyCreatedUser", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Consulta uma cadeia de caracteres localizada semelhante a &lt;h4&gt;Olá {0},&lt;/h4&gt;
+        ///&lt;p&gt;O administrador enviou seus dados de acesso a plataforma SGP.&lt;/p&gt;
+        ///&lt;p&gt;Login: {1}&lt;/p&gt;
+        ///&lt;p&gt;Senha: {2}&lt;/p&gt;
+        ///&lt;p&gt;&lt;a href=&quot;{3}&quot; target=&quot;_blank&quot;&gt;{4}&lt;/a&gt;&lt;/p&gt;.
+        /// </summary>
+        internal static string UserEmailBody {
+            get {
+                return ResourceManager.GetString("UserEmailBody", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Consulta uma cadeia de caracteres localizada semelhante a Não é possível criar usuário sem o nome de usuário.
         /// </summary>
         internal static string ValidUserException {

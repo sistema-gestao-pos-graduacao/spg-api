@@ -22,9 +22,9 @@ namespace SPG.Domain.Model
     public string Name { get; set; } = string.Empty;
 
     [StringLength(256)]
+    [Required]
     public string Email { get; set; } = string.Empty;
 
-    [Required]
     public DateOnly BirthDate { get; set; }
 
     [Required]
