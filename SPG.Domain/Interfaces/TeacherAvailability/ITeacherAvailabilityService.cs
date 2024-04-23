@@ -6,8 +6,8 @@ namespace SPG.Domain.Interfaces
   {
         IEnumerable<TeacherAvailabilityDto> GetAllTeacherAvailabilities();
         TeacherAvailabilityDto GetTeacherAvailabilityById(int id);
-        TeacherAvailabilityDto AddTeacherAvailability(TeacherAvailabilityDto person);
-        TeacherAvailabilityDto UpdateTeacherAvailability(TeacherAvailabilityDto person);
+        TeacherAvailabilityDto AddTeacherAvailability(TeacherAvailabilityDto teacherAvailability);
+        TeacherAvailabilityDto UpdateTeacherAvailability(TeacherAvailabilityDto teacherAvailability);
         void DeleteTeacherAvailability(int id);
     }
 }

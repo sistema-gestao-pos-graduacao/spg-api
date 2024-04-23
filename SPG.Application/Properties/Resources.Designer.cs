@@ -92,6 +92,15 @@ namespace SPG.Application.Properties {
         }
         
         /// <summary>
+        ///   Consulta uma cadeia de caracteres localizada semelhante a Não é possível associar uma pessoa que não seja coordenador ao curso.
+        /// </summary>
+        internal static string ValidCoordinatorCourse {
+            get {
+                return ResourceManager.GetString("ValidCoordinatorCourse", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Consulta uma cadeia de caracteres localizada semelhante a Não é possível criar usuário sem o nome de usuário.
         /// </summary>
         internal static string ValidUserException {

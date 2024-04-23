@@ -56,12 +56,16 @@ namespace SPG.API
       services.AddAutoMapper(typeof(UserProfile));
       services.AddAutoMapper(typeof(SubjectProfile));
       services.AddAutoMapper(typeof(TeacherAvailabilityProfile));
+      services.AddAutoMapper(typeof(CourseProfile));
+      services.AddAutoMapper(typeof(CurriculumProfile));
       #endregion
 
       #region Repositories
       services.AddScoped<IPersonRepository, PersonRepository>();
       services.AddScoped<ISubjectRepository, SubjectRepository>();
       services.AddScoped<ITeacherAvailabilityRepository, TeacherAvailabilityRepository>();
+      services.AddScoped<ICourseRepository, CourseRepository>();
+      services.AddScoped<ICurriculumRepository, CurriculumRepository>();
       #endregion
 
       #region Services
@@ -71,6 +75,8 @@ namespace SPG.API
       services.AddScoped<ISubjectService, SubjectService>();
       services.AddScoped<ITeacherAvailabilityService, TeacherAvailabilityService>();
       services.AddScoped<IEmailService, EmailService>();
+      services.AddScoped<ICourseService, CourseService>();
+      services.AddScoped<ICurriculumService, CurriculumService>();
       #endregion
     }
 
