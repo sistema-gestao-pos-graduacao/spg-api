@@ -12,15 +12,15 @@ namespace SPG.Application.Services
 
     public IEnumerable<CurriculumDto> GetAllCurriculums()
     {
-      var subjects = _repository.GetAll().ToList();
-      if (!subjects.Any())
+      var curriculums = _repository.GetAll().ToList();
+      if (!curriculums.Any())
         return new List<CurriculumDto>();
 
-      var subjectsDto = new List<CurriculumDto>();
+      var curriculumsDto = new List<CurriculumDto>();
 
-      subjects.ForEach(subject => { subjectsDto.Add(_mapper.Map<CurriculumDto>(subject)); });
+      curriculums.ForEach(curriculum => { curriculumsDto.Add(_mapper.Map<CurriculumDto>(curriculum)); });
 
-      return subjectsDto;
+      return curriculumsDto;
     }
 
     public CurriculumDto GetCurriculumById(int id)
@@ -30,18 +30,18 @@ namespace SPG.Application.Services
 
     public CurriculumDto AddCurriculum(CurriculumDto dto)
     {
-      var subject = _mapper.Map<CurriculumModel>(dto);
+      var curriculum = _mapper.Map<CurriculumModel>(dto);
 
-      _repository.Add(subject);
+      _repository.Add(curriculum);
 
-      return _mapper.Map<CurriculumDto>(subject);
+      return _mapper.Map<CurriculumDto>(curriculum);
     }
 
-    public CurriculumDto UpdateCurriculum(CurriculumDto subject)
+    public CurriculumDto UpdateCurriculum(CurriculumDto curriculum)
     {
-      _repository.Update(_mapper.Map<CurriculumModel>(subject));
+      _repository.Update(_mapper.Map<CurriculumModel>(curriculum));
 
-      return subject;
+      return curriculum;
     }
 
     public void DeleteCurriculum(int id)
