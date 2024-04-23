@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
-using SPG.Data.Context;
+using SPG.Data;
 
 #nullable disable
 
@@ -17,7 +17,7 @@ namespace SPG.Data.Migrations
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "8.0.2")
+                .HasAnnotation("ProductVersion", "8.0.4")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
@@ -155,6 +155,136 @@ namespace SPG.Data.Migrations
                     b.ToTable("AspNetUserTokens", (string)null);
                 });
 
+            modelBuilder.Entity("SPG.Domain.Model.AvailableTimeModel", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasMaxLength(200)
+                        .HasColumnType("nvarchar(200)");
+
+                    b.Property<int>("PersonId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Time")
+                        .IsRequired()
+                        .HasMaxLength(200)
+                        .HasColumnType("nvarchar(200)");
+
+                    b.Property<int>("WeekDays")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("PersonId");
+
+                    b.ToTable("AvailableTimes");
+                });
+
+            modelBuilder.Entity("SPG.Domain.Model.ClassModel", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<int>("CurriculumId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasMaxLength(200)
+                        .HasColumnType("nvarchar(200)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("CurriculumId");
+
+                    b.ToTable("Classes");
+                });
+
+            modelBuilder.Entity("SPG.Domain.Model.CourseModel", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<int?>("CoordinatorId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasMaxLength(200)
+                        .HasColumnType("nvarchar(200)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("CoordinatorId")
+                        .IsUnique()
+                        .HasFilter("[CoordinatorId] IS NOT NULL");
+
+                    b.ToTable("Courses");
+                });
+
+            modelBuilder.Entity("SPG.Domain.Model.CurriculumModel", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<int>("CourseId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasMaxLength(200)
+                        .HasColumnType("nvarchar(200)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("CourseId")
+                        .IsUnique();
+
+                    b.ToTable("Curriculums");
+                });
+
+            modelBuilder.Entity("SPG.Domain.Model.ExceptionDateModel", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<int>("AvailableTimeId")
+                        .HasColumnType("int");
+
+                    b.Property<DateOnly>("Date")
+                        .HasMaxLength(200)
+                        .HasColumnType("date");
+
+                    b.Property<string>("Description")
+                        .IsRequired()
+                        .HasMaxLength(200)
+                        .HasColumnType("nvarchar(200)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("AvailableTimeId");
+
+                    b.ToTable("ExceptionDates");
+                });
+
             modelBuilder.Entity("SPG.Domain.Model.PersonModel", b =>
                 {
                     b.Property<int>("Id")
@@ -168,8 +298,13 @@ namespace SPG.Data.Migrations
 
                     b.Property<string>("Cpf")
                         .IsRequired()
-                        .HasMaxLength(45)
-                        .HasColumnType("nvarchar(45)");
+                        .HasMaxLength(11)
+                        .HasColumnType("nvarchar(11)");
+
+                    b.Property<string>("Email")
+                        .IsRequired()
+                        .HasMaxLength(256)
+                        .HasColumnType("nvarchar(256)");
 
                     b.Property<string>("Name")
                         .IsRequired()
@@ -185,9 +320,39 @@ namespace SPG.Data.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("UserId");
+                    b.HasIndex("UserId")
+                        .IsUnique();
 
                     b.ToTable("Persons");
+                });
+
+            modelBuilder.Entity("SPG.Domain.Model.ScheduledClassModel", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<int>("AvaliableTimeId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("CurriculumId")
+                        .HasColumnType("int");
+
+                    b.Property<DateOnly>("Date")
+                        .HasColumnType("date");
+
+                    b.Property<int>("SubjectId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("AvaliableTimeId");
+
+                    b.HasIndex("SubjectId");
+
+                    b.ToTable("ScheduledClasses");
                 });
 
             modelBuilder.Entity("SPG.Domain.Model.SubjectModel", b =>
@@ -198,12 +363,44 @@ namespace SPG.Data.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
+                    b.Property<int?>("Building")
+                        .HasColumnType("int");
+
+                    b.Property<int>("CurriculumId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("Hours")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Location")
+                        .IsRequired()
+                        .HasMaxLength(255)
+                        .HasColumnType("nvarchar(255)");
+
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasMaxLength(500)
                         .HasColumnType("nvarchar(500)");
 
+                    b.Property<int?>("Room")
+                        .HasMaxLength(255)
+                        .HasColumnType("int");
+
+                    b.Property<string>("Students")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int?>("TeacherId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("WeekDay")
+                        .HasColumnType("int");
+
                     b.HasKey("Id");
+
+                    b.HasIndex("CurriculumId");
+
+                    b.HasIndex("TeacherId");
 
                     b.ToTable("Subjects");
                 });
@@ -348,15 +545,105 @@ namespace SPG.Data.Migrations
                         .IsRequired();
                 });
 
+            modelBuilder.Entity("SPG.Domain.Model.AvailableTimeModel", b =>
+                {
+                    b.HasOne("SPG.Domain.Model.PersonModel", "Person")
+                        .WithMany()
+                        .HasForeignKey("PersonId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Person");
+                });
+
+            modelBuilder.Entity("SPG.Domain.Model.ClassModel", b =>
+                {
+                    b.HasOne("SPG.Domain.Model.CurriculumModel", "Curriculum")
+                        .WithMany()
+                        .HasForeignKey("CurriculumId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Curriculum");
+                });
+
+            modelBuilder.Entity("SPG.Domain.Model.CourseModel", b =>
+                {
+                    b.HasOne("SPG.Domain.Model.PersonModel", "Coordinator")
+                        .WithOne()
+                        .HasForeignKey("SPG.Domain.Model.CourseModel", "CoordinatorId")
+                        .OnDelete(DeleteBehavior.SetNull);
+
+                    b.Navigation("Coordinator");
+                });
+
+            modelBuilder.Entity("SPG.Domain.Model.CurriculumModel", b =>
+                {
+                    b.HasOne("SPG.Domain.Model.CourseModel", "Course")
+                        .WithOne()
+                        .HasForeignKey("SPG.Domain.Model.CurriculumModel", "CourseId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Course");
+                });
+
+            modelBuilder.Entity("SPG.Domain.Model.ExceptionDateModel", b =>
+                {
+                    b.HasOne("SPG.Domain.Model.AvailableTimeModel", "AvailableTime")
+                        .WithMany()
+                        .HasForeignKey("AvailableTimeId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("AvailableTime");
+                });
+
             modelBuilder.Entity("SPG.Domain.Model.PersonModel", b =>
                 {
                     b.HasOne("SPG.Domain.Model.UserModel", "User")
-                        .WithMany()
-                        .HasForeignKey("UserId")
+                        .WithOne()
+                        .HasForeignKey("SPG.Domain.Model.PersonModel", "UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.Navigation("User");
+                });
+
+            modelBuilder.Entity("SPG.Domain.Model.ScheduledClassModel", b =>
+                {
+                    b.HasOne("SPG.Domain.Model.AvailableTimeModel", "AvaliableTime")
+                        .WithMany()
+                        .HasForeignKey("AvaliableTimeId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("SPG.Domain.Model.SubjectModel", "Subject")
+                        .WithMany()
+                        .HasForeignKey("SubjectId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("AvaliableTime");
+
+                    b.Navigation("Subject");
+                });
+
+            modelBuilder.Entity("SPG.Domain.Model.SubjectModel", b =>
+                {
+                    b.HasOne("SPG.Domain.Model.CurriculumModel", "Curriculum")
+                        .WithMany()
+                        .HasForeignKey("CurriculumId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("SPG.Domain.Model.PersonModel", "Teacher")
+                        .WithMany()
+                        .HasForeignKey("TeacherId");
+
+                    b.Navigation("Curriculum");
+
+                    b.Navigation("Teacher");
                 });
 
             modelBuilder.Entity("SPG.Domain.Model.TeacherAvailabilityModel", b =>

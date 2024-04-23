@@ -23,25 +23,25 @@ namespace SPG.API.Controllers.Subject
     [HttpGet("{id}")]
     public IActionResult Get(int id)
     {
-      var person = _service.GetSubjectById(id);
-      return Ok(person);
+      var subject = _service.GetSubjectById(id);
+      return Ok(subject);
     }
 
     [HttpPost]
-    public IActionResult Post([FromBody] SubjectDto person)
+    public IActionResult Post([FromBody] SubjectDto subject)
     {
       if (!ModelState.IsValid)
         return BadRequest(ModelState);
 
-      var result = _service.AddSubject(person);
+      var result = _service.AddSubject(subject);
 
-      return CreatedAtAction(nameof(Get), new { id = result.Id }, person);
+      return CreatedAtAction(nameof(Get), new { id = result.Id }, subject);
     }
 
     [HttpPut]
-    public IActionResult Put([FromBody] SubjectDto person)
+    public IActionResult Put([FromBody] SubjectDto subject)
     {
-      _service.UpdateSubject(person);
+      _service.UpdateSubject(subject);
 
       return NoContent();
     }

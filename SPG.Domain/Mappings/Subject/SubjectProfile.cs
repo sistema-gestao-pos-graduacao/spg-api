@@ -8,7 +8,10 @@ namespace SPG.Domain.Mappings
     {
         public SubjectProfile()
         {
-            CreateMap<SubjectModel, SubjectDto>();
+            CreateMap<SubjectModel, SubjectDto>()
+              .ForMember(dest => dest.CurriculumName, opt => opt.MapFrom(src => src.Curriculum != null ? src.Curriculum.Name : string.Empty))
+              .ForMember(dest => dest.TeacherName, opt => opt.MapFrom(src => src.Teacher != null ? src.Teacher.Name : string.Empty))
+              .ReverseMap();
         }
     }
 }

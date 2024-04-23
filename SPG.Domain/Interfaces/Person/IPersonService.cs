@@ -6,7 +6,7 @@ namespace SPG.Domain.Interfaces
     {
         IEnumerable<PersonDto> GetAllPersons();
         PersonDto GetPersonById(int id);
-        PersonDto AddPerson(PersonDto person);
+        Task<PersonDto> AddPerson(PersonDto dto);
         PersonDto UpdatePerson(PersonDto person);
         void DeletePerson(int id);
     }

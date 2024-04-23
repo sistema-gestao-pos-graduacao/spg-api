@@ -117,6 +117,22 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="InvalidUserRoleName" xml:space="preserve">
+    <value>Não é possível criar uma pessoa sem informar o perfil dela </value>
+  </data>
+  <data name="SuccessfullyCreatedUser" xml:space="preserve">
+    <value>Usuário de acesso ao SGP</value>
+  </data>
+  <data name="UserEmailBody" xml:space="preserve">
+    <value>&lt;h4&gt;Olá {0},&lt;/h4&gt;
+&lt;p&gt;O administrador enviou seus dados de acesso a plataforma SGP.&lt;/p&gt;
+&lt;p&gt;Login: {1}&lt;/p&gt;
+&lt;p&gt;Senha: {2}&lt;/p&gt;
+&lt;p&gt;&lt;a href="{3}" target="_blank"&gt;{4}&lt;/a&gt;&lt;/p&gt;</value>
+  </data>
+  <data name="ValidCoordinatorCourse" xml:space="preserve">
+    <value>Não é possível associar uma pessoa que não seja coordenador ao curso</value>
+  </data>
   <data name="ValidUserException" xml:space="preserve">
     <value>Não é possível criar usuário sem o nome de usuário</value>
   </data>
