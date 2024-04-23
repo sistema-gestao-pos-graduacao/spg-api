@@ -130,6 +130,9 @@
 &lt;p&gt;Senha: {2}&lt;/p&gt;
 &lt;p&gt;&lt;a href="{3}" target="_blank"&gt;{4}&lt;/a&gt;&lt;/p&gt;</value>
   </data>
+  <data name="ValidCoordinatorCourse" xml:space="preserve">
+    <value>Não é possível associar uma pessoa que não seja coordenador ao curso</value>
+  </data>
   <data name="ValidUserException" xml:space="preserve">
     <value>Não é possível criar usuário sem o nome de usuário</value>
   </data>

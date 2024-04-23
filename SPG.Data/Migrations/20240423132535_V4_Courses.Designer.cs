@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using SPG.Data;
 
@@ -11,9 +12,11 @@ using SPG.Data;
 namespace SPG.Data.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    partial class AppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20240423132535_V4_Courses")]
+    partial class V4_Courses
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -363,44 +366,20 @@ namespace SPG.Data.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<int?>("Building")
-                        .HasColumnType("int");
-
                     b.Property<int>("CurriculumId")
                         .HasColumnType("int");
 
                     b.Property<int>("Hours")
                         .HasColumnType("int");
 
-                    b.Property<string>("Location")
-                        .IsRequired()
-                        .HasMaxLength(255)
-                        .HasColumnType("nvarchar(255)");
-
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasMaxLength(500)
                         .HasColumnType("nvarchar(500)");
 
-                    b.Property<int?>("Room")
-                        .HasMaxLength(255)
-                        .HasColumnType("int");
-
-                    b.Property<string>("Students")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int?>("TeacherId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("WeekDay")
-                        .HasColumnType("int");
-
                     b.HasKey("Id");
 
                     b.HasIndex("CurriculumId");
-
-                    b.HasIndex("TeacherId");
 
                     b.ToTable("Subjects");
                 });
@@ -637,13 +616,7 @@ namespace SPG.Data.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("SPG.Domain.Model.PersonModel", "Teacher")
-                        .WithMany()
-                        .HasForeignKey("TeacherId");
-
                     b.Navigation("Curriculum");
-
-                    b.Navigation("Teacher");
                 });
 
             modelBuilder.Entity("SPG.Domain.Model.TeacherAvailabilityModel", b =>

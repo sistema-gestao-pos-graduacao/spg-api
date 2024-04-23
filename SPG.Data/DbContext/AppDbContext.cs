@@ -22,7 +22,7 @@ namespace SPG.Data
 
     public DbSet<ScheduledClassModel> ScheduledClasses { get; set; }
 
-    public DbSet<SpecializationModel> Specializations { get; set; }
+    public DbSet<CourseModel> Courses { get; set; }
 
     public DbSet<CurriculumModel> Curriculums { get; set; }
 
@@ -34,6 +34,18 @@ namespace SPG.Data
           .HasOne(p => p.User)
           .WithOne()
           .HasForeignKey<PersonModel>(p => p.UserId)
+          .OnDelete(DeleteBehavior.Cascade);
+
+      modelBuilder.Entity<CourseModel>()
+          .HasOne(p => p.Coordinator)
+          .WithOne()
+          .HasForeignKey<CourseModel>(p => p.CoordinatorId)
+          .OnDelete(DeleteBehavior.SetNull);
+
+      modelBuilder.Entity<CurriculumModel>()
+          .HasOne(p => p.Course)
+          .WithOne()
+          .HasForeignKey<CurriculumModel>(p => p.CourseId)
           .OnDelete(DeleteBehavior.Cascade);
     }
   }

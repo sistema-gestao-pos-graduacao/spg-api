@@ -8,10 +8,10 @@ namespace SPG.Domain.Model
     [Key]
     public int Id { get; set; }
 
-    [ForeignKey("Specialization")]
-    public int SpecializationId { get; set; } 
+    [ForeignKey("Course")]
+    public int CourseId { get; set; } 
 
-    public SpecializationModel? Specialization { get; set; }
+    public CourseModel? Course { get; set; }
     
     [Required]
     [StringLength(200)]

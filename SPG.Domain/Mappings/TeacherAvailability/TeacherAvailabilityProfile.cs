@@ -8,7 +8,8 @@ namespace SPG.Domain.Mappings
   {
     public TeacherAvailabilityProfile()
     {
-      CreateMap<TeacherAvailabilityModel, TeacherAvailabilityDto>();
+      CreateMap<TeacherAvailabilityModel, TeacherAvailabilityDto>()
+        .ReverseMap();
     }
   }
 }

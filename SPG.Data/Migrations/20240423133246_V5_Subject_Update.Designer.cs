@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using SPG.Data;
 
@@ -11,9 +12,11 @@ using SPG.Data;
 namespace SPG.Data.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    partial class AppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20240423133246_V5_Subject_Update")]
+    partial class V5_Subject_Update
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -314,11 +317,16 @@ namespace SPG.Data.Migrations
                     b.Property<int>("PersonType")
                         .HasColumnType("int");
 
+                    b.Property<int?>("SubjectModelId")
+                        .HasColumnType("int");
+
                     b.Property<string>("UserId")
                         .IsRequired()
                         .HasColumnType("nvarchar(450)");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("SubjectModelId");
 
                     b.HasIndex("UserId")
                         .IsUnique();
@@ -386,14 +394,7 @@ namespace SPG.Data.Migrations
                         .HasMaxLength(255)
                         .HasColumnType("int");
 
-                    b.Property<string>("Students")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<int?>("TeacherId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("WeekDay")
                         .HasColumnType("int");
 
                     b.HasKey("Id");
@@ -601,6 +602,10 @@ namespace SPG.Data.Migrations
 
             modelBuilder.Entity("SPG.Domain.Model.PersonModel", b =>
                 {
+                    b.HasOne("SPG.Domain.Model.SubjectModel", null)
+                        .WithMany("Students")
+                        .HasForeignKey("SubjectModelId");
+
                     b.HasOne("SPG.Domain.Model.UserModel", "User")
                         .WithOne()
                         .HasForeignKey("SPG.Domain.Model.PersonModel", "UserId")
@@ -655,6 +660,11 @@ namespace SPG.Data.Migrations
                         .IsRequired();
 
                     b.Navigation("Teacher");
+                });
+
+            modelBuilder.Entity("SPG.Domain.Model.SubjectModel", b =>
+                {
+                    b.Navigation("Students");
                 });
 #pragma warning restore 612, 618
         }

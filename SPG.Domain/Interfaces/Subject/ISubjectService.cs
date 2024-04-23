@@ -6,8 +6,8 @@ namespace SPG.Domain.Interfaces
     {
         IEnumerable<SubjectDto> GetAllSubjects();
         SubjectDto GetSubjectById(int id);
-        SubjectDto AddSubject(SubjectDto person);
-        SubjectDto UpdateSubject(SubjectDto person);
+        SubjectDto AddSubject(SubjectDto subject);
+        SubjectDto UpdateSubject(SubjectDto subject);
         void DeleteSubject(int id);
     }
 }
