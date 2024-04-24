@@ -35,7 +35,9 @@ namespace SPG.API
           builder.WithOrigins("http://localhost:3000",
             "https://localhost:3000", 
             "http://app-i575ajhit22gu.azurewebsites.net", 
-            "https://app-i575ajhit22gu.azurewebsites.net")
+            "https://app-i575ajhit22gu.azurewebsites.net",
+            "http://delightful-moss-07baede1e.5.azurestaticapps.net",
+            "https://delightful-moss-07baede1e.5.azurestaticapps.net")
                .AllowAnyHeader()
                .AllowAnyMethod()
                .AllowCredentials();
@@ -49,7 +51,7 @@ namespace SPG.API
         options.ExpireTimeSpan = TimeSpan.FromDays(1);
         options.Cookie.HttpOnly = true;
         options.Cookie.Path = "/"; 
-        options.Cookie.SecurePolicy = CookieSecurePolicy.None;
+        options.Cookie.SecurePolicy = CookieSecurePolicy.Always;
         options.Cookie.SameSite = SameSiteMode.None;
         options.Events.OnSignedIn = context =>
         {
@@ -89,11 +91,8 @@ namespace SPG.API
 
     public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
     {
-      //if (env.IsDevelopment())
-      //{
-        app.UseSwagger();
-        app.UseSwaggerUI();
-      //}
+      app.UseSwagger();
+      app.UseSwaggerUI();
 
       app.UseHttpsRedirection();
       app.UseCors("AllowFrontend");
@@ -106,8 +105,6 @@ namespace SPG.API
       {
         endpoints.MapControllers();
       });
-     
-      //SeedRoles(app).Wait();
     }
 
     private static async Task SeedRoles(IApplicationBuilder app)
