@@ -32,7 +32,10 @@ namespace SPG.API
       {
         options.AddPolicy("AllowFrontend", builder =>
         {
-          builder.AllowAnyOrigin()
+          builder.WithOrigins("http://localhost:3000",
+            "https://localhost:3000", 
+            "http://app-i575ajhit22gu.azurewebsites.net", 
+            "https://app-i575ajhit22gu.azurewebsites.net")
                .AllowAnyHeader()
                .AllowAnyMethod()
                .AllowCredentials();
@@ -104,7 +107,7 @@ namespace SPG.API
         endpoints.MapControllers();
       });
      
-      SeedRoles(app).Wait();
+      //SeedRoles(app).Wait();
     }
 
     private static async Task SeedRoles(IApplicationBuilder app)
