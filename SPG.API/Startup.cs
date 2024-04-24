@@ -49,7 +49,7 @@ namespace SPG.API
         options.ExpireTimeSpan = TimeSpan.FromDays(1);
         options.Cookie.HttpOnly = true;
         options.Cookie.Path = "/"; 
-        options.Cookie.SecurePolicy = CookieSecurePolicy.SameAsRequest;
+        options.Cookie.SecurePolicy = CookieSecurePolicy.None;
         options.Cookie.SameSite = SameSiteMode.None;
         options.Events.OnSignedIn = context =>
         {
@@ -89,11 +89,11 @@ namespace SPG.API
 
     public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
     {
-      if (env.IsDevelopment())
-      {
+      //if (env.IsDevelopment())
+      //{
         app.UseSwagger();
         app.UseSwaggerUI();
-      }
+      //}
 
       app.UseHttpsRedirection();
       app.UseCors("AllowFrontend");
