@@ -32,7 +32,7 @@ namespace SPG.API
       {
         options.AddPolicy("AllowFrontend", builder =>
         {
-          builder.WithOrigins(baseDomain)
+          builder.AllowAnyOrigin()
                .AllowAnyHeader()
                .AllowAnyMethod()
                .AllowCredentials();
@@ -45,10 +45,14 @@ namespace SPG.API
       {
         options.ExpireTimeSpan = TimeSpan.FromDays(1);
         options.Cookie.HttpOnly = true;
-        options.Cookie.Domain = new Uri(baseDomain).Host; 
         options.Cookie.Path = "/"; 
         options.Cookie.SecurePolicy = CookieSecurePolicy.SameAsRequest;
         options.Cookie.SameSite = SameSiteMode.None;
+        options.Events.OnSignedIn = context =>
+        {
+          options.Cookie.Domain = new Uri(context.Request.Scheme + "://" + context.Request.Host.Value).Host;
+          return Task.CompletedTask;
+        };
       });
 
       #region Mapper
