@@ -10,7 +10,8 @@ namespace SPG.Domain.Mappings
         {
             CreateMap<CurriculumModel, CurriculumDto>()
               .ForMember(dest => dest.Course, opt => opt.MapFrom(src => src.Course != null ? src.Course.Name : string.Empty))
-              .ReverseMap();
+              .ReverseMap()
+              .ForMember(dest => dest.Course, opt => opt.MapFrom(src => new CourseModel())); ;
         }
     }
 }

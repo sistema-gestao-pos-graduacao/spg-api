@@ -37,15 +37,15 @@ namespace SPG.Data
           .OnDelete(DeleteBehavior.Cascade);
 
       modelBuilder.Entity<CourseModel>()
-          .HasOne(p => p.Coordinator)
-          .WithOne()
-          .HasForeignKey<CourseModel>(p => p.CoordinatorId)
+          .HasOne(c => c.Coordinator)
+          .WithMany()
+          .HasForeignKey(c => c.CoordinatorId)
           .OnDelete(DeleteBehavior.SetNull);
 
       modelBuilder.Entity<CurriculumModel>()
-          .HasOne(p => p.Course)
-          .WithOne()
-          .HasForeignKey<CurriculumModel>(p => p.CourseId)
+          .HasOne(c => c.Course)
+          .WithMany()
+          .HasForeignKey(c => c.CourseId)
           .OnDelete(DeleteBehavior.Cascade);
     }
   }

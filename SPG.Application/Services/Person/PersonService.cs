@@ -45,7 +45,7 @@ namespace SPG.Application.Services
       var person = _mapper.Map<PersonModel>(dto);
       person.Cpf = CPFUtils.RemoveSpecialCharacters(person.Cpf);
 
-      person.UserId = await _userService.GenerateNewUser(person.Name, person.Email, roleName);
+      person.UserId = await _userService.GenerateNewUser(person.Name, person.Email, new List<string>() { roleName });
 
       try
       {

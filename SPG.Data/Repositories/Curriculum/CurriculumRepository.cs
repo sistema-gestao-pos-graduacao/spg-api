@@ -1,6 +1,7 @@
 ﻿using SPG.Domain.Interfaces;
 using SPG.Domain.Model;
 using SPG.Data.Properties;
+using Microsoft.EntityFrameworkCore;
 
 namespace SPG.Data.Repositories
 {
@@ -15,22 +16,26 @@ namespace SPG.Data.Repositories
 
     public CurriculumModel GetById(int id)
     {
-      var subject = _context.Curriculums.FirstOrDefault(p => p.Id == id);
+      var curriculum = _context.Curriculums.FirstOrDefault(p => p.Id == id);
 
-      return subject ?? throw new Exception(string.Format(Resources.NotFoundCurriculum, id));
+      return curriculum ?? throw new Exception(string.Format(Resources.NotFoundCurriculum, id));
     }
 
-    public void Add(CurriculumModel subject)
+    public void Add(CurriculumModel curriculum)
     {
-      _context.Curriculums.Add(subject);
-      subject.Id = _context.SaveChanges();
+      _context.Curriculums.Add(curriculum);
+      curriculum.Id = _context.SaveChanges();
     }
 
-    public void Update(CurriculumModel subject)
+    public void Update(CurriculumModel curriculum)
     {
       try
       {
-        _context.Curriculums.Update(subject);
+        var model = GetById(curriculum.Id);
+        model.Name = curriculum.Name;
+        model.CourseId = curriculum.CourseId;
+
+        _context.Entry(model).State = EntityState.Modified;
         _context.SaveChanges();
       }
       catch (Exception ex)
@@ -41,10 +46,10 @@ namespace SPG.Data.Repositories
 
     public void Delete(int id)
     {
-      var subject = _context.Curriculums.FirstOrDefault(p => p.Id == id);
-      if (subject != null)
+      var curriculum = _context.Curriculums.FirstOrDefault(p => p.Id == id);
+      if (curriculum != null)
       {
-        _context.Curriculums.Remove(subject);
+        _context.Curriculums.Remove(curriculum);
         _context.SaveChanges();
       }
     }

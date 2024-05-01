@@ -1,6 +1,7 @@
 ﻿using SPG.Domain.Interfaces;
 using SPG.Domain.Model;
 using SPG.Data.Properties;
+using Microsoft.EntityFrameworkCore;
 
 namespace SPG.Data.Repositories
 {
@@ -30,7 +31,14 @@ namespace SPG.Data.Repositories
     {
       try
       {
-        _context.Persons.Update(person);
+        var model = GetById(person.Id);
+        model.Name = person.Name;
+        model.Cpf = person.Cpf; 
+        model.BirthDate = person.BirthDate; 
+        model.UserId = person.UserId; 
+        model.Email = person.Email;
+
+        _context.Entry(model).State = EntityState.Modified;
         _context.SaveChanges();
       }
       catch (Exception ex)
