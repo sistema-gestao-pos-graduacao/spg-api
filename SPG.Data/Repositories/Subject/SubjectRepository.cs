@@ -11,12 +11,18 @@ namespace SPG.Data.Repositories
 
     public IEnumerable<SubjectModel> GetAll()
     {
-      return _context.Subjects.ToList();
+      return _context.Subjects
+        .Include(c => c.Teacher)
+        .Include(c => c.Curriculum)
+        .ToList();
     }
 
     public SubjectModel GetById(int id)
     {
-      var subject = _context.Subjects.FirstOrDefault(p => p.Id == id);
+      var subject = _context.Subjects
+        .Include(c => c.Teacher)
+        .Include(c => c.Curriculum)
+        .FirstOrDefault(p => p.Id == id);
 
       return subject ?? throw new Exception(string.Format(Resources.NotFoundSubject, id));
     }
@@ -24,7 +30,8 @@ namespace SPG.Data.Repositories
     public void Add(SubjectModel subject)
     {
       _context.Subjects.Add(subject);
-      subject.Id = _context.SaveChanges();
+      _context.SaveChanges();
+      subject.Id = _context.Subjects.OrderByDescending(c => c.Id).Select(c => c.Id).FirstOrDefault();
     }
 
     public void Update(SubjectModel subject)

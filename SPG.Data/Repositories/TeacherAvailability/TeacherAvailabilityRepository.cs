@@ -11,12 +11,12 @@ namespace SPG.Data.Repositories
 
     public IEnumerable<TeacherAvailabilityModel> GetAll()
     {
-      return _context.TeacherAvailabilities.ToList();
+      return _context.TeacherAvailabilities.Include(c => c.Teacher).ToList();
     }
 
     public TeacherAvailabilityModel GetById(int id)
     {
-      var teacherAvailability = _context.TeacherAvailabilities.FirstOrDefault(p => p.Id == id);
+      var teacherAvailability = _context.TeacherAvailabilities.Include(c => c.Teacher).FirstOrDefault(p => p.Id == id);
 
       return teacherAvailability ?? throw new Exception(string.Format(Resources.NotFoundTeacherAvailability, id));
     }
@@ -24,7 +24,8 @@ namespace SPG.Data.Repositories
     public void Add(TeacherAvailabilityModel teacherAvailability)
     {
       _context.TeacherAvailabilities.Add(teacherAvailability);
-      teacherAvailability.Id = _context.SaveChanges();
+      _context.SaveChanges();
+      teacherAvailability.Id = _context.TeacherAvailabilities.OrderByDescending(c => c.Id).Select(c => c.Id).FirstOrDefault();
     }
 
     public void Update(TeacherAvailabilityModel teacherAvailability)

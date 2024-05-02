@@ -12,8 +12,8 @@ namespace SPG.Domain.Mappings
               .ForMember(dest => dest.CurriculumName, opt => opt.MapFrom(src => src.Curriculum != null ? src.Curriculum.Name : string.Empty))
               .ForMember(dest => dest.TeacherName, opt => opt.MapFrom(src => src.Teacher != null ? src.Teacher.Name : string.Empty))
               .ReverseMap()
-              .ForMember(dest => dest.Curriculum, opt => opt.MapFrom(src => new CurriculumModel()))
-              .ForMember(dest => dest.Teacher, opt => opt.MapFrom(src => new PersonModel()));
+              .ForMember(dest => dest.Curriculum, opt => opt.Ignore())
+              .ForMember(dest => dest.Teacher, opt => opt.Ignore());
         }
     }
 }

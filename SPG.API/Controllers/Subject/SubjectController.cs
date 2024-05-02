@@ -35,7 +35,7 @@ namespace SPG.API.Controllers.Subject
 
       var result = _service.AddSubject(subject);
 
-      return CreatedAtAction(nameof(Get), new { id = result.Id }, subject);
+      return CreatedAtAction(nameof(Get), new { id = result.Id }, result);
     }
 
     [HttpPut]

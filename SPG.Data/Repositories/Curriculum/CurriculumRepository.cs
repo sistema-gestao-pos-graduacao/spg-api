@@ -11,12 +11,12 @@ namespace SPG.Data.Repositories
 
     public IEnumerable<CurriculumModel> GetAll()
     {
-      return _context.Curriculums.ToList();
+      return _context.Curriculums.Include(c => c.Course).ToList();
     }
 
     public CurriculumModel GetById(int id)
     {
-      var curriculum = _context.Curriculums.FirstOrDefault(p => p.Id == id);
+      var curriculum = _context.Curriculums.Include(c => c.Course).FirstOrDefault(p => p.Id == id);
 
       return curriculum ?? throw new Exception(string.Format(Resources.NotFoundCurriculum, id));
     }
@@ -24,7 +24,8 @@ namespace SPG.Data.Repositories
     public void Add(CurriculumModel curriculum)
     {
       _context.Curriculums.Add(curriculum);
-      curriculum.Id = _context.SaveChanges();
+      _context.SaveChanges();
+      curriculum.Id = _context.Curriculums.OrderByDescending(c => c.Id).Select(c => c.Id).FirstOrDefault();
     }
 
     public void Update(CurriculumModel curriculum)

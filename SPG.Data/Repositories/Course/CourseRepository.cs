@@ -24,21 +24,12 @@ namespace SPG.Data.Repositories
 
     public void Add(CourseModel course)
     {
-      string sql = @"
-        INSERT INTO COURSES (Name, CoordinatorId)
-        VALUES (@CourseName, @CoordinatorId);
-        SELECT SCOPE_IDENTITY();
-      ";
-
-      _context.Database.ExecuteSqlRaw(sql,
-          new SqlParameter("@CourseName", course.Name),
-          new SqlParameter("@CoordinatorId", (object?)course.CoordinatorId ?? DBNull.Value));
-
-      course.Id = context.Courses.OrderByDescending(c => c.Id).Select(c => c.Id).FirstOrDefault();
+      _context.Courses.Add(course);
+      _context.SaveChanges();
+      course.Id = _context.Courses.OrderByDescending(c => c.Id).Select(c => c.Id).FirstOrDefault();
     }
 
-
-  public void Update(CourseModel course)
+    public void Update(CourseModel course)
     {
       try
       {

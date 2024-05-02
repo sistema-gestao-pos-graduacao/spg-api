@@ -11,7 +11,7 @@ namespace SPG.Domain.Mappings
             CreateMap<CourseModel, CourseDto>()
               .ForMember(dest => dest.Coordinator, opt => opt.MapFrom(src => src.Coordinator != null ? src.Coordinator.Name : string.Empty))
               .ReverseMap()
-              .ForMember(dest => dest.Coordinator, opt => opt.MapFrom(src => new PersonModel()));
+              .ForMember(dest => dest.Coordinator, opt => opt.Ignore());
         }
     }
 }

@@ -11,12 +11,12 @@ namespace SPG.Data.Repositories
     private readonly IUserService _userService = userService;
     public IEnumerable<PersonModel> GetAll()
     {
-      return _context.Persons.ToList();
+      return _context.Persons.Include(c => c.User).ToList();
     }
 
     public PersonModel GetById(int id)
     {
-      var person = _context.Persons.FirstOrDefault(p => p.Id == id);
+      var person = _context.Persons.Include(c => c.User).FirstOrDefault(p => p.Id == id);
 
       return person ?? throw new Exception(string.Format(Resources.NotFoundPerson, id));
     }
@@ -24,7 +24,8 @@ namespace SPG.Data.Repositories
     public void Add(PersonModel person)
     {
       _context.Persons.Add(person);
-      person.Id = _context.SaveChanges();
+      _context.SaveChanges();
+      person.Id = _context.Persons.OrderByDescending(c => c.Id).Select(c => c.Id).FirstOrDefault();
     }
 
     public void Update(PersonModel person)
