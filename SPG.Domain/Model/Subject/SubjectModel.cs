@@ -32,7 +32,6 @@ namespace SPG.Domain.Model
 
     public int? Building { get; set; }
 
-    [StringLength(255)]
     public int? Room { get; set; }
 
     public List<string> Students { get; set; } = [];
@@ -41,5 +40,8 @@ namespace SPG.Domain.Model
     public string Considerations = string.Empty;
 
     public WeekDaysEnum WeekDay { get; set; }
+
+    [StringLength(2047)]
+    public string Syllabus { get; set; } = string.Empty;
   }
 }
