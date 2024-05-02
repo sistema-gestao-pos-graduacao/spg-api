@@ -25,7 +25,32 @@ namespace SPG.Application.Services
     public async Task<IEnumerable<UserDto>> GetAllUsersAsync()
     {
       var users = await _userManager.Users.ToListAsync();
-      return _mapper.Map<IEnumerable<UserDto>>(users);
+      List<UserDto> usersList = [];
+
+      foreach (var user in users)
+      {
+        var roles = await _userManager.GetRolesAsync(user);
+        var userDto = _mapper.Map<UserDto>(user);
+        userDto.Roles = roles;
+
+        usersList.Add(userDto);
+      }
+      return usersList;
+    }
+
+    /// <summary>
+    /// Retorna um usuário pelo id
+    /// </summary>
+    /// <param name="id">Id do usuário</param>
+    /// <returns>Retorna o usuário\ correspondente</returns>
+    public async Task<UserDto> GetUserByIdAsync(string id)
+    {
+      var user = await GetUserModelByIdAsync(id);
+      var roles = await _userManager.GetRolesAsync(user);
+      var userDto = _mapper.Map<UserDto>(user);
+      userDto.Roles = roles;
+
+      return userDto;
     }
 
     /// <summary>
@@ -33,10 +58,10 @@ namespace SPG.Application.Services
     /// </summary>
     /// <param name="id">Id do usuário</param>
     /// <returns>Retorna o usuário correspondente</returns>
-    public async Task<UserDto> GetUserByIdAsync(string id)
+    public async Task<UserModel> GetUserModelByIdAsync(string id)
     {
       var user = await _userManager.FindByIdAsync(id);
-      return _mapper.Map<UserDto>(user);
+      return user == null ? throw new Exception(Resources.ValidEmptyUser) : user;
     }
 
     /// <summary>
@@ -58,7 +83,7 @@ namespace SPG.Application.Services
       if (!result.Succeeded)
         throw new Exception(result.Errors.First().ToString());
 
-      await PutUserRole(user.UserName, userDto.Role);
+      await PutUserRole(user.UserName, userDto.Roles);
       return _mapper.Map<UserDto>(user);
     }
 
@@ -68,8 +93,14 @@ namespace SPG.Application.Services
     /// <param name="userDto">Usuário</param>
     public async Task UpdateUserAsync(UserDto userDto)
     {
-      var user = await _userManager.FindByIdAsync(userDto.Id);
-      await _userManager.UpdateAsync(_mapper.Map<UserModel>(user));
+      var user = await GetUserModelByIdAsync(userDto.Id);
+      
+      user.UserName = userDto.UserName;
+      user.Email = userDto.Email;
+
+      await PutUserRole(userDto.UserName, userDto.Roles);
+
+      await _userManager.UpdateAsync(user);
     }
 
     /// <summary>
@@ -86,18 +117,27 @@ namespace SPG.Application.Services
     /// <summary>
     /// Inlcui a role do usuario
     /// </summary>
-    public async Task PutUserRole(string nomeDoUsuario, string roleName)
-    {
-      var usuario = await _userManager.FindByNameAsync(nomeDoUsuario);
-      var role = await _roleManager.FindByNameAsync(roleName);
+public async Task PutUserRole(string nomeDoUsuario, IList<string> roleNames)
+{
+    var usuario = await _userManager.FindByNameAsync(nomeDoUsuario);
 
-      if (usuario != null && role != null)
-      {
-        await _userManager.AddToRoleAsync(usuario, roleName);
-      }
-      else
+    if (usuario == null || !roleNames.Any())
         throw new Exception(Resources.InvalidUserRoleName);
+
+    var rolesToAdd = new List<string>();
+
+    foreach (var name in roleNames)
+    {
+        var role = await _roleManager.FindByNameAsync(name);
+
+        if (role != null)
+            rolesToAdd.Add(name);
+        else
+            throw new Exception(Resources.InvalidUserRoleName);
     }
+
+    await _userManager.AddToRolesAsync(usuario, rolesToAdd);
+}
 
     /// <summary>
     /// Gera token para recuperar senha
@@ -124,7 +164,7 @@ namespace SPG.Application.Services
     /// <summary>
     /// Gera um novo usuario
     /// </summary>
-    public async Task<string> GenerateNewUser(string personName, string personEmail, string roleName)
+    public async Task<string> GenerateNewUser(string personName, string personEmail, IList<string> roleNames)
     {
       var user = new UserModel
       {
@@ -140,7 +180,7 @@ namespace SPG.Application.Services
       if (!result.Succeeded)
         throw new Exception(result.Errors.First().ToString());
 
-      await PutUserRole(user.UserName, roleName);
+      await PutUserRole(user.UserName, roleNames);
 
       await _emailService.SendEmailAsync(
       user.Email,
@@ -190,10 +230,8 @@ namespace SPG.Application.Services
       password += GetRandomChar("ABCDEFGHIJKLMNOPQRSTUVWXYZ", random);
       password += GetRandomChar(specialCharacters, random);
 
-      for (int i = 4; i < 8; i++)
-      {
+      for (int i = 0; i < 4; i++)
         password += GetRandomChar("0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ" + specialCharacters, random);
-      }
 
       password = new string(password.ToCharArray().OrderBy(x => random.Next()).ToArray());
 

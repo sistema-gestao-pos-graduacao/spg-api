@@ -34,7 +34,7 @@ namespace SPG.API.Controllers.TeacherAvailability
 
       var result = _service.AddTeacherAvailability(teacherAvailability);
 
-      return CreatedAtAction(nameof(Get), new { id = result.Id }, teacherAvailability);
+      return CreatedAtAction(nameof(Get), new { id = result.Id }, result);
     }
 
     [HttpPut]

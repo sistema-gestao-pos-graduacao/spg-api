@@ -101,6 +101,15 @@ namespace SPG.Application.Properties {
         }
         
         /// <summary>
+        ///   Consulta uma cadeia de caracteres localizada semelhante a Nenhum usuário encontrado.
+        /// </summary>
+        internal static string ValidEmptyUser {
+            get {
+                return ResourceManager.GetString("ValidEmptyUser", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Consulta uma cadeia de caracteres localizada semelhante a Não é possível criar usuário sem o nome de usuário.
         /// </summary>
         internal static string ValidUserException {

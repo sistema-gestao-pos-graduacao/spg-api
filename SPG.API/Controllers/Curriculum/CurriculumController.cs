@@ -34,7 +34,7 @@ namespace SPG.API.Controllers.Curriculum
 
       var result = _service.AddCurriculum(curriculum);
 
-      return CreatedAtAction(nameof(Get), new { id = result.Id }, curriculum);
+      return CreatedAtAction(nameof(Get), new { id = result.Id }, result);
     }
 
     [HttpPut]
