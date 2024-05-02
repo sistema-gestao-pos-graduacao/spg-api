@@ -12,7 +12,8 @@ namespace SPG.Domain.Model
     [Required]
     [StringLength(500)]
     public string Name { get; set; } = string.Empty;
-    
+
+    [Required]
     [ForeignKey("Curriculum")]
     public int CurriculumId { get; set; }
 

@@ -133,6 +133,9 @@
   <data name="ValidCoordinatorCourse" xml:space="preserve">
     <value>Não é possível associar uma pessoa que não seja coordenador ao curso</value>
   </data>
+  <data name="ValidEmptyUser" xml:space="preserve">
+    <value>Nenhum usuário encontrado</value>
+  </data>
   <data name="ValidUserException" xml:space="preserve">
     <value>Não é possível criar usuário sem o nome de usuário</value>
   </data>

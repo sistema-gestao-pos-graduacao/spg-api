@@ -8,6 +8,7 @@ namespace SPG.Domain.Model
     [Key]
     public int Id { get; set; }
 
+    [Required]
     [ForeignKey("Course")]
     public int CourseId { get; set; } 
 

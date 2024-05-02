@@ -1,6 +1,7 @@
 ﻿using SPG.Domain.Interfaces;
 using SPG.Domain.Model;
 using SPG.Data.Properties;
+using Microsoft.EntityFrameworkCore;
 
 namespace SPG.Data.Repositories
 {
@@ -10,12 +11,18 @@ namespace SPG.Data.Repositories
 
     public IEnumerable<SubjectModel> GetAll()
     {
-      return _context.Subjects.ToList();
+      return _context.Subjects
+        .Include(c => c.Teacher)
+        .Include(c => c.Curriculum)
+        .ToList();
     }
 
     public SubjectModel GetById(int id)
     {
-      var subject = _context.Subjects.FirstOrDefault(p => p.Id == id);
+      var subject = _context.Subjects
+        .Include(c => c.Teacher)
+        .Include(c => c.Curriculum)
+        .FirstOrDefault(p => p.Id == id);
 
       return subject ?? throw new Exception(string.Format(Resources.NotFoundSubject, id));
     }
@@ -23,14 +30,26 @@ namespace SPG.Data.Repositories
     public void Add(SubjectModel subject)
     {
       _context.Subjects.Add(subject);
-      subject.Id = _context.SaveChanges();
+      _context.SaveChanges();
+      subject.Id = _context.Subjects.OrderByDescending(c => c.Id).Select(c => c.Id).FirstOrDefault();
     }
 
     public void Update(SubjectModel subject)
     {
       try
       {
-        _context.Subjects.Update(subject);
+        var model = GetById(subject.Id);
+        model.WeekDay = subject.WeekDay;
+        model.TeacherId = subject.TeacherId;  
+        model.CurriculumId = subject.CurriculumId;
+        model.Room = subject.Room;  
+        model.Building =  subject.Building;
+        model.Considerations = subject.Considerations;
+        model.Location = subject.Location;
+        model.Students = subject.Students;
+        model.Hours = subject.Hours;
+
+        _context.Entry(model).State = EntityState.Modified;
         _context.SaveChanges();
       }
       catch (Exception ex)

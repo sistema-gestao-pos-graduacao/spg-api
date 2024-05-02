@@ -45,7 +45,7 @@ namespace SPG.API.Controllers.Users
       }
     }
 
-    [HttpPatch]
+    [HttpPut]
     
     public async Task<IActionResult> Update(UserDto userDto)
     {

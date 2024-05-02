@@ -1,6 +1,7 @@
 ﻿using SPG.Domain.Interfaces;
 using SPG.Domain.Model;
 using SPG.Data.Properties;
+using Microsoft.EntityFrameworkCore;
 
 namespace SPG.Data.Repositories
 {
@@ -10,12 +11,12 @@ namespace SPG.Data.Repositories
     private readonly IUserService _userService = userService;
     public IEnumerable<PersonModel> GetAll()
     {
-      return _context.Persons.ToList();
+      return _context.Persons.Include(c => c.User).ToList();
     }
 
     public PersonModel GetById(int id)
     {
-      var person = _context.Persons.FirstOrDefault(p => p.Id == id);
+      var person = _context.Persons.Include(c => c.User).FirstOrDefault(p => p.Id == id);
 
       return person ?? throw new Exception(string.Format(Resources.NotFoundPerson, id));
     }
@@ -23,14 +24,22 @@ namespace SPG.Data.Repositories
     public void Add(PersonModel person)
     {
       _context.Persons.Add(person);
-      person.Id = _context.SaveChanges();
+      _context.SaveChanges();
+      person.Id = _context.Persons.OrderByDescending(c => c.Id).Select(c => c.Id).FirstOrDefault();
     }
 
     public void Update(PersonModel person)
     {
       try
       {
-        _context.Persons.Update(person);
+        var model = GetById(person.Id);
+        model.Name = person.Name;
+        model.Cpf = person.Cpf; 
+        model.BirthDate = person.BirthDate; 
+        model.UserId = person.UserId; 
+        model.Email = person.Email;
+
+        _context.Entry(model).State = EntityState.Modified;
         _context.SaveChanges();
       }
       catch (Exception ex)
