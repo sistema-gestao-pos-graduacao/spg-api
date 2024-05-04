@@ -6,5 +6,6 @@
     public int TeacherId { get; set; }
     public DateTime StartDateTime { get; set; }
     public DateTime EndDateTime { get; set; }
+    public string Color { get; set; } = string.Empty;
   }
 }

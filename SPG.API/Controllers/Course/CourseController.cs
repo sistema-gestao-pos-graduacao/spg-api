@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using SPG.API.Controllers.Base;
 using SPG.Domain.Dto;
 using SPG.Domain.Interfaces;
 
@@ -8,15 +9,15 @@ namespace SPG.API.Controllers.Course
   [ApiController]
   [Route("api/[controller]")]
   [Authorize]
-  public class CoursesController(ICourseService service) : ControllerBase
+  public class CoursesController(ICourseService service) : SPGBaseController<CourseDto>
   {
     private readonly ICourseService _service = service;
 
     [HttpGet]
-    public IActionResult Get()
+    public IActionResult GetAll([FromQuery] Dictionary<string, string> filters)
     {
       var subjects = _service.GetAllCourses();
-      return Ok(subjects);
+      return Ok(ApplyFilters(subjects, filters));
     }
 
     [HttpGet("{id}")]

@@ -43,5 +43,8 @@ namespace SPG.Domain.Model
 
     [StringLength(2047)]
     public string Syllabus { get; set; } = string.Empty;
+
+    [StringLength(7)]
+    public string Color { get; set; } = string.Empty;
   }
 }

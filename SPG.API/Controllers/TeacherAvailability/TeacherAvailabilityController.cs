@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using SPG.API.Controllers.Base;
 using SPG.Domain.Dto;
 using SPG.Domain.Interfaces;
 
@@ -8,15 +9,15 @@ namespace SPG.API.Controllers.TeacherAvailability
   [ApiController]
   [Route("api/[controller]")]
   [Authorize]
-  public class TeacherAvailabilitysController(ITeacherAvailabilityService service) : ControllerBase
+  public class TeacherAvailabilitysController(ITeacherAvailabilityService service) : SPGBaseController<TeacherAvailabilityDto>
   {
     private readonly ITeacherAvailabilityService _service = service;
 
     [HttpGet]
-    public IActionResult Get()
+    public IActionResult GetAll([FromQuery] Dictionary<string, string> filters)
     {
       var subjects = _service.GetAllTeacherAvailabilities();
-      return Ok(subjects);
+      return Ok(ApplyFilters(subjects, filters));
     }
 
     [HttpGet("{id}")]
