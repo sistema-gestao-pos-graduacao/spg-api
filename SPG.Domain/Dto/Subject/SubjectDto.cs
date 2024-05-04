@@ -10,7 +10,7 @@ namespace SPG.Domain.Dto
 
         public int CurriculumId { get; set; }
 
-        public int CurriculumName { get; set; }
+        public string CurriculumName { get; set; } = string.Empty;
 
         public int? TeacherId { get; set; }
 
@@ -24,13 +24,15 @@ namespace SPG.Domain.Dto
 
         public int? Room { get; set; }
 
-        public string Considerations = string.Empty;
+        public string Considerations { get; set; } = string.Empty;
 
         public List<string> Students { get; set; } = [];
 
         public WeekDaysEnum WeekDay { get; set; }
 
         public string Syllabus { get; set; } = string.Empty;
-    }
+
+        public string Color { get; set; } = string.Empty;
+     }
 }
 

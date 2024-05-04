@@ -15,7 +15,7 @@ namespace SPG.API.Controllers.Login
   {
     private readonly ILoginService _loginService = loginService;
 
-    [HttpPost("login")]
+    [HttpPost("Login")]
     public async Task<IActionResult> Login([FromBody] LoginDto login)
     {
       var result = await _loginService.AuthenticateUser(login);
@@ -25,7 +25,7 @@ namespace SPG.API.Controllers.Login
         return Unauthorized(Resources.InvalidLogin);
     }
 
-    [HttpPost("logout")]
+    [HttpPost("Logout")]
     [Authorize]
     public async Task<IActionResult> Logout()
     {
