@@ -10,7 +10,7 @@ namespace SPG.Application.Services
     private readonly IMapper _mapper = mapper;
     private readonly ISystemParamsRepository _repository = repository;
 
-    public IEnumerable<SystemParamsDto> GetAllSystemParamss()
+    public IEnumerable<SystemParamsDto> GetAllSystemParams()
     {
       var systemParams = _repository.GetAll().ToList();
       if (!systemParams.Any())

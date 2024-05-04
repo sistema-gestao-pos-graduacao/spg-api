@@ -17,7 +17,7 @@ namespace SPG.API.Controllers.SystemParams
     [HttpGet]
     public ActionResult<IEnumerable<SystemParamsDto>> GetAll([FromQuery] Dictionary<string, string> filters)
     {
-      var systemParams = _systemParamsService.GetAllSystemParamss();
+      var systemParams = _systemParamsService.GetAllSystemParams();
       return Ok(ApplyFilters(systemParams, filters));
     }
 
