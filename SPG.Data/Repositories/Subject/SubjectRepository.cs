@@ -34,6 +34,17 @@ namespace SPG.Data.Repositories
       subject.Id = _context.Subjects.OrderByDescending(c => c.Id).Select(c => c.Id).FirstOrDefault();
     }
 
+    public void AddAll(IList<SubjectModel> subjects)
+    {
+      _context.Subjects.AddRange(subjects);
+      _context.SaveChanges();
+
+      var addedIds = _context.Subjects.OrderByDescending(c => c.Id).Select(c => c.Id).ToList();
+
+      for (int i = 0; i < subjects.Count; i++)
+        subjects[i].Id = addedIds[i];
+    }
+
     public void Update(SubjectModel subject)
     {
       try

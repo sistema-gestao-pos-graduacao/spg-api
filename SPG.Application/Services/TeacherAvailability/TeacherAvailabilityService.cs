@@ -2,6 +2,7 @@
 using SPG.Domain.Dto;
 using SPG.Domain.Interfaces;
 using SPG.Domain.Model;
+using SPG.Domain.Utils;
 
 namespace SPG.Application.Services
 {
@@ -18,7 +19,7 @@ namespace SPG.Application.Services
 
       var teacherAvailabilitiesDto = new List<TeacherAvailabilityDto>();
 
-      teacherAvailabilities.ForEach(subject => { teacherAvailabilitiesDto.Add(_mapper.Map<TeacherAvailabilityDto>(subject)); });
+      teacherAvailabilities.ForEach(teacherAvailability => { teacherAvailabilitiesDto.Add(_mapper.Map<TeacherAvailabilityDto>(teacherAvailability)); });
 
       return teacherAvailabilitiesDto;
     }
@@ -30,23 +31,41 @@ namespace SPG.Application.Services
 
     public TeacherAvailabilityDto AddTeacherAvailability(TeacherAvailabilityDto dto)
     {
-      var subject = _mapper.Map<TeacherAvailabilityModel>(dto);
+      AddHexColor(dto);
+      var teacherAvailability = _mapper.Map<TeacherAvailabilityModel>(dto);
 
-      _repository.Add(subject);
+      _repository.Add(teacherAvailability);
 
-      return _mapper.Map<TeacherAvailabilityDto>(subject);
+      return _mapper.Map<TeacherAvailabilityDto>(teacherAvailability);
+    }
+    public IList<TeacherAvailabilityDto> AddTeacherAvailabilities(List<TeacherAvailabilityDto> dtoList)
+    {
+      foreach (var d in dtoList)
+        AddHexColor(d);
+
+      List<TeacherAvailabilityModel> teacherAvailabilities = _mapper.Map<List<TeacherAvailabilityModel>>(dtoList);
+
+      if (teacherAvailabilities.Any())
+        _repository.AddAll(teacherAvailabilities);
+
+      return _mapper.Map<List<TeacherAvailabilityDto>>(teacherAvailabilities);
     }
 
-    public TeacherAvailabilityDto UpdateTeacherAvailability(TeacherAvailabilityDto subject)
+    public TeacherAvailabilityDto UpdateTeacherAvailability(TeacherAvailabilityDto teacherAvailability)
     {
-      _repository.Update(_mapper.Map<TeacherAvailabilityModel>(subject));
+      _repository.Update(_mapper.Map<TeacherAvailabilityModel>(teacherAvailability));
 
-      return subject;
+      return teacherAvailability;
     }
 
     public void DeleteTeacherAvailability(int id)
     {
       _repository.Delete(id);
+    }
+
+    private static void AddHexColor(TeacherAvailabilityDto teacherAvailability)
+    {
+      teacherAvailability.Color = ColorUtils.GenerateHexColor(teacherAvailability.StartDateTime.ToString());
     }
   }
 

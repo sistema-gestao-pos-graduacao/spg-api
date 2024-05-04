@@ -9,7 +9,7 @@ namespace SPG.API.Controllers.TeacherAvailability
   [ApiController]
   [Route("api/[controller]")]
   [Authorize]
-  public class TeacherAvailabilitysController(ITeacherAvailabilityService service) : SPGBaseController<TeacherAvailabilityDto>
+  public class TeacherAvailabilitiesController(ITeacherAvailabilityService service) : SPGBaseController<TeacherAvailabilityDto>
   {
     private readonly ITeacherAvailabilityService _service = service;
 
@@ -36,6 +36,18 @@ namespace SPG.API.Controllers.TeacherAvailability
       var result = _service.AddTeacherAvailability(teacherAvailability);
 
       return CreatedAtAction(nameof(Get), new { id = result.Id }, result);
+    }
+
+    [HttpPost]
+    [Route("SaveAll")]
+    public IActionResult PostAll([FromBody] List<TeacherAvailabilityDto> teacherAvailabilities)
+    {
+      if (!ModelState.IsValid)
+        return BadRequest(ModelState);
+
+      var results = _service.AddTeacherAvailabilities(teacherAvailabilities);
+
+      return Ok(results);
     }
 
     [HttpPut]

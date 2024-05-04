@@ -8,6 +8,7 @@ namespace SPG.Domain.Interfaces
         SubjectDto GetSubjectById(int id);
         SubjectDto AddSubject(SubjectDto subject);
         SubjectDto UpdateSubject(SubjectDto subject);
+        IList<SubjectDto> AddSubjects(List<SubjectDto> subjects);
         void DeleteSubject(int id);
     }
 }

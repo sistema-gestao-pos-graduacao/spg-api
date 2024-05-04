@@ -61,6 +61,15 @@ namespace SPG.Data.Properties {
         }
         
         /// <summary>
+        ///   Consulta uma cadeia de caracteres localizada semelhante a Não existe aula cadastrada com o id:{0}.
+        /// </summary>
+        internal static string NotFoundClassSchedule {
+            get {
+                return ResourceManager.GetString("NotFoundClassSchedule", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Consulta uma cadeia de caracteres localizada semelhante a Não existe curso cadastrado com o id:{0}.
         /// </summary>
         internal static string NotFoundCourse {
@@ -93,6 +102,15 @@ namespace SPG.Data.Properties {
         internal static string NotFoundSubject {
             get {
                 return ResourceManager.GetString("NotFoundSubject", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Consulta uma cadeia de caracteres localizada semelhante a Não existe parametro cadastrado com o id:{0}.
+        /// </summary>
+        internal static string NotFoundSystemParams {
+            get {
+                return ResourceManager.GetString("NotFoundSystemParams", resourceCulture);
             }
         }
         

@@ -2,6 +2,7 @@
 using SPG.Domain.Dto;
 using SPG.Domain.Interfaces;
 using SPG.Domain.Model;
+using SPG.Domain.Utils;
 
 namespace SPG.Application.Services
 {
@@ -30,11 +31,25 @@ namespace SPG.Application.Services
 
     public SubjectDto AddSubject(SubjectDto dto)
     {
+      AddHexColor(dto);
       var subject = _mapper.Map<SubjectModel>(dto);
 
       _repository.Add(subject);
 
       return _mapper.Map<SubjectDto>(subject);
+    }
+
+    public IList<SubjectDto> AddSubjects(List<SubjectDto> dtoList)
+    {
+      foreach(var d in dtoList)
+        AddHexColor(d);
+
+      List<SubjectModel> subjects = _mapper.Map<List<SubjectModel>>(dtoList);
+
+      if(subjects.Any())
+        _repository.AddAll(subjects);
+
+      return _mapper.Map<List<SubjectDto>>(subjects);
     }
 
     public SubjectDto UpdateSubject(SubjectDto subject)
@@ -47,6 +62,11 @@ namespace SPG.Application.Services
     public void DeleteSubject(int id)
     {
       _repository.Delete(id);
+    }
+
+    private static void AddHexColor(SubjectDto subject)
+    {
+      subject.Color = ColorUtils.GenerateHexColor(subject.Name);
     }
   }
 

@@ -9,7 +9,9 @@ namespace SPG.Domain.Mappings
     public TeacherAvailabilityProfile()
     {
       CreateMap<TeacherAvailabilityModel, TeacherAvailabilityDto>()
-        .ReverseMap();
+        .ForMember(dest => dest.TeacherName, opt => opt.MapFrom(src => src.Teacher != null ? src.Teacher.Name : string.Empty))
+        .ReverseMap()
+        .ForMember(dest => dest.Teacher, opt => opt.Ignore());
     }
   }
 }
