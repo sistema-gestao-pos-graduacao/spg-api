@@ -28,6 +28,17 @@ namespace SPG.Data.Repositories
       teacherAvailability.Id = _context.TeacherAvailabilities.OrderByDescending(c => c.Id).Select(c => c.Id).FirstOrDefault();
     }
 
+    public void AddAll(IList<TeacherAvailabilityModel> teacherAvailabilities)
+    {
+      _context.TeacherAvailabilities.AddRange(teacherAvailabilities);
+      _context.SaveChanges();
+
+      var addedIds = _context.TeacherAvailabilities.OrderByDescending(c => c.Id).Select(c => c.Id).ToList();
+
+      for (int i = 0; i < teacherAvailabilities.Count; i++)
+        teacherAvailabilities[i].Id = addedIds[i];
+    }
+
     public void Update(TeacherAvailabilityModel teacherAvailability)
     {
       try

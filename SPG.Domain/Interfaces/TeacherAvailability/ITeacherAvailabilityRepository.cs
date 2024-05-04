@@ -7,6 +7,7 @@ namespace SPG.Domain.Interfaces
         IEnumerable<TeacherAvailabilityModel> GetAll();
         TeacherAvailabilityModel GetById(int id);
         void Add(TeacherAvailabilityModel teacherAvailability);
+        void AddAll(IList<TeacherAvailabilityModel> teacherAvailabilities);
         void Update(TeacherAvailabilityModel teacherAvailability);
         void Delete(int id);
     }
