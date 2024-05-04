@@ -7,6 +7,7 @@ using SPG.Domain.Enums;
 using SPG.Domain.Interfaces;
 using SPG.Domain.Mappings;
 using SPG.Domain.Model;
+using SPG.Domain.SystemParams;
 using System;
 
 namespace SPG.API
@@ -68,6 +69,7 @@ namespace SPG.API
       services.AddAutoMapper(typeof(CourseProfile));
       services.AddAutoMapper(typeof(CurriculumProfile));
       services.AddAutoMapper(typeof(ClassScheduleProfile));
+      services.AddAutoMapper(typeof(SystemParamsProfile));
       #endregion
 
       #region Repositories
@@ -77,6 +79,7 @@ namespace SPG.API
       services.AddScoped<ICourseRepository, CourseRepository>();
       services.AddScoped<ICurriculumRepository, CurriculumRepository>();
       services.AddScoped<IClassScheduleRepository, ClassScheduleRepository>();
+      services.AddScoped<ISystemParamsRepository, SystemParamsRepository>();
       #endregion
 
       #region Services
@@ -89,6 +92,11 @@ namespace SPG.API
       services.AddScoped<ICourseService, CourseService>();
       services.AddScoped<ICurriculumService, CurriculumService>();
       services.AddScoped<IClassScheduleService, ClassScheduleService>();
+      services.AddScoped<ISystemParamsService, SystemParamsService>();
+      #endregion
+
+      #region System Params
+      services.AddScoped<SystemParams>();
       #endregion
     }
 

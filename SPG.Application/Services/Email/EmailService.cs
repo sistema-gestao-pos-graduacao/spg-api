@@ -2,28 +2,29 @@
 using System.Net.Mail;
 using System.Net;
 using SPG.Domain.Interfaces;
+using SPG.Domain.SystemParams;
 
 namespace SPG.Application.Services
 {
-  public class EmailService(IConfiguration configuration) : IEmailService
+  public class EmailService(SystemParams systemParams) : IEmailService
   {
-    private readonly IConfiguration _configuration = configuration;
+    private readonly SystemParams _systemParams = systemParams;
 
     /// <summary>
     /// Envia email
     /// </summary>
     public async Task SendEmailAsync(string email, string subject, string message)
     {
-      var smtpClient = new SmtpClient(_configuration.GetSection("SmtpCredentials:ServerAddress").Value)
+      var smtpClient = new SmtpClient(_systemParams.SmtpServerAddress)
       {
-        Port = int.Parse(_configuration.GetSection("SmtpCredentials:Port").Value ??  ""),
-        Credentials = new NetworkCredential(_configuration.GetSection("SmtpCredentials:Username").Value, _configuration.GetSection("SmtpCredentials:Password").Value),
+        Port = int.Parse(_systemParams.SmtpPort),
+        Credentials = new NetworkCredential(_systemParams.SmtpUsername, _systemParams.SmtpPassword),
         EnableSsl = true,
       };
 
       var mailMessage = new MailMessage
       {
-        From = new MailAddress(_configuration.GetSection("SmtpCredentials:FromEmail").Value ?? ""),
+        From = new MailAddress(_systemParams.SmtpFromEmail),
         Subject = subject,
         Body = message,
         IsBodyHtml = true,
