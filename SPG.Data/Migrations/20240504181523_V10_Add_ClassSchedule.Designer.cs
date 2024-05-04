@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using SPG.Data;
 
@@ -11,9 +12,11 @@ using SPG.Data;
 namespace SPG.Data.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    partial class AppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20240504181523_V10_Add_ClassSchedule")]
+    partial class V10_Add_ClassSchedule
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -228,15 +231,15 @@ namespace SPG.Data.Migrations
                     b.Property<DateTime>("StartDateTime")
                         .HasColumnType("datetime2");
 
-                    b.Property<int>("SubjectId")
+                    b.Property<int>("TeacherId")
                         .HasColumnType("int");
 
-                    b.Property<int?>("TeacherId")
-                        .HasColumnType("int");
+                    b.Property<string>("Title")
+                        .IsRequired()
+                        .HasMaxLength(255)
+                        .HasColumnType("nvarchar(255)");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("SubjectId");
 
                     b.HasIndex("TeacherId");
 
@@ -614,18 +617,11 @@ namespace SPG.Data.Migrations
 
             modelBuilder.Entity("SPG.Domain.Model.ClassScheduleModel", b =>
                 {
-                    b.HasOne("SPG.Domain.Model.PersonModel", "Subject")
-                        .WithMany()
-                        .HasForeignKey("SubjectId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
                     b.HasOne("SPG.Domain.Model.PersonModel", "Teacher")
                         .WithMany()
                         .HasForeignKey("TeacherId")
-                        .OnDelete(DeleteBehavior.NoAction);
-
-                    b.Navigation("Subject");
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.Navigation("Teacher");
                 });

@@ -4,56 +4,56 @@ using SPG.API.Controllers.Base;
 using SPG.Domain.Dto;
 using SPG.Domain.Interfaces;
 
-namespace SPG.API.Controllers.Subject
+namespace SPG.API.Controllers.ClassSchedule
 {
   [ApiController]
   [Route("api/[controller]")]
   [Authorize]
-  public class SubjectsController(ISubjectService service) : SPGBaseController<SubjectDto>
+  public class ClassScheduleController(IClassScheduleService service) : SPGBaseController<ClassScheduleDto>
   {
-    private readonly ISubjectService _service = service;
+    private readonly IClassScheduleService _service = service;
 
     [HttpGet]
     public IActionResult GetAll([FromQuery] Dictionary<string, string> filters)
     {
-      var subjects = _service.GetAllSubjects();
+      var subjects = _service.GetAllClassSchedules();
       return Ok(ApplyFilters(subjects, filters));
     }
 
     [HttpGet("{id}")]
     public IActionResult Get(int id)
     {
-      var subject = _service.GetSubjectById(id);
+      var subject = _service.GetClassScheduleById(id);
       return Ok(subject);
     }
 
     [HttpPost]
-    public IActionResult Post([FromBody] SubjectDto subject)
+    public IActionResult Post([FromBody] ClassScheduleDto subject)
     {
       if (!ModelState.IsValid)
         return BadRequest(ModelState);
 
-      var result = _service.AddSubject(subject);
+      var result = _service.AddClassSchedule(subject);
 
       return CreatedAtAction(nameof(Get), new { id = result.Id }, result);
     }
 
     [HttpPost]
     [Route("SaveAll")]
-    public IActionResult PostAll([FromBody] List<SubjectDto> subjects)
+    public IActionResult PostAll([FromBody] List<ClassScheduleDto> subjects)
     {
       if (!ModelState.IsValid)
         return BadRequest(ModelState);
 
-      var results = _service.AddSubjects(subjects);
+      var results = _service.AddClassSchedules(subjects);
 
       return Ok(results);
     }
 
     [HttpPut]
-    public IActionResult Put([FromBody] SubjectDto subject)
+    public IActionResult Put([FromBody] ClassScheduleDto subject)
     {
-      _service.UpdateSubject(subject);
+      _service.UpdateClassSchedule(subject);
 
       return NoContent();
     }
@@ -61,12 +61,12 @@ namespace SPG.API.Controllers.Subject
     [HttpDelete("{id}")]
     public IActionResult Delete(int id)
     {
-      var existingSubject = _service.GetSubjectById(id);
-      if (existingSubject == null)
+      var existingClassSchedule = _service.GetClassScheduleById(id);
+      if (existingClassSchedule == null)
       {
         return NotFound();
       }
-      _service.DeleteSubject(id);
+      _service.DeleteClassSchedule(id);
       return NoContent();
     }
   }

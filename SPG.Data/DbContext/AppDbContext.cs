@@ -26,6 +26,10 @@ namespace SPG.Data
 
     public DbSet<CurriculumModel> Curriculums { get; set; }
 
+    public DbSet<ClassScheduleModel> ClassSchedules { get; set; }
+
+    public DbSet<SystemParamsModel> SystemParams { get; set; }
+
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
       base.OnModelCreating(modelBuilder);
@@ -41,6 +45,18 @@ namespace SPG.Data
           .WithMany()
           .HasForeignKey(c => c.CoordinatorId)
           .OnDelete(DeleteBehavior.SetNull);
+
+      modelBuilder.Entity<ClassScheduleModel>()
+          .HasOne(c => c.Teacher)
+          .WithMany()
+          .HasForeignKey(c => c.TeacherId)
+          .OnDelete(DeleteBehavior.NoAction);
+
+      modelBuilder.Entity<ClassScheduleModel>()
+          .HasOne(c => c.Subject)
+          .WithMany()
+          .HasForeignKey(c => c.SubjectId)
+          .OnDelete(DeleteBehavior.Cascade);
 
       modelBuilder.Entity<CurriculumModel>()
           .HasOne(c => c.Course)
