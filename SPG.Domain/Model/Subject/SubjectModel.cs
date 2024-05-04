@@ -37,7 +37,7 @@ namespace SPG.Domain.Model
     public List<string> Students { get; set; } = [];
 
     [StringLength(1000)]
-    public string Considerations = string.Empty;
+    public string Considerations { get; set; } = string.Empty;
 
     public WeekDaysEnum WeekDay { get; set; }
 
