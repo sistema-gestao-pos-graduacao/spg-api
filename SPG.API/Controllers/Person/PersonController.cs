@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using SPG.API.Controllers.Base;
 using SPG.Domain.Dto;
 using SPG.Domain.Interfaces;
 
@@ -8,15 +9,16 @@ namespace SPG.API.Controllers.Person
   [ApiController]
   [Route("api/[controller]")]
   [Authorize]
-  public class PersonsController(IPersonService service) : ControllerBase
+  public class PersonsController(IPersonService service) : SPGBaseController<PersonDto>
   {
     private readonly IPersonService _service = service;
 
     [HttpGet]
-    public IActionResult Get()
+    public IActionResult GetAll([FromQuery] Dictionary<string, string> filters)
     {
       var persons = _service.GetAllPersons();
-      return Ok(persons);
+
+      return Ok(ApplyFilters(persons, filters));
     }
 
     [HttpGet("{id}")]

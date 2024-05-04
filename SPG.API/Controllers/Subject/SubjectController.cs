@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
+using SPG.API.Controllers.Base;
 using SPG.Domain.Dto;
 using SPG.Domain.Interfaces;
 
@@ -9,15 +9,15 @@ namespace SPG.API.Controllers.Subject
   [ApiController]
   [Route("api/[controller]")]
   [Authorize]
-  public class SubjectsController(ISubjectService service) : ControllerBase
+  public class SubjectsController(ISubjectService service) : SPGBaseController<SubjectDto>
   {
     private readonly ISubjectService _service = service;
 
     [HttpGet]
-    public IActionResult Get()
+    public IActionResult GetAll([FromQuery] Dictionary<string, string> filters)
     {
       var subjects = _service.GetAllSubjects();
-      return Ok(subjects);
+      return Ok(ApplyFilters(subjects, filters));
     }
 
     [HttpGet("{id}")]

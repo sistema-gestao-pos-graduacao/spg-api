@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using SPG.API.Controllers.Base;
 using SPG.Domain.Dto;
 using SPG.Domain.Interfaces;
 
@@ -9,15 +10,15 @@ namespace SPG.API.Controllers.Users
   [Authorize(Roles = "Admin")]
   [Route("api/[controller]")]
   [ApiController]
-  public class UsersController(IUserService userService) : ControllerBase
+  public class UsersController(IUserService userService) : SPGBaseController<UserDto>
   {
     private readonly IUserService _userService = userService;
 
     [HttpGet]
-    public async Task<ActionResult<IEnumerable<UserDto>>> GetAll()
+    public async Task<ActionResult<IEnumerable<UserDto>>> GetAll([FromQuery] Dictionary<string, string> filters)
     {
       var users = await _userService.GetAllUsersAsync();
-      return Ok(users);
+      return Ok(ApplyFilters(users, filters));
     }
 
     [HttpGet("{id}")]

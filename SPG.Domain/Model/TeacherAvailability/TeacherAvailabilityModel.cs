@@ -18,5 +18,8 @@ namespace SPG.Domain.Model
 
     [Required]
     public DateTime EndDateTime { get; set; }
+
+    [StringLength(7)]
+    public string Color { get; set; } = string.Empty;
   }
 }
