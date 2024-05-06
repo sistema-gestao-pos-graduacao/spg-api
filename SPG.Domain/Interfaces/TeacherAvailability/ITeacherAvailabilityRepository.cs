@@ -10,5 +10,6 @@ namespace SPG.Domain.Interfaces
         void AddAll(IList<TeacherAvailabilityModel> teacherAvailabilities);
         void Update(TeacherAvailabilityModel teacherAvailability);
         void Delete(int id);
+        void DeleteAll(List<int> ids);
     }
 }

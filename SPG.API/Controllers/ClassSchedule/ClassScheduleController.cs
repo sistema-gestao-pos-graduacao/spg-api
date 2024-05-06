@@ -69,5 +69,17 @@ namespace SPG.API.Controllers.ClassSchedule
       _service.DeleteClassSchedule(id);
       return NoContent();
     }
+
+    [HttpPost]
+    [Route("DeleteAll")]
+    public IActionResult DeleteAll([FromBody] List<int> ids)
+    {
+      if (!ModelState.IsValid)
+        return BadRequest(ModelState);
+
+      _service.DeleteClassSchedules(ids);
+
+      return NoContent();
+    }
   }
 }
