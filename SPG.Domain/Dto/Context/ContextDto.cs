@@ -8,6 +8,11 @@
     public string UserId { get; set; } = "";
 
     /// <summary>
+    /// Id de pessoa
+    /// </summary>
+    public int PersonId { get; set; }
+
+    /// <summary>
     /// Nome de usuário.
     /// </summary>
     public string Username { get; set; } = "";

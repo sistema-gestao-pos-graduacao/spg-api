@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using SPG.API.Properties;
 using SPG.Domain.Dto;
+using SPG.Domain.Interfaces;
 using SPG.Domain.Model;
 using System.Security.Claims;
 
@@ -11,9 +12,10 @@ namespace SPG.API.Controllers.Login
   [Route("api/[controller]")]
   [ApiController]
   [Authorize]
-  public class ContextController(UserManager<UserModel> userManager) : ControllerBase
+  public class ContextController(UserManager<UserModel> userManager, IPersonService personService) : ControllerBase
   {
     private readonly UserManager<UserModel> _userManager = userManager;
+    private readonly IPersonService _personService = personService;
 
     [HttpGet]
     public async Task<IActionResult> Get()
@@ -26,11 +28,14 @@ namespace SPG.API.Controllers.Login
       if (user == null)
         return NotFound(Resources.UserNotFound);
 
+      var person = _personService.GetPersonByUserId(userId);
+
       var roles = await _userManager.GetRolesAsync(user);
 
       return Ok(new ContextDto
       {
         UserId = user.Id,
+        PersonId = person.Id,
         Username = user.UserName ?? "",
         Email = user.Email ?? "",
         Roles = roles

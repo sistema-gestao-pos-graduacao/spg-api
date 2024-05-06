@@ -10,5 +10,6 @@ namespace SPG.Domain.Interfaces
         IList<TeacherAvailabilityDto> AddTeacherAvailabilities(List<TeacherAvailabilityDto> teacherAvailabilities);
         TeacherAvailabilityDto UpdateTeacherAvailability(TeacherAvailabilityDto teacherAvailability);
         void DeleteTeacherAvailability(int id);
+        void DeleteTeacherAvailabilities(List<int> ids);
     }
 }

@@ -63,6 +63,11 @@ namespace SPG.Application.Services
       _repository.Delete(id);
     }
 
+    public void DeleteTeacherAvailabilities(List<int> ids)
+    {
+      _repository.DeleteAll(ids);
+    }
+
     private static void AddHexColor(TeacherAvailabilityDto teacherAvailability)
     {
       teacherAvailability.Color = ColorUtils.GenerateHexColor(teacherAvailability.StartDateTime.ToString());

@@ -63,6 +63,11 @@ namespace SPG.Application.Services
       _repository.Delete(id);
     }
 
+    public void DeleteClassSchedules(List<int> ids)
+    {
+      _repository.DeleteAll(ids);
+    }
+
     private static void AddHexColor(ClassScheduleDto classSchedule)
     {
       classSchedule.Color = ColorUtils.GenerateHexColor(classSchedule.StartDateTime.ToString());

@@ -6,6 +6,7 @@ namespace SPG.Domain.Interfaces
     {
         IEnumerable<PersonModel> GetAll();
         PersonModel GetById(int id);
+        PersonModel GetByUserId(string userIdd);
         void Add(PersonModel person);
         void Update(PersonModel person);
         void Delete(int id);
