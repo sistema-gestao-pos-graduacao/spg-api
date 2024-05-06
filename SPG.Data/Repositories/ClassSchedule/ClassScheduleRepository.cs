@@ -12,7 +12,6 @@ namespace SPG.Data.Repositories
     public IEnumerable<ClassScheduleModel> GetAll()
     {
       return _context.ClassSchedules
-        .Include(c => c.Teacher)
         .Include(c => c.Subject)
         .ToList();
     }
@@ -20,7 +19,6 @@ namespace SPG.Data.Repositories
     public ClassScheduleModel GetById(int id)
     {
       var classSchedule = _context.ClassSchedules
-        .Include(c => c.Teacher)
         .Include(c => c.Subject)
         .FirstOrDefault(p => p.Id == id);
 
@@ -50,7 +48,6 @@ namespace SPG.Data.Repositories
       try
       {
         var model = GetById(classSchedule.Id);
-        model.TeacherId = classSchedule.TeacherId;
         model.SubjectId = classSchedule.SubjectId;
         model.StartDateTime = classSchedule.StartDateTime;
         model.EndDateTime = classSchedule.EndDateTime;
