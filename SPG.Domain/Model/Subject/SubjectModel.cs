@@ -20,7 +20,7 @@ namespace SPG.Domain.Model
     public CurriculumModel? Curriculum { get; set; }
     
     [Required]
-    public int Hours { get; set; }
+    public int NumberOfClasses { get; set; }
 
     [ForeignKey("Teacher")]
     public int? TeacherId { get; set; }

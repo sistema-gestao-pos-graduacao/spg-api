@@ -58,7 +58,7 @@ namespace SPG.Data.Repositories
         model.Considerations = subject.Considerations;
         model.Location = subject.Location;
         model.Students = subject.Students;
-        model.Hours = subject.Hours;
+        model.NumberOfClasses = subject.NumberOfClasses;
         model.Syllabus = subject.Syllabus;
 
         _context.Entry(model).State = EntityState.Modified;

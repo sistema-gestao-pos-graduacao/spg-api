@@ -16,7 +16,7 @@ namespace SPG.Domain.Dto
 
         public string TeacherName { get; set; } = string.Empty;
 
-        public int Hours { get; set; }
+        public int NumberOfClasses { get; set; }
 
         public string Location { get; set; } = string.Empty;
 
