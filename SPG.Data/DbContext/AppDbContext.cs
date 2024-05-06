@@ -47,12 +47,6 @@ namespace SPG.Data
           .OnDelete(DeleteBehavior.SetNull);
 
       modelBuilder.Entity<ClassScheduleModel>()
-          .HasOne(c => c.Teacher)
-          .WithMany()
-          .HasForeignKey(c => c.TeacherId)
-          .OnDelete(DeleteBehavior.NoAction);
-
-      modelBuilder.Entity<ClassScheduleModel>()
           .HasOne(c => c.Subject)
           .WithMany()
           .HasForeignKey(c => c.SubjectId)
