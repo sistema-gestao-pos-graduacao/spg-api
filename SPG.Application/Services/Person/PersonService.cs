@@ -32,6 +32,11 @@ namespace SPG.Application.Services
       return _mapper.Map<PersonDto>(_repository.GetById(id));
     }
 
+    public PersonDto GetPersonByUserId(string userId)
+    {
+      return _mapper.Map<PersonDto>(_repository.GetByUserId(userId));
+    }
+
     public async Task<PersonDto> AddPerson(PersonDto dto)
     {
       if(dto.PersonType == null)

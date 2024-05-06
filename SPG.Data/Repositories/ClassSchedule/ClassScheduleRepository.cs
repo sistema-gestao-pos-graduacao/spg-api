@@ -73,5 +73,15 @@ namespace SPG.Data.Repositories
         _context.SaveChanges();
       }
     }
+
+    public void DeleteAll(List<int> ids)
+    {
+      var classSchedule = _context.ClassSchedules.Where(c => ids.Contains(c.Id)).ToList();
+      if (classSchedule != null)
+      {
+        _context.ClassSchedules.RemoveRange(classSchedule);
+        _context.SaveChanges();
+      }
+    }
   }
 }

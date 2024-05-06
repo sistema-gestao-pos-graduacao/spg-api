@@ -69,5 +69,17 @@ namespace SPG.API.Controllers.TeacherAvailability
       _service.DeleteTeacherAvailability(id);
       return NoContent();
     }
+
+    [HttpPost]
+    [Route("DeleteAll")]
+    public IActionResult DeleteAll([FromBody] List<int> ids)
+    {
+      if (!ModelState.IsValid)
+        return BadRequest(ModelState);
+
+      _service.DeleteTeacherAvailabilities(ids);
+
+      return NoContent();
+    }
   }
 }

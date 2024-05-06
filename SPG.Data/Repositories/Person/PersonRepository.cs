@@ -20,6 +20,13 @@ namespace SPG.Data.Repositories
 
       return person ?? throw new Exception(string.Format(Resources.NotFoundPerson, id));
     }
+    
+    public PersonModel GetByUserId(string userId)
+    {
+      var person = _context.Persons.Include(c => c.User).FirstOrDefault(p => p.UserId == userId);
+
+      return person ?? throw new Exception(string.Format(Resources.NotFoundPerson, userId));
+    }
 
     public void Add(PersonModel person)
     {

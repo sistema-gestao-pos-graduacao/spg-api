@@ -66,5 +66,15 @@ namespace SPG.Data.Repositories
         _context.SaveChanges();
       }
     }
+
+    public void DeleteAll(List<int> ids)
+    {
+      var teacherAvailability = _context.TeacherAvailabilities.Where(c => ids.Contains(c.Id)).ToList();
+      if (teacherAvailability != null)
+      {
+        _context.TeacherAvailabilities.RemoveRange(teacherAvailability);
+        _context.SaveChanges();
+      }
+    }
   }
 }

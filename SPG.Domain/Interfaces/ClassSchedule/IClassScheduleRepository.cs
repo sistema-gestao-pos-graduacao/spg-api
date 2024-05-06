@@ -10,5 +10,6 @@ namespace SPG.Domain.Interfaces
         void AddAll(IList<ClassScheduleModel> classSchedules);
         void Update(ClassScheduleModel classSchedule);
         void Delete(int id);
+        void DeleteAll(List<int> ids);
     }
 }
