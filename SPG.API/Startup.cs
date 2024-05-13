@@ -70,6 +70,7 @@ namespace SPG.API
       services.AddAutoMapper(typeof(CurriculumProfile));
       services.AddAutoMapper(typeof(ClassScheduleProfile));
       services.AddAutoMapper(typeof(SystemParamsProfile));
+      services.AddAutoMapper(typeof(ClassProfile));
       #endregion
 
       #region Repositories
@@ -80,6 +81,7 @@ namespace SPG.API
       services.AddScoped<ICurriculumRepository, CurriculumRepository>();
       services.AddScoped<IClassScheduleRepository, ClassScheduleRepository>();
       services.AddScoped<ISystemParamsRepository, SystemParamsRepository>();
+      services.AddScoped<IClassRepository, ClassRepository>();
       #endregion
 
       #region Services
@@ -93,6 +95,7 @@ namespace SPG.API
       services.AddScoped<ICurriculumService, CurriculumService>();
       services.AddScoped<IClassScheduleService, ClassScheduleService>();
       services.AddScoped<ISystemParamsService, SystemParamsService>();
+      services.AddScoped<IClassService, ClassService>();
       #endregion
 
       #region System Params

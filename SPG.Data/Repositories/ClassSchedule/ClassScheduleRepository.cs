@@ -13,6 +13,7 @@ namespace SPG.Data.Repositories
     {
       return _context.ClassSchedules
         .Include(c => c.Subject)
+        .ThenInclude(c => c.Teacher)
         .ToList();
     }
 
@@ -20,6 +21,7 @@ namespace SPG.Data.Repositories
     {
       var classSchedule = _context.ClassSchedules
         .Include(c => c.Subject)
+        .ThenInclude(c => c.Teacher)
         .FirstOrDefault(p => p.Id == id);
 
       return classSchedule ?? throw new Exception(string.Format(Resources.NotFoundClassSchedule, id));

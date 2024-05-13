@@ -53,11 +53,7 @@ namespace SPG.Data.Repositories
         model.WeekDay = subject.WeekDay;
         model.TeacherId = subject.TeacherId;  
         model.CurriculumId = subject.CurriculumId;
-        model.Room = subject.Room;  
-        model.Building =  subject.Building;
         model.Considerations = subject.Considerations;
-        model.Location = subject.Location;
-        model.Students = subject.Students;
         model.NumberOfClasses = subject.NumberOfClasses;
         model.Syllabus = subject.Syllabus;
 
@@ -76,6 +72,16 @@ namespace SPG.Data.Repositories
       if (subject != null)
       {
         _context.Subjects.Remove(subject);
+        _context.SaveChanges();
+      }
+    }
+
+    public void DeleteAll(List<int> ids)
+    {
+      var subjects = _context.Subjects.Where(c => ids.Contains(c.Id)).ToList();
+      if (subjects != null)
+      {
+        _context.Subjects.RemoveRange(subjects);
         _context.SaveChanges();
       }
     }

@@ -136,6 +136,9 @@
   <data name="ValidEmptyUser" xml:space="preserve">
     <value>Nenhum usuário encontrado</value>
   </data>
+  <data name="ValidResetPasswordError" xml:space="preserve">
+    <value>O processo de criação de uma nova senha falhou!</value>
+  </data>
   <data name="ValidUserException" xml:space="preserve">
     <value>Não é possível criar usuário sem o nome de usuário</value>
   </data>

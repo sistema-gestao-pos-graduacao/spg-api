@@ -110,6 +110,15 @@ namespace SPG.Application.Properties {
         }
         
         /// <summary>
+        ///   Consulta uma cadeia de caracteres localizada semelhante a O processo de criação de uma nova senha falhou!.
+        /// </summary>
+        internal static string ValidResetPasswordError {
+            get {
+                return ResourceManager.GetString("ValidResetPasswordError", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Consulta uma cadeia de caracteres localizada semelhante a Não é possível criar usuário sem o nome de usuário.
         /// </summary>
         internal static string ValidUserException {

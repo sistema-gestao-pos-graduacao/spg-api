@@ -27,15 +27,6 @@ namespace SPG.Domain.Model
 
     public PersonModel? Teacher { get; set; }
 
-    [StringLength(255)]
-    public string Location { get; set; } = string.Empty;
-
-    public int? Building { get; set; }
-
-    public int? Room { get; set; }
-
-    public List<string> Students { get; set; } = [];
-
     [StringLength(1000)]
     public string Considerations { get; set; } = string.Empty;
 

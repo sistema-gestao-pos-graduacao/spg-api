@@ -149,16 +149,30 @@ public async Task PutUserRole(string nomeDoUsuario, IList<string> roleNames)
       if (user == null || string.IsNullOrEmpty(user.Email))
         return;
 
-      var token = await _userManager.GeneratePasswordResetTokenAsync(user);
+      var password = await GeneratePasswordAsync(user.Id);
 
       await _emailService.SendEmailAsync(
         user.Email,
-        "Password Reset",
-        @$"Please reset your password by clicking this link: 
-           <a href='www.url.com/{token}'>Resetar Senha</a>"
+        "Nova senha de acesso ao SGP",
+        @$"A sua nova senha de acesso é: 
+           {password}"
         );
 
       return;
+    }
+
+    public async Task<string> GeneratePasswordAsync(string userId)
+    {
+      var user = await _userManager.FindByIdAsync(userId) ?? throw new InvalidOperationException(Resources.ValidEmptyUser);
+      string newPassword = Guid.NewGuid().ToString().Replace("-", "").Substring(0, 8);
+
+      var token = await _userManager.GeneratePasswordResetTokenAsync(user);
+      var result = await _userManager.ResetPasswordAsync(user, token, newPassword);
+      
+      if (!result.Succeeded)
+        throw new InvalidOperationException(Resources.ValidResetPasswordError);
+
+      return newPassword;
     }
 
     /// <summary>

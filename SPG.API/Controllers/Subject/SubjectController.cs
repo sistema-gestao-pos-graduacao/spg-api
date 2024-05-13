@@ -69,5 +69,17 @@ namespace SPG.API.Controllers.Subject
       _service.DeleteSubject(id);
       return NoContent();
     }
+
+    [HttpPost]
+    [Route("DeleteAll")]
+    public IActionResult DeleteAll([FromBody] List<int> ids)
+    {
+      if (!ModelState.IsValid)
+        return BadRequest(ModelState);
+
+      _service.DeleteSubjects(ids);
+
+      return NoContent();
+    }
   }
 }
