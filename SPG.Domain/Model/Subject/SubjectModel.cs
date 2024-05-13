@@ -37,5 +37,12 @@ namespace SPG.Domain.Model
 
     [StringLength(7)]
     public string Color { get; set; } = string.Empty;
+
+    [StringLength(255)]
+    public string Location { get; set; } = string.Empty;
+
+    public int? Building { get; set; }
+
+    public int? Room { get; set; }
   }
 }

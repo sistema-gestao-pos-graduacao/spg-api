@@ -9,9 +9,9 @@ namespace SPG.Domain.Mappings
         public ClassProfile()
         {
             CreateMap<ClassModel, ClassDto>()
-              .ForMember(dest => dest.SubjectName, opt => opt.MapFrom(src => src.Subject != null ? src.Subject.Name : string.Empty))
+              .ForMember(dest => dest.SubjectName, opt => opt.MapFrom(src => src.Curriculum != null ? src.Curriculum.Name : string.Empty))
               .ReverseMap()
-              .ForMember(dest => dest.Subject, opt => opt.Ignore()); ;
+              .ForMember(dest => dest.Curriculum, opt => opt.Ignore()); ;
         }
     }
 }
