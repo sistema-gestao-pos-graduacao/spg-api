@@ -48,14 +48,14 @@ namespace SPG.API.Controllers.Person
     }
 
     [HttpDelete("{id}")]
-    public IActionResult Delete(int id)
+    public async Task<IActionResult> Delete(int id)
     {
       var existingPerson = _service.GetPersonById(id);
       if (existingPerson == null)
       {
           return NotFound();
       }
-      _service.DeletePerson(id);
+      await _service.DeletePerson(id);
       return NoContent();
     }
   }

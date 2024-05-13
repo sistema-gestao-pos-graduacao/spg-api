@@ -63,6 +63,10 @@ namespace SPG.Application.Services
     {
       _repository.Delete(id);
     }
+    public void DeleteSubjects(List<int> ids)
+    {
+      _repository.DeleteAll(ids);
+    }
 
     private static void AddHexColor(SubjectDto subject)
     {

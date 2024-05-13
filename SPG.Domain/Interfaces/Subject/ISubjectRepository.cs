@@ -10,5 +10,6 @@ namespace SPG.Domain.Interfaces
         void AddAll(IList<SubjectModel> subjects);
         void Update(SubjectModel subject);
         void Delete(int id);
+      void DeleteAll(List<int> ids);
     }
 }

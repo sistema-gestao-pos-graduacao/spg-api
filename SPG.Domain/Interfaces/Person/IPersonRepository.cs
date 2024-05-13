@@ -9,6 +9,6 @@ namespace SPG.Domain.Interfaces
         PersonModel GetByUserId(string userIdd);
         void Add(PersonModel person);
         void Update(PersonModel person);
-        void Delete(int id);
+        Task Delete(int id);
     }
 }

@@ -20,21 +20,12 @@ namespace SPG.Domain.Model
     public CurriculumModel? Curriculum { get; set; }
     
     [Required]
-    public int Hours { get; set; }
+    public int NumberOfClasses { get; set; }
 
     [ForeignKey("Teacher")]
     public int? TeacherId { get; set; }
 
     public PersonModel? Teacher { get; set; }
-
-    [StringLength(255)]
-    public string Location { get; set; } = string.Empty;
-
-    public int? Building { get; set; }
-
-    public int? Room { get; set; }
-
-    public List<string> Students { get; set; } = [];
 
     [StringLength(1000)]
     public string Considerations { get; set; } = string.Empty;
