@@ -73,9 +73,9 @@ namespace SPG.Application.Services
       return person;
     }
 
-    public void DeletePerson(int id)
+    public async Task DeletePerson(int id)
     {
-      _repository.Delete(id);
+      await _repository.Delete(id);
     }
   }
 

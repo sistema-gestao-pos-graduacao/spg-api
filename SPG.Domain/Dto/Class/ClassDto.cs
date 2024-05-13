@@ -1,23 +1,15 @@
-﻿using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
-
-namespace SPG.Domain.Model
+﻿namespace SPG.Domain.Dto
 {
-  public class ClassModel()
+  public class ClassDto
   {
-    [Key]
     public int Id { get; set; }
 
-    [ForeignKey("Subject")]
     public int SubjectId { get; set; }
 
-    public SubjectModel? Subject { get; set; }
-    
-    [Required]
-    [StringLength(200)]
+    public string SubjectName { get; set; } = string.Empty;
+
     public string Name { get; set; } = string.Empty;
 
-    [StringLength(255)]
     public string Location { get; set; } = string.Empty;
 
     public int? Building { get; set; }

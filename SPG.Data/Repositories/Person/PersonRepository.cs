@@ -55,7 +55,7 @@ namespace SPG.Data.Repositories
       }
     }
 
-    public void Delete(int id)
+    public async Task Delete(int id)
     {
       var person = _context.Persons.FirstOrDefault(p => p.Id == id);
       if (person != null)
@@ -63,7 +63,7 @@ namespace SPG.Data.Repositories
         try
         {
           _context.Persons.Remove(person);
-          _userService.DeleteUserAsync(person.UserId);
+          await _userService.DeleteUserAsync(person.UserId);
           _context.SaveChanges();
         }
         catch (Exception ex)

@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using SPG.Data;
 
@@ -11,9 +12,11 @@ using SPG.Data;
 namespace SPG.Data.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    partial class AppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20240506221524_V16_Update_Subject")]
+    partial class V16_Update_Subject
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -194,32 +197,17 @@ namespace SPG.Data.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<int?>("Building")
+                    b.Property<int>("CurriculumId")
                         .HasColumnType("int");
-
-                    b.Property<string>("Location")
-                        .IsRequired()
-                        .HasMaxLength(255)
-                        .HasColumnType("nvarchar(255)");
 
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasMaxLength(200)
                         .HasColumnType("nvarchar(200)");
 
-                    b.Property<int?>("Room")
-                        .HasColumnType("int");
-
-                    b.Property<string>("Students")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("SubjectId")
-                        .HasColumnType("int");
-
                     b.HasKey("Id");
 
-                    b.HasIndex("SubjectId");
+                    b.HasIndex("CurriculumId");
 
                     b.ToTable("Classes");
                 });
@@ -404,6 +392,9 @@ namespace SPG.Data.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
+                    b.Property<int?>("Building")
+                        .HasColumnType("int");
+
                     b.Property<string>("Color")
                         .IsRequired()
                         .HasMaxLength(7)
@@ -417,6 +408,11 @@ namespace SPG.Data.Migrations
                     b.Property<int>("CurriculumId")
                         .HasColumnType("int");
 
+                    b.Property<string>("Location")
+                        .IsRequired()
+                        .HasMaxLength(255)
+                        .HasColumnType("nvarchar(255)");
+
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasMaxLength(500)
@@ -424,6 +420,13 @@ namespace SPG.Data.Migrations
 
                     b.Property<int>("NumberOfClasses")
                         .HasColumnType("int");
+
+                    b.Property<int?>("Room")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Students")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Syllabus")
                         .IsRequired()
@@ -627,13 +630,13 @@ namespace SPG.Data.Migrations
 
             modelBuilder.Entity("SPG.Domain.Model.ClassModel", b =>
                 {
-                    b.HasOne("SPG.Domain.Model.SubjectModel", "Subject")
+                    b.HasOne("SPG.Domain.Model.CurriculumModel", "Curriculum")
                         .WithMany()
-                        .HasForeignKey("SubjectId")
+                        .HasForeignKey("CurriculumId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("Subject");
+                    b.Navigation("Curriculum");
                 });
 
             modelBuilder.Entity("SPG.Domain.Model.ClassScheduleModel", b =>
