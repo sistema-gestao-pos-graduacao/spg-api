@@ -11,12 +11,12 @@ namespace SPG.Data.Repositories
 
     public IEnumerable<ClassModel> GetAll()
     {
-      return _context.Classes.Include(c => c.Subject).ToList();
+      return _context.Classes.Include(c => c.Curriculum).ToList();
     }
 
     public ClassModel GetById(int id)
     {
-      var classObj = _context.Classes.Include(c => c.Subject).FirstOrDefault(p => p.Id == id);
+      var classObj = _context.Classes.Include(c => c.Curriculum).FirstOrDefault(p => p.Id == id);
 
       return classObj ?? throw new Exception(string.Format(Resources.NotFoundClass, id));
     }
@@ -34,10 +34,7 @@ namespace SPG.Data.Repositories
       {
         var model = GetById(classObj.Id);
         model.Name = classObj.Name;
-        model.SubjectId = classObj.SubjectId;
-        model.Room = classObj.Room;
-        model.Building = classObj.Building;
-        model.Location = classObj.Location;
+        model.CurriculumId = classObj.CurriculumId;
         model.Students = classObj.Students;
 
         _context.Entry(model).State = EntityState.Modified;
