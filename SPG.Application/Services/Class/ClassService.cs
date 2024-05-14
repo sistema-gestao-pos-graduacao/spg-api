@@ -5,10 +5,11 @@ using SPG.Domain.Model;
 
 namespace SPG.Application.Services
 {
-  public class ClassService(IClassRepository repository, IMapper mapper) : IClassService
+  public class ClassService(IClassRepository repository, IMapper mapper, IClassScheduleService classScheduleService) : IClassService
   {
     private readonly IMapper _mapper = mapper;
     private readonly IClassRepository _repository = repository;
+    private readonly IClassScheduleService _classScheduleService = classScheduleService;
 
     public IEnumerable<ClassDto> GetAllClasses()
     {
@@ -31,6 +32,7 @@ namespace SPG.Application.Services
     public ClassDto AddClass(ClassDto dto)
     {
       var classObj = _mapper.Map<ClassModel>(dto);
+      classObj.Name = GenerateNameClass(dto);
 
       _repository.Add(classObj);
 
@@ -46,7 +48,18 @@ namespace SPG.Application.Services
 
     public void DeleteClass(int id)
     {
+      _classScheduleService.RemoveClassIdFromRelatedClasses(id);
       _repository.Delete(id);
+    }
+
+    private static string GenerateNameClass(ClassDto dto)
+    {
+      var date = DateTime.UtcNow;
+      var semester = date.Month < 6 ? "1" : "2";
+      var random = new Random(date.Day + date.Month + date.Year);
+      int randomNumber = random.Next(100, int.MaxValue);
+
+      return $"0{randomNumber}{dto.CurriculumId}_{semester}_{date.Year}";
     }
   }
 

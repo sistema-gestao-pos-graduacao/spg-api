@@ -21,5 +21,7 @@ namespace SPG.Domain.Model
 
     [StringLength(7)]
     public string Color { get; set; } = string.Empty;
+
+    public IList<int> RelatedClassesIds { get; set; } = [];
   }
 }

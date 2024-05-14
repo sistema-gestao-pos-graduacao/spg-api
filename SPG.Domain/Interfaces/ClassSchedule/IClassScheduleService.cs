@@ -11,5 +11,6 @@ namespace SPG.Domain.Interfaces
         IList<ClassScheduleDto> AddClassSchedules(List<ClassScheduleDto> ClassSchedules);
         void DeleteClassSchedule(int id);
         void DeleteClassSchedules(List<int> ids);
+        void RemoveClassIdFromRelatedClasses(int classId);
     }
 }

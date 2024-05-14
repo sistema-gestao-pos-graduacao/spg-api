@@ -11,5 +11,6 @@ namespace SPG.Domain.Interfaces
         void Update(ClassScheduleModel classSchedule);
         void Delete(int id);
         void DeleteAll(List<int> ids);
+        IList<ClassScheduleModel> GetAllClassesScheduleByRelatedClassId(int relatedClassId);
     }
 }

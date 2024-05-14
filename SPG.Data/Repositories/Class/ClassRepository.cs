@@ -33,7 +33,6 @@ namespace SPG.Data.Repositories
       try
       {
         var model = GetById(classObj.Id);
-        model.Name = classObj.Name;
         model.CurriculumId = classObj.CurriculumId;
         model.Students = classObj.Students;
 
