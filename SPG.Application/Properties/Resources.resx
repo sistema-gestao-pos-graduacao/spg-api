@@ -117,8 +117,14 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="InvalidClassesIdsValidation" xml:space="preserve">
+    <value>Não é possível relacionar o agendamento aos ids: </value>
+  </data>
   <data name="InvalidUserRoleName" xml:space="preserve">
     <value>Não é possível criar uma pessoa sem informar o perfil dela </value>
+  </data>
+  <data name="RelatedClassesRepeationValidation" xml:space="preserve">
+    <value>Não é possível associar a mesma turma duas vezes para o mesmo agendamento! Item(s) duplicados: </value>
   </data>
   <data name="SuccessfullyCreatedUser" xml:space="preserve">
     <value>Usuário de acesso ao SGP</value>

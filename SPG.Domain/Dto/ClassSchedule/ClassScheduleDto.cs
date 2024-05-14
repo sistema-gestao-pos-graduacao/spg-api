@@ -10,5 +10,6 @@
     public DateTime StartDateTime { get; set; }
     public DateTime EndDateTime { get; set; }
     public string Color { get; set; } = string.Empty;
+    public IList<int> RelatedClassesIds { get; set; } = [];
   }
 }
