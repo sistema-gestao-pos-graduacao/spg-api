@@ -27,7 +27,7 @@ namespace SPG.API.Controllers.Base
                 return values.Contains(value);
               }
               return false;
-            });
+            }).ToList();
           continue;
         }
         
