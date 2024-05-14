@@ -61,11 +61,29 @@ namespace SPG.Application.Properties {
         }
         
         /// <summary>
+        ///   Consulta uma cadeia de caracteres localizada semelhante a Não é possível relacionar o agendamento aos ids: .
+        /// </summary>
+        internal static string InvalidClassesIdsValidation {
+            get {
+                return ResourceManager.GetString("InvalidClassesIdsValidation", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Consulta uma cadeia de caracteres localizada semelhante a Não é possível criar uma pessoa sem informar o perfil dela .
         /// </summary>
         internal static string InvalidUserRoleName {
             get {
                 return ResourceManager.GetString("InvalidUserRoleName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Consulta uma cadeia de caracteres localizada semelhante a Não é possível associar a mesma turma duas vezes para o mesmo agendamento! Item(s) duplicados: .
+        /// </summary>
+        internal static string RelatedClassesRepeationValidation {
+            get {
+                return ResourceManager.GetString("RelatedClassesRepeationValidation", resourceCulture);
             }
         }
         

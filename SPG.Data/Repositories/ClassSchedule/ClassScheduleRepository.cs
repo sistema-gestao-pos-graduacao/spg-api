@@ -53,6 +53,7 @@ namespace SPG.Data.Repositories
         model.SubjectId = classSchedule.SubjectId;
         model.StartDateTime = classSchedule.StartDateTime;
         model.EndDateTime = classSchedule.EndDateTime;
+        model.RelatedClassesIds = classSchedule.RelatedClassesIds;
 
         _context.Entry(model).State = EntityState.Modified;
         _context.SaveChanges();
@@ -81,6 +82,16 @@ namespace SPG.Data.Repositories
         _context.ClassSchedules.RemoveRange(classSchedule);
         _context.SaveChanges();
       }
+    }
+
+    public IList<ClassScheduleModel> GetAllClassesScheduleByRelatedClassId(int relatedClassId)
+    {
+      var classSchedule = _context.ClassSchedules
+        .Include(c => c.Subject)
+        .Where(p => p.RelatedClassesIds.Contains(relatedClassId))
+        .ToList();
+
+      return classSchedule;
     }
   }
 }

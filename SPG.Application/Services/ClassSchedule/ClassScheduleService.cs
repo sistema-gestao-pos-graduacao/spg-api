@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using SPG.Application.Properties;
 using SPG.Domain.Dto;
 using SPG.Domain.Interfaces;
 using SPG.Domain.Model;
@@ -6,10 +7,11 @@ using SPG.Domain.Utils;
 
 namespace SPG.Application.Services
 {
-  public class ClassScheduleService(IClassScheduleRepository repository, IMapper mapper) : IClassScheduleService
+  public class ClassScheduleService(IClassScheduleRepository repository, IClassRepository classRepository, IMapper mapper) : IClassScheduleService
   {
     private readonly IMapper _mapper = mapper;
     private readonly IClassScheduleRepository _repository = repository;
+    private readonly IClassRepository _classRepository = classRepository;
 
     public IEnumerable<ClassScheduleDto> GetAllClassSchedules()
     {
@@ -31,6 +33,7 @@ namespace SPG.Application.Services
 
     public ClassScheduleDto AddClassSchedule(ClassScheduleDto dto)
     {
+      VerifyRelatedClasses(dto);
       AddHexColor(dto);
       var classSchedule = _mapper.Map<ClassScheduleModel>(dto);
 
@@ -41,7 +44,10 @@ namespace SPG.Application.Services
     public IList<ClassScheduleDto> AddClassSchedules(List<ClassScheduleDto> dtoList)
     {
       foreach (var d in dtoList)
+      {
+        VerifyRelatedClasses(d);
         AddHexColor(d);
+      }
 
       List<ClassScheduleModel> classSchedules = _mapper.Map<List<ClassScheduleModel>>(dtoList);
 
@@ -53,6 +59,7 @@ namespace SPG.Application.Services
 
     public ClassScheduleDto UpdateClassSchedule(ClassScheduleDto classSchedule)
     {
+      VerifyRelatedClasses(classSchedule);
       _repository.Update(_mapper.Map<ClassScheduleModel>(classSchedule));
 
       return classSchedule;
@@ -71,6 +78,47 @@ namespace SPG.Application.Services
     private static void AddHexColor(ClassScheduleDto classSchedule)
     {
       classSchedule.Color = ColorUtils.GenerateHexColor(classSchedule.StartDateTime.ToString());
+    }
+
+    private void VerifyRelatedClasses(ClassScheduleDto classSchedule)
+    {
+      var duplicates = classSchedule.RelatedClassesIds
+        .GroupBy(x => x)
+        .Where(group => group.Count() > 1)
+        .Select(group => group.Key);
+
+      if (duplicates.Any())
+        throw new Exception(Resources.RelatedClassesRepeationValidation + string.Join(", ", duplicates));
+
+      var classesIds = _classRepository.GetAll().Select(c => c.Id).ToList();
+
+      List<int> invalidIds = [];
+
+      foreach (var item in classSchedule.RelatedClassesIds)
+      {
+        if (!classesIds.Contains(item))
+          invalidIds.Add(item);
+      }
+
+      throw new Exception(Resources.InvalidClassesIdsValidation + string.Join(", ", invalidIds));
+    }
+
+    public void RemoveClassIdFromRelatedClasses(int classId)
+    {
+      try
+      {
+        var classSchedules = _repository.GetAllClassesScheduleByRelatedClassId(classId);
+
+        foreach (var item in classSchedules)
+        {
+          item.RelatedClassesIds.Remove(classId);
+          _repository.Update(item);
+        }
+      }
+      catch (Exception)
+      {
+        throw;
+      }
     }
   }
 
