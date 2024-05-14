@@ -40,6 +40,12 @@ namespace SPG.Data
           .HasForeignKey<PersonModel>(p => p.UserId)
           .OnDelete(DeleteBehavior.Cascade);
 
+      modelBuilder.Entity<SubjectModel>()
+          .HasOne(s => s.Teacher)
+          .WithMany()
+          .HasForeignKey(s => s.TeacherId)
+          .OnDelete(DeleteBehavior.SetNull);
+
       modelBuilder.Entity<CourseModel>()
           .HasOne(c => c.Coordinator)
           .WithMany()
