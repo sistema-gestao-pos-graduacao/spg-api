@@ -26,8 +26,6 @@ namespace SPG.Domain.Dto
 
         public string Considerations { get; set; } = string.Empty;
 
-        public List<string> Students { get; set; } = [];
-
         public WeekDaysEnum WeekDay { get; set; }
 
         public string Syllabus { get; set; } = string.Empty;
