@@ -16,44 +16,52 @@ namespace SPG.API.Controllers.ClassSchedule
     [HttpGet]
     public IActionResult GetAll([FromQuery] Dictionary<string, string> filters)
     {
-      var subjects = _service.GetAllClassSchedules();
-      return Ok(ApplyFilters(subjects, filters));
+      var classSchedules = _service.GetAllClassSchedules();
+      return Ok(ApplyFilters(classSchedules, filters));
+    }
+
+    [HttpGet]
+    [Route("FilteredByClass")]
+    public IActionResult GetAllFilteredByClass([FromQuery] Dictionary<string, string> filters, int id)
+    {
+      var classSchedules = _service.GetAllFilteredByClass(id);
+      return Ok(ApplyFilters(classSchedules, filters));
     }
 
     [HttpGet("{id}")]
     public IActionResult Get(int id)
     {
-      var subject = _service.GetClassScheduleById(id);
-      return Ok(subject);
+      var classSchedule = _service.GetClassScheduleById(id);
+      return Ok(classSchedule);
     }
 
     [HttpPost]
-    public IActionResult Post([FromBody] ClassScheduleDto subject)
+    public IActionResult Post([FromBody] ClassScheduleDto classSchedule)
     {
       if (!ModelState.IsValid)
         return BadRequest(ModelState);
 
-      var result = _service.AddClassSchedule(subject);
+      var result = _service.AddClassSchedule(classSchedule);
 
       return CreatedAtAction(nameof(Get), new { id = result.Id }, result);
     }
 
     [HttpPost]
     [Route("SaveAll")]
-    public IActionResult PostAll([FromBody] List<ClassScheduleDto> subjects)
+    public IActionResult PostAll([FromBody] List<ClassScheduleDto> classSchedules)
     {
       if (!ModelState.IsValid)
         return BadRequest(ModelState);
 
-      var results = _service.AddClassSchedules(subjects);
+      var results = _service.AddClassSchedules(classSchedules);
 
       return Ok(results);
     }
 
     [HttpPut]
-    public IActionResult Put([FromBody] ClassScheduleDto subject)
+    public IActionResult Put([FromBody] ClassScheduleDto classSchedule)
     {
-      _service.UpdateClassSchedule(subject);
+      _service.UpdateClassSchedule(classSchedule);
 
       return NoContent();
     }
