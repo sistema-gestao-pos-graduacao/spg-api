@@ -28,7 +28,7 @@ namespace SPG.Application.Services
       if (!classSchedules.Any())
         return new List<ClassScheduleDto>();
 
-      return _mapper.Map<List<ClassScheduleDto>>(classSchedules.Where(item => id == item.Id)).ToList();
+      return _mapper.Map<List<ClassScheduleDto>>(classSchedules.Where(item => item.RelatedClassesIds.Contains(id)).ToList());
     }
 
     public ClassScheduleDto GetClassScheduleById(int id)
