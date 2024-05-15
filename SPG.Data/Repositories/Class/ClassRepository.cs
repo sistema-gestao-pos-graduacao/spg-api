@@ -21,6 +21,13 @@ namespace SPG.Data.Repositories
       return classObj ?? throw new Exception(string.Format(Resources.NotFoundClass, id));
     }
 
+    public ClassModel? GetByName(string name)
+    {
+      var classObj = _context.Classes.Include(c => c.Curriculum).FirstOrDefault(p => p.Name == name);
+
+      return classObj;
+    }
+
     public void Add(ClassModel classObj)
     {
       _context.Classes.Add(classObj);

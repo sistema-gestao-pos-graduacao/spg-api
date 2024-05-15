@@ -29,6 +29,11 @@ namespace SPG.Application.Services
       return _mapper.Map<ClassDto>(_repository.GetById(id));
     }
 
+    public ClassDto GetClassByName(string name)
+    {
+      return _mapper.Map<ClassDto>(_repository.GetByName(name));
+    }
+
     public ClassDto AddClass(ClassDto dto)
     {
       var classObj = _mapper.Map<ClassModel>(dto);
@@ -52,14 +57,23 @@ namespace SPG.Application.Services
       _repository.Delete(id);
     }
 
-    private static string GenerateNameClass(ClassDto dto)
+    private string GenerateNameClass(ClassDto dto)
     {
       var date = DateTime.UtcNow;
       var semester = date.Month < 6 ? "1" : "2";
-      var random = new Random(date.Day + date.Month + date.Year);
-      int randomNumber = random.Next(100, int.MaxValue);
+      var random = new Random();
+      int randomNumber = random.Next(100, 999);
 
-      return $"0{randomNumber}{dto.CurriculumId}_{semester}_{date.Year}";
+      var name = $"0{randomNumber}{dto.CurriculumId}_{semester}_{date.Year}";
+      var classSchedule = GetClassByName(name);
+
+      while (classSchedule != null) {
+        randomNumber = random.Next(100, 999);
+        name = $"0{randomNumber}{dto.CurriculumId}_{semester}_{date.Year}";
+        classSchedule = GetClassByName(name);
+      }
+
+      return name;
     }
   }
 
