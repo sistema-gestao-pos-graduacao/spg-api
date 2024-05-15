@@ -21,7 +21,7 @@ namespace SPG.API.Controllers.ClassSchedule
     }
 
     [HttpGet]
-    [Route("FilteredByClass")]
+    [Route("FilteredByClass/{id}")]
     public IActionResult GetAllFilteredByClass([FromQuery] Dictionary<string, string> filters, int id)
     {
       var classSchedules = _service.GetAllFilteredByClass(id);
