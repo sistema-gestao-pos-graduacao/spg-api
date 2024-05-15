@@ -6,6 +6,7 @@ namespace SPG.Domain.Interfaces
     {
         IEnumerable<ClassModel> GetAll();
         ClassModel GetById(int id);
+        ClassModel? GetByName(string name);
         void Add(ClassModel curriculum);
         void Update(ClassModel curriculum);
         void Delete(int id);
