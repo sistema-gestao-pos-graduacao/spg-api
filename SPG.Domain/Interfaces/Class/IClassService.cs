@@ -9,5 +9,6 @@ namespace SPG.Domain.Interfaces
         ClassDto AddClass(ClassDto curriculum);
         ClassDto UpdateClass(ClassDto curriculum);
         void DeleteClass(int id);
+        ClassDto GetClassByName(string name);
     }
 }
