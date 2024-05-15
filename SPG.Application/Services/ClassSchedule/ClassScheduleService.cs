@@ -19,11 +19,16 @@ namespace SPG.Application.Services
       if (!classSchedules.Any())
         return new List<ClassScheduleDto>();
 
-      var classSchedulesDto = new List<ClassScheduleDto>();
+      return _mapper.Map<List<ClassScheduleDto>>(classSchedules);
+    }
 
-      classSchedules.ForEach(classSchedule => { classSchedulesDto.Add(_mapper.Map<ClassScheduleDto>(classSchedule)); });
+    public IEnumerable<ClassScheduleDto> GetAllFilteredByClass(int id)
+    {
+      var classSchedules = _repository.GetAll().ToList();
+      if (!classSchedules.Any())
+        return new List<ClassScheduleDto>();
 
-      return classSchedulesDto;
+      return _mapper.Map<List<ClassScheduleDto>>(classSchedules.Where(item => id == item.Id)).ToList();
     }
 
     public ClassScheduleDto GetClassScheduleById(int id)
@@ -100,7 +105,8 @@ namespace SPG.Application.Services
           invalidIds.Add(item);
       }
 
-      throw new Exception(Resources.InvalidClassesIdsValidation + string.Join(", ", invalidIds));
+      if(invalidIds.Any())
+        throw new Exception(Resources.InvalidClassesIdsValidation + string.Join(", ", invalidIds));
     }
 
     public void RemoveClassIdFromRelatedClasses(int classId)
