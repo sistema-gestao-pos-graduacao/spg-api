@@ -111,7 +111,7 @@ namespace SPG.API
       app.UseHttpsRedirection();
       app.UseCors("AllowFrontend");
       app.UseRouting();
-      
+
       app.UseAuthentication();
       app.UseAuthorization();
 
