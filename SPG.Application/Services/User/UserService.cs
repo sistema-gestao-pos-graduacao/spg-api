@@ -194,13 +194,23 @@ public async Task PutUserRole(string nomeDoUsuario, IList<string> roleNames)
       if (!result.Succeeded)
         throw new Exception(result.Errors.First().ToString());
 
-      await PutUserRole(user.UserName, roleNames);
+      try
+      {
+        await PutUserRole(user.UserName, roleNames);
 
-      await _emailService.SendEmailAsync(
-      user.Email,
-      Resources.SuccessfullyCreatedUser,
-      string.Format(Resources.UserEmailBody, personName, user.UserName, password, _configuration["BaseDomain"], _configuration["SystemName"])
-      );
+        await _emailService.SendEmailAsync(
+        user.Email,
+        Resources.SuccessfullyCreatedUser,
+        string.Format(Resources.UserEmailBody, personName, user.UserName, password, _configuration["BaseDomain"], _configuration["SystemName"])
+        );
+      }
+      catch (Exception ex)
+      {
+        if (!string.IsNullOrEmpty(user.Id))
+          await DeleteUserAsync(user.Id);
+        throw new Exception(ex.ToString());
+      }
+
       return user.Id;
     }
 
